@@ -12,6 +12,8 @@ import map.Map;
 
 public class Game implements Runnable {
 	
+	// TEST FOR COMMIT BY FAUSTINE
+	
 	//display of our game
 	private Map map; 
 	
