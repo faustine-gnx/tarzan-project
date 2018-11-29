@@ -13,6 +13,7 @@ import map.Map;
 public class Game implements Runnable {
 	
 	// TEST FOR COMMIT BY FAUSTINE
+	// TEST FOR COMMIT BY MARTINA !
 	
 	//display of our game
 	private Map map; 
