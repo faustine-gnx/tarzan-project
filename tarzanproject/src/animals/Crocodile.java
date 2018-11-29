@@ -1,12 +1,9 @@
 package animals;
 import javax.imageio.ImageIO;
-
+import sun.applet.Main;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-
-import com.sun.tools.javac.Main;
-
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
