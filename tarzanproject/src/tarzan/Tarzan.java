@@ -1,16 +1,23 @@
 package tarzan;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.ModuleLayer.Controller;
 import java.net.URL;
+import java.util.Timer;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 //import com.sun.tools.javac.Main;
-import sun.applet.Main;
-
+import com.sun.tools.javac.Main;
 import animals.Animal;
+import map.Map;
 import notmoving.Banana;
 import notmoving.Flower;
 import notmoving.Kavurus;
@@ -19,15 +26,20 @@ import tilegame.Goal;
 import tilegame.Level;
 import tilegame.Settings;
 
-public class Tarzan { // I would set everything private? since there is no subclass
+
+
+public class Tarzan implements KeyListener { 
+	
+	// I would set everything private? since there is no subclass - true 
 					  // + make getters
 	protected String name; 
 	protected int[][] position; 
 	protected int energy;
 	protected int endurance;
-	//protected int level; // needed?
+	protected int level; // M: i added the protected int level if not used we can delete it later 
 	protected int strength;
-	protected boolean isAlive ; // attribute or method depending on energy?
+	protected boolean isAlive ; 
+	// attribute or method depending on energy? M:--> true : but in order to make the game fails if tarzan is killed? 
 	protected int numberOfOpponentsKilled;
 	protected int numberOfFlowersPicked;
 	    
@@ -46,7 +58,10 @@ public class Tarzan { // I would set everything private? since there is no subcl
 		//this.level = setg.getLevel();		
 	}
 
-	void update() { // called at each time step
+		
+	void update() { 
+		// called at each time step
+		
 		// if position of animal or not living = position of tarzan
 		// --> call fight / pickup etc.
 		
@@ -57,40 +72,40 @@ public class Tarzan { // I would set everything private? since there is no subcl
 		// --> value depends on mode: waling, swimming, swinging
 	}
 	
-
-	void fight(Animal a) {
+	void fight(Animal a) throws Throwable {
 		this.energy -= a.getAnimalStrength();
 		this.numberOfOpponentsKilled += 1;
 		// need to destroy animal ! (for optimization of memory)
-		a.finalize(); // can we do this?
+		// a finalize () can we do this? I think so. I completed then we can decide
+		a.finalize();
 	}
 	
-	void levelUp() {} // what is this used for?
+ // void levelUp() {} what is this used for? 
+ // M: i deleted at first I thought we could used to go from one level to another 
 	void showAbility() {}
 	
-	void eatBanana(Banana b){
+	void eatBanana(Banana b) throws Throwable{
 		this.endurance += Banana.getEnduranceGiven();
 		b.finalize(); // destroy banana
 	}
 	
-	void pickFlower(Flower f){
+	void pickFlower(Flower f) throws Throwable{
 		this.numberOfFlowersPicked += 1;
 		f.finalize(); // destroy flower
 	}
 	
-	void pickKnife(Knife k){
+	void pickKnife(Knife k) throws Throwable{
 		this.strength += Knife.getStrengthGiven();
 		k.finalize(); // destroy knife
 	}
 	
-	void move() {}
-	
-	void takePill(Kavurus k) {
+	void takePill(Kavurus k) throws Throwable {
 		this.energy += Kavurus.getEnergyGiven(); // no idea how much
 		k.finalize(); // destroy pill
 	}
 	
-	void fieldOfView() {} // 
+	void fieldOfView() {} // what is this for ? 
+	
 	void inReachDistance() {}
 	
 	boolean hasReachedGoal(Goal g) {
@@ -104,28 +119,16 @@ public class Tarzan { // I would set everything private? since there is no subcl
 		}
 	}
 	
-	{}		
-
-
-// WHAT IS THIS DOING HERE ? NOT METHOD, NOT ATTRIBUTE..? 
-// CREATE getTexture / get Sound?
-	void getTexture(){ 
+// CREATE getTexture / get Sound? M: yes better use create I modified it 
+	void createTexture(){ 
 		//texture 
 		try {
 			URL imageUrl = new URL("https://vignette.wikia.nocookie.net/disney/images/2/2c/Tarzan_transparent.png/revision/latest?cb=20151031043816");
-			in = imageUrl.openStream();
+			InputStream in = imageUrl.openStream();
 			BufferedImage image = ImageIO.read(in);
 			in.close();
 		} catch(IOException ioe) {
 			//log the error
-		}
-	}
-
-			// sound Tarzan
-	public static synchronized void callSound(final String url) {
-		new Thread(new Runnable() { // ???
-			// The wrapper thread is unnecessary, unless it blocks on the
-			// Clip finishing; see comments.
 		}
 	}
 					    
@@ -140,8 +143,35 @@ public class Tarzan { // I would set everything private? since there is no subcl
 			System.err.println(e.getMessage());
 		}
 	}
-	
-	
-					  }).start(); // WHAT IS THIS ?
-			}
+   
+	// move with keyboard
+    private void move(KeyEvent e, String keyStatus){
+        int location = e.getKeyLocation();
+        if (location == KeyEvent.KEY_LOCATION_STANDARD) {
+        } else if (location == KeyEvent.KEY_LOCATION_LEFT) {
+        } else if (location == KeyEvent.KEY_LOCATION_RIGHT) {
+        } else if (location == KeyEvent.KEY_LOCATION_NUMPAD) {
+        } 
+            
+        }
+
+    // unimplemented for KeyListener
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
+
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}}

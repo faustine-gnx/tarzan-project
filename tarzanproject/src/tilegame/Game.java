@@ -41,9 +41,6 @@ public class Game implements Runnable {
 		setg = new Settings();
 		lvl = new Level(this.setg.getLevel());
 		map = new Map(); // 
-		
-		
-		
 	}
 	
 	//set method initializeGraphics and new Display 

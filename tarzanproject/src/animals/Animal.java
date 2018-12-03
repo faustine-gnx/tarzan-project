@@ -1,5 +1,4 @@
 package animals;
-import sun.applet.Main;
 
 public abstract class Animal {
 	protected final int[][] animalPosition; // don't move for now

@@ -3,7 +3,9 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import sun.applet.Main;
+
+import com.sun.tools.javac.Main;
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
