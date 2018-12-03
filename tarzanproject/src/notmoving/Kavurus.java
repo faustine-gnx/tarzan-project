@@ -16,6 +16,11 @@ public abstract class Kavurus extends NotLivings {
 	public static int getEnergyGiven() {
 		return ENERGY_GIVEN;
 	}
+	
+	@Override
+	public void finalize () throws Throwable { 
+		System.out.println("Kavurus pill taken. Congratulations! Your energy increased!");
+	}
 		
 
 {

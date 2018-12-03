@@ -16,13 +16,17 @@ public abstract class Animal {
 		return this.animalStrength;
 	}
 	
+	public int[][] getAnimalPosition() {
+		return this.animalPosition;
+	}
+	
 	public String getAnimalName() {
 		return this.animalName;
 	}
 	
 	 //overriding finalize method 
 	 @Override
-	 protected void finalize () throws Throwable { 
+	 public void finalize () throws Throwable { //changed to public to be called in Tarzan
 		 System.out.println("Animal eliminated!");
 } 
 }

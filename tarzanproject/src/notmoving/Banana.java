@@ -9,14 +9,24 @@ import javax.imageio.ImageIO;
 
 public abstract class Banana extends NotLivings {
 	
-		private boolean isEaten;
-		
-		// constructor
-		Banana (int[][] position) {
-			super(position, "Banana"); 
-			this.isEaten = false;
-		}
+	//private boolean isEaten; I don't thing we need this
+	protected static final int ENDURANCE_GIVEN = 10; // no idea how much
+	
+	// constructor
+	Banana (int[][] position) {
+		super(position, "Banana"); 
+		//this.isEaten = false;
+	}
 
+	public static int getEnduranceGiven() {
+		return ENDURANCE_GIVEN;
+	}
+		
+	//overriding finalize method 
+	@Override
+	public void finalize () throws Throwable { 
+		System.out.println("Banana eaten. Congratulations! Your endurance increased!");
+	} 
 		
 {
 			//texture 
@@ -40,11 +50,7 @@ public abstract class Banana extends NotLivings {
 			    }
 			}
 		
-			//overriding finalize method 
-			 @Override
-			 protected void finalize () throws Throwable { 
-				 System.out.println("Banana eaten. Congratulations! Your energy increased!");
-		} 
+		
 			
 		
 			}

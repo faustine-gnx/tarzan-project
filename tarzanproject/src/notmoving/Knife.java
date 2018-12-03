@@ -39,7 +39,7 @@ public abstract class Knife extends NotLivings {
 		}
 			//overriding finalize method 
 			 @Override
-			 protected void finalize () throws Throwable { 
+			public void finalize () throws Throwable { 
 				 System.out.println("Knife picked");
 		} 
 			

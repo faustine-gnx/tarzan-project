@@ -11,6 +11,8 @@ import javax.sound.sampled.Clip;
 import sun.applet.Main;
 
 import animals.Animal;
+import notmoving.Banana;
+import notmoving.Flower;
 import notmoving.Kavurus;
 import notmoving.Knife;
 import tilegame.Goal;
@@ -44,26 +46,48 @@ public class Tarzan { // I would set everything private? since there is no subcl
 		//this.level = setg.getLevel();		
 	}
 
+	void update() { // called at each time step
+		// if position of animal or not living = position of tarzan
+		// --> call fight / pickup etc.
+		
+		// if goals are reached
+		// --> message stating goals are reached
+		
+		// decrease energy by value
+		// --> value depends on mode: waling, swimming, swinging
+	}
+	
 
 	void fight(Animal a) {
-		
+		this.energy -= a.getAnimalStrength();
+		this.numberOfOpponentsKilled += 1;
+		// need to destroy animal ! (for optimization of memory)
+		a.finalize(); // can we do this?
 	}
 	
 	void levelUp() {} // what is this used for?
 	void showAbility() {}
 	
-	void pickFlower(){
-		this.numberOfFlowersPicked += 1;
+	void eatBanana(Banana b){
+		this.endurance += Banana.getEnduranceGiven();
+		b.finalize(); // destroy banana
 	}
 	
-	void pickKnife(){
+	void pickFlower(Flower f){
+		this.numberOfFlowersPicked += 1;
+		f.finalize(); // destroy flower
+	}
+	
+	void pickKnife(Knife k){
 		this.strength += Knife.getStrengthGiven();
+		k.finalize(); // destroy knife
 	}
 	
 	void move() {}
 	
-	void takePill() {
+	void takePill(Kavurus k) {
 		this.energy += Kavurus.getEnergyGiven(); // no idea how much
+		k.finalize(); // destroy pill
 	}
 	
 	void fieldOfView() {} // 

@@ -10,10 +10,10 @@ import java.io.InputStream;
 import java.net.URL; 
 
 public abstract class Lion extends Animal  {
-		// constructor
-		Lion(int[][] position) {
-			super(position, 10, "Lion"); 
-		}
+	// constructor
+	Lion(int[][] position) {
+		super(position, 10, "Lion"); 
+	}
 
 
 			{

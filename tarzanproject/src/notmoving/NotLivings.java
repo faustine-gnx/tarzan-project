@@ -11,6 +11,7 @@ public abstract class NotLivings { // = non moving
 		notLivingName = name;  
 		notLivingPosition = position;  
 	}
+
 }
 	 
 	 
