@@ -3,9 +3,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-
-import com.sun.tools.javac.Main;
-
+import sun.applet.Main;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,11 +11,11 @@ import java.net.URL;
 
 public abstract class Snake extends Animal  {
 		// constructor
-		Snake(int position, int strength, String name) {
-			super(position, strength, name); }
-			int position [][]; 
-			int strength = 4; 
-			String name = "Snake"; 
+		Snake(int[][] position) {
+			super(position, 4, "Snake"); 
+			}
+
+
 			{
 	
 //texture animal 

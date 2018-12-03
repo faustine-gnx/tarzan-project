@@ -6,11 +6,17 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 public abstract class Knife extends NotLivings {
-		// constructor
-		Knife (int position, String name) {
-			super(position,name); }
-			int position [][]; 
-			String name = "Harmful knife"; 
+	protected static final int STRENGTH_GIVEN = 10; // no idea how much
+	
+	// constructor
+	Knife (int[][] position) {
+		super(position, "Harmful knife"); 
+	}
+	
+	public static int getStrengthGiven() {
+		return STRENGTH_GIVEN;
+	}
+
 {
 			//texture 
 			try {

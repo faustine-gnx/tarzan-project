@@ -3,20 +3,22 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-
-import com.sun.tools.javac.Main;
+//import com.sun.tools.javac.Main;
+import sun.applet.Main;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL; 
 
-public abstract class Crocodile extends Animal  {
+public abstract class Crocodile extends Animal {
 		// constructor
-	Crocodile(int position, int strength, String name) {
-		super(position, strength, name); }
-		int position [][]; 
-		int strength = 6; 
-		String name = "Crocodile" ; {
+	Crocodile(int[][] position) {
+		super(position, 6, "Crocodile"); 
+	}
+ 
+		
+		
+		{
 //texture animal 
 		try {
 			URL imageUrl = new URL("https://purepng.com/photo/1938/animals-green-crocodile");

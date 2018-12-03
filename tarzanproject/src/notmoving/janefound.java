@@ -5,7 +5,8 @@ import java.io.InputStream;
 import java.net.URL;
 import javax.imageio.ImageIO;
 
-public abstract class janefound {
+public abstract class janefound { // Just change texture in Jane class
+								 // No need for new class
 	{
 		int position [][]; 
 

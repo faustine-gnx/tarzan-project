@@ -7,19 +7,23 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import com.sun.tools.javac.Main;
+import sun.applet.Main;
+//import com.sun.tools.javac.Main;
 
 
 
 public abstract class Jane extends NotLivings {
+	// int position [][] ; in superclass
+	//String name = "Jane"; in superclass
+
 	// constructor
-	Jane (int position, String name) {
-		super(position,name); }	
-	int position [][] ; 
-	String name = "Jane"; 
+	Jane (int[][] position) {
+		super(position,  "Jane");
+	}	
+	
 	{
 
-	//texture 
+	//texture --> get Texture? 
 	try {
 	    URL imageUrl = new URL("http://pluspng.com/png-169572.html");
 	    InputStream in = imageUrl.openStream();

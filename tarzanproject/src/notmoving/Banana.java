@@ -9,12 +9,15 @@ import javax.imageio.ImageIO;
 
 public abstract class Banana extends NotLivings {
 	
-		private static boolean isEaten;
+		private boolean isEaten;
+		
 		// constructor
-		Banana (int position, String name) {
-			super(position,name); }
-			int position [][]; 
-			String name = "Banana"; 
+		Banana (int[][] position) {
+			super(position, "Banana"); 
+			this.isEaten = false;
+		}
+
+		
 {
 			//texture 
 			try {

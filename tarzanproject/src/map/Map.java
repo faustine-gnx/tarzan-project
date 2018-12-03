@@ -1,5 +1,5 @@
 package map;
-import drawable.Drawable;
+import interfaces.Drawable;
 import tarzan.Tarzan;
 import tilegame.Level;
 import tilegame.Settings;

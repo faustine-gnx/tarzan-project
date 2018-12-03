@@ -7,11 +7,11 @@ import javax.imageio.ImageIO;
 
 
 public abstract class Hut extends NotLivings {
-		// constructor
-		Hut (int position, String name) {
-			super(position,name); }
-			int position [][]; 
-			String name = "cosy hut"; 
+	// constructor
+	Hut (int[][] position, String name) {
+		super(position, "Cosy hut"); 
+	}
+	
 {
 			//texture 
 			try {

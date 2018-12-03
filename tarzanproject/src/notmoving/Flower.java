@@ -10,11 +10,16 @@ import javax.imageio.ImageIO;
 
 
 public abstract class Flower extends NotLivings {
-		// constructor
-		Flower (int position, String name) {
-			super(position,name); }
-			int position [][]; 
-			String name = "Exotic beatiful pink flower"; 
+	
+	private boolean isPicked;
+	
+	// constructor
+	Flower (int[][] position) {
+		super(position, "Exotic beautiful pink flower"); 
+		this.isPicked = false;
+	}
+
+
 {
 			//texture 
 			try {

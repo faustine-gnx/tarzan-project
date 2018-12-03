@@ -6,11 +6,18 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 public abstract class Kavurus extends NotLivings {
-		// constructor
-		Kavurus (int position, String name) {
-			super(position,name); }
-			int position [][]; 
-			String name = "Kavurus magic pill"; 
+	protected static final int ENERGY_GIVEN = 50; // No idea how much
+	
+	// constructor
+	Kavurus (int[][] position) {
+		super(position, "Kavurus magic pill"); 
+	}
+	
+	public static int getEnergyGiven() {
+		return ENERGY_GIVEN;
+	}
+		
+
 {
 			//texture 
 			try {
