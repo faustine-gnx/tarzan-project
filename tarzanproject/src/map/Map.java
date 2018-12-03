@@ -52,6 +52,8 @@ public class Map implements Drawable {
 			createOneAnimal();
 		}
 		
+		
+		
 	}
 	
 	private void createOneAnimal() { // or each animal apart? 
