@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import sun.applet.Main;
+import com.sun.tools.javac.Main;
 import tilegame.Level;
 import tilegame.Settings;
 
@@ -25,9 +25,9 @@ public class Tarzan { // I would set everything private? since there is no subcl
 	public Tarzan(int[][] pos, Level lvl, Settings setg){
 		this.name = "Tarzan";
 		this.position = pos;
-		this.energy = lvl.getInitialEnergy();
-		this.endurance = setg.getInitialEndurance();
-		this.strength = setg.getInitialStrength();
+		this.energy = Settings.getInitialEnergy();
+		this.endurance = Settings.getInitialEndurance();
+		this.strength = Settings.getInitialStrength();
 		this.isAlive = true;
 		//this.level = setg.getLevel();		
 	}

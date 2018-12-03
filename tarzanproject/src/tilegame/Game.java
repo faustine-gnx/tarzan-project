@@ -2,7 +2,8 @@ package tilegame;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-
+import java.util.Timer;
+import java.util.TimerTask;
 import display.DisplayOfGame;
 import imageloader.ImagesLoader;
 import map.Map;
@@ -12,16 +13,12 @@ import map.Map;
 
 public class Game implements Runnable {
 	
-	// TEST FOR COMMIT BY FAUSTINE !!!
-	// TEST FOR COMMIT BY MARTINA !
-	
 	//display of our game
 	private Map map; 
 	
 	// Added by Faustine:
 	protected Level lvl;
 	protected Settings setg;
-	
 	public int width;
 	public int height; 
 	public String title; 
@@ -35,28 +32,24 @@ public class Game implements Runnable {
 	// how draw things to the screen
 	private BufferStrategy bufferStrategy; 
 	private Graphics graphics; 
-
 	private BufferedImage ImageTitle ; 
 	private BufferedImage testsheet;
 	
 	// Game constructor
 	public Game(String t, int w, int h) {
-		//display = new DisplayOfGame (t, w, h);
+	//display = new DisplayOfGame (t, w, h);
 		setg = new Settings();
 		lvl = new Level(this.setg.getLevel());
 		map = new Map(); // 
 		
-		// class access to the width and height = use this
-		this.width = w; 
-		this.height = h; 
-		this.title = t; 
+		
 		
 	}
 	
 	//set method initializeGraphics and new Display 
 	public void initializeGraphics () {
 		DisplayOfGame display = new DisplayOfGame (title, width, height); 
-		testsheet = ImagesLoader.loadImage("/textures/tarzan.png"); 
+		testsheet = ImagesLoader.loadImage("/textures/welcometothejungle.png"); 
 	}
 	
 	// update everything 
@@ -90,8 +83,21 @@ public class Game implements Runnable {
 		graphics.dispose();
 }}
 	
+	//timer 
+	
+	Timer gameTimer = new Timer(); 
+	TimerTask task = new TimerTask () {
+		public void run() {
+			int secondsPassed = 0;
+			secondsPassed++; 
+			System.out.println ("Seconds passed:" + secondsPassed);
+		}
+	};	
+	
 	//run method 
 	public void run () {
+		
+	gameTimer.scheduleAtFixedRate(task,1000,1000);
 		
 	// call method initialize graphics
 		initializeGraphics(); 
@@ -102,6 +108,8 @@ public class Game implements Runnable {
 		while (running) {
 		tick();
 	    render();
+	    
+	
 	}
 	
 	stop ();
@@ -132,7 +140,7 @@ public class Game implements Runnable {
 		catch (InterruptedException e) {
 			e.printStackTrace () ;
 		}
-		}
-
-	
-}
+		
+	}
+		
+	}

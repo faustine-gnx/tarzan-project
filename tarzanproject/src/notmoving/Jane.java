@@ -7,8 +7,8 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import com.sun.tools.javac.Main;
 
-import sun.applet.Main;
 
 
 public abstract class Jane extends NotLivings {

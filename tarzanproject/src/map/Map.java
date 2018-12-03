@@ -46,7 +46,7 @@ public class Map implements Drawable {
 	//private double[][] createNoiseMap(){} // see if utils exists
 	//private double[][] createLandMap() {}
 	private void createPositionables(Level lvl) {
-		int levelNumber = lvl.getLevelNumber();
+		int levelNumber = Settings.getLevel();
 		int numberOfOpponents = lvl.getNumberOfOpponents();
 		for (int i = 0; i < numberOfOpponents; i++) {
 			createOneAnimal();

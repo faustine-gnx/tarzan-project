@@ -4,7 +4,9 @@ package tilegame;
 public class Settings {
 	private static int initialStrength;
 	private static int initialEndurance;
+	private static int InitialEnergy; 
 	private static int level;
+	public static Object lvl;
 	
 	// Constructor with three int or setters ?
 	// get these values from GUI --> how?
@@ -19,5 +21,9 @@ public class Settings {
 	
 	public static int getLevel() {
 		return level;
+	}
+	
+	public static int getInitialEnergy() {
+		return InitialEnergy;
 	}
 }
