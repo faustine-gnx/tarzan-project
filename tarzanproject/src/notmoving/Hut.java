@@ -32,4 +32,9 @@ if ("Hut-isFound" != null){
 
 } 
 }
+
+public static int getEnergyGiven() {
+	// TODO Auto-generated method stub
+	return 0;
+}
 }	
