@@ -24,7 +24,6 @@ import tilegame.Level;
 import tilegame.Settings;
 
 public class Map implements Drawable {
-	
 	private final static int SIZE_MAP = 20;
 	double[][] landMap; // land type map
 	//List<int[][],> occupationList = new ArrayList<>(); // 
