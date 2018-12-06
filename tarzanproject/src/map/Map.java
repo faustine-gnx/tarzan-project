@@ -25,6 +25,9 @@ import tilegame.Settings;
 
 public class Map implements Drawable {
 	private final static int SIZE_MAP = 20;
+	// WHY DOES COMMIT NOT WORK ????
+	
+	
 	double[][] landMap; // land type map
 	//List<int[][],> occupationList = new ArrayList<>(); // 
 	List<Object> positionnableList = new ArrayList <Object>();
