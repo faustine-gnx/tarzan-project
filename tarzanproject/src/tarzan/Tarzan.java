@@ -22,7 +22,7 @@ import tilegame.Settings;
 public class Tarzan { 
 	
 	// I would set everything private? since there is no subclass - true 
-					  // + make getters
+	// + make getters
 	protected String name; 
 	protected int energy;
 	protected int endurance;
