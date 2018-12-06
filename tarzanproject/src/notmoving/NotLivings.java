@@ -1,15 +1,23 @@
 package notmoving;
 public abstract class NotLivings { // = non moving
-	protected final int[][] notLivingPosition; 
-	protected final String notLivingName;
+	protected final Position notLivingsPosition; 
+	protected final String notLivingsName;
 	
 	/*NotLivings (int[][] position) { 
 		notLivingPosition = position;  
 	}*/
 	
-	NotLivings (int[][] position, String name) {
-		notLivingName = name;  
-		notLivingPosition = position;  
+	NotLivings (Position position, String name) {
+		notLivingsName = name;  
+		notLivingsPosition = position;  
+	}
+	
+	public Position getPosition() {
+		return this.notLivingsPosition;
+	}
+	
+	public String getName() {
+		return this.notLivingsName;
 	}
 	
 	public abstract int getNotLivingsType();

@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 
 public class Hut extends NotLivings {
 	// constructor
-	public Hut (int[][] position) {
+	public Hut (Position position) {
 		super(position, "Cosy hut"); 
 	}
 	

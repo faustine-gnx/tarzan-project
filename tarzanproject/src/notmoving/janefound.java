@@ -8,7 +8,7 @@ import javax.imageio.ImageIO;
 public abstract class janefound { // Just change texture in Jane class
 								 // No need for new class
 	{
-		int position [][]; 
+		Position position; 
 
 	//texture 
 	try {

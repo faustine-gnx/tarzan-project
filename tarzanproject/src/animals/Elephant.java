@@ -13,8 +13,12 @@ import java.net.URL;
 
 public class Elephant extends Animal {
 	// constructor
-	public Elephant(int[][] position) {
+	public Elephant(Position position) {
 		super(position, 2, "Elephant"); 
+	}
+	
+	public int getAnimalType(){
+		return 12;
 	}
 		
 	{

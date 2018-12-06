@@ -14,7 +14,7 @@ public class Flower extends NotLivings {
 	private boolean isPicked;
 	
 	// constructor
-	public Flower (int[][] position) {
+	public Flower (Position position) {
 		super(position, "Exotic beautiful pink flower"); 
 		this.isPicked = false;
 	}

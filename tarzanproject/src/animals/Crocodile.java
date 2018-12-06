@@ -11,11 +11,13 @@ import java.net.URL;
 
 public class Crocodile extends Animal {
 		// constructor
-	public Crocodile(int[][] position) {
+	public Crocodile(Position position) {
 		super(position, 6, "Crocodile"); 
 	}
  
-		
+	public int getAnimalType(){
+		return 11;
+	}
 		
 		{
 //texture animal 

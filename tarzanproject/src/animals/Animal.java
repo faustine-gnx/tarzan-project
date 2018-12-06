@@ -1,11 +1,11 @@
 package animals;
 
 public abstract class Animal {
-	protected final int[][] animalPosition; // don't move for now
+	protected final Position animalPosition; // don't move for now
 	protected final int animalStrength ;
 	protected final String animalName ; 
 	
-	Animal (int[][] position, int strength, String name) {	
+	Animal (Position position, int strength, String name) {	
 		 this.animalName = name;  
 		 this.animalPosition = position; 
 		 this.animalStrength = strength; 
@@ -15,7 +15,7 @@ public abstract class Animal {
 		return this.animalStrength;
 	}
 	
-	public int[][] getAnimalPosition() {
+	public Position getAnimalPosition() {
 		return this.animalPosition;
 	}
 	

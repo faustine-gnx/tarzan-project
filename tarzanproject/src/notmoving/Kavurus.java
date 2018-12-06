@@ -9,7 +9,7 @@ public class Kavurus extends NotLivings {
 	protected static final int ENERGY_GIVEN = 50; // No idea how much
 	
 	// constructor
-	public Kavurus (int[][] position) {
+	public Kavurus (Position position) {
 		super(position, "Kavurus magic pill"); 
 	}
 	

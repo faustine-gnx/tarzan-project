@@ -11,11 +11,14 @@ import java.net.URL;
 
 public class Snake extends Animal  {
 		// constructor
-	public Snake(int[][] position) {
+	public Snake(Position position) {
 		super(position, 4, "Snake"); 
 	}
 
-
+	public int getAnimalType(){
+		return 14;
+	}
+	
 	{
 	
 //texture animal 

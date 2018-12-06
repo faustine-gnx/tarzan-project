@@ -18,7 +18,7 @@ public class Jane extends NotLivings {
 	//String name = "Jane"; in superclass
 
 	// constructor
-	public Jane (int[][] position) {
+	public Jane (Position position) {
 		super(position,  "Jane");
 	}	
 	

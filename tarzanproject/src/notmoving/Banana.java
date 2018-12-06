@@ -13,7 +13,7 @@ public class Banana extends NotLivings {
 	protected static final int ENDURANCE_GIVEN = 10; // no idea how much
 	
 	// constructor
-	public Banana (int[][] position) {
+	public Banana (Position position) {
 		super(position, "Banana"); 
 		//this.isEaten = false;
 	}

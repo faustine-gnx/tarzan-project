@@ -9,7 +9,7 @@ public class Knife extends NotLivings {
 	protected static final int STRENGTH_GIVEN = 10; // no idea how much
 	
 	// constructor
-	public Knife (int[][] position) {
+	public Knife (Position position) {
 		super(position, "Harmful knife"); 
 	}
 	

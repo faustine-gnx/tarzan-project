@@ -32,21 +32,21 @@ public class Tarzan {
 	// attribute or method depending on energy? M:--> true : but in order to make the game fails if tarzan is killed? 
 	protected int numberOfOpponentsKilled;
 	protected int numberOfFlowersPicked;
-	private int[][] animalPosition;
-	private int[][] positionTarzan;
+	private Position animalPosition;
+	private Position tarzanPosition;
 	    
 	// Constructors
 	// Constructor called in game:
 	// lvl and setg passed as arguments are attributes of game
-	public Tarzan(int[][] pos, Level lvl, Settings setg){
+	public Tarzan(Position pos, Level lvl, Settings setg){
 		this.name = "Tarzan";
-		this.positionTarzan = pos;
+		this.tarzanPosition = pos;
 		this.energy = lvl.getInitialEnergy();
-		this.endurance =setg.getInitialStrength();
+		this.endurance = setg.getInitialStrength();
 		this.isAlive = true;
 		this.numberOfOpponentsKilled = 0;
 		this.numberOfFlowersPicked = 0;
-		this.animalPosition = animalPosition;
+		//this.animalPosition = animalPosition;
 		//this.level = setg.getLevel();		
 	}
 
@@ -74,7 +74,7 @@ public class Tarzan {
  // M: i deleted levelUp () I thought we could used to go 
   //from one level to another but useless
 	
-	 void showAbility() {}
+	void showAbility() {}
 	
 	void eatBanana(Banana b) throws Throwable{
 		this.endurance += Banana.getEnduranceGiven();
@@ -86,9 +86,9 @@ public class Tarzan {
 		f.finalize(); // destroy flower
 	}
 	
-	void pickKnife(Knife kn) throws Throwable{
+	void pickKnife(Knife k) throws Throwable{
 		this.strength += Knife.getStrengthGiven();
-		kn.finalize(); // destroy knife
+		k.finalize(); // destroy knife
 	}
 	
 	void takePill(Kavurus k) throws Throwable {
@@ -118,14 +118,14 @@ public class Tarzan {
 		}
 	}
 	
-	void update() { 
+	void update() { // DO THIS IN GAME: CHECK IF TARZANPOSITION == ANIMAL/NOTLIVINGSPOSITION
 		
 		// called at each time step --> M: what does it mean? 
 		
 		
 		// if position of animal or not living = position of tarzan
 		// call fight 
-		if (animalPosition == positionTarzan);
+		if (animalPosition == tarzanPosition);
 		{
 			try {
 				fight(null);
@@ -137,8 +137,8 @@ public class Tarzan {
 		
 		// several methods to check the position of not livings == tarzan then method associated 
 		
-		int[][] KavarusPosition = null ;
-		if (KavarusPosition == positionTarzan)
+		Position kavarusPosition = null ; // why ???
+		if (kavarusPosition == tarzanPosition)
 			try {
 				takePill (null);
 			} catch (Throwable e) {
@@ -147,8 +147,8 @@ public class Tarzan {
 			}
 		
 
-		int[][] FlowerPosition = null ;
-		if (FlowerPosition == positionTarzan)
+		Position flowerPosition = null ;
+		if (flowerPosition == tarzanPosition)
 			try {
 				pickFlower (null);
 			} catch (Throwable e) {
@@ -156,8 +156,8 @@ public class Tarzan {
 				e.printStackTrace();
 			}
 		
-		int[][] BananaPosition = null ;
-		if (BananaPosition == positionTarzan)
+		Position bananaPosition = null ;
+		if (bananaPosition == positionTarzan)
 			try {
 				eatBanana (null);
 			} catch (Throwable e) {
@@ -165,8 +165,8 @@ public class Tarzan {
 				e.printStackTrace();
 			}
 		
-		int[][] KnifePosition = null ;
-		if (KnifePosition == positionTarzan)
+		int[2] knifePosition = null ;
+		if (knifePosition == tarzanPosition)
 			try {
 				pickKnife (null);
 			} catch (Throwable e) {

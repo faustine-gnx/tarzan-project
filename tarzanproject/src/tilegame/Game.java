@@ -57,8 +57,8 @@ public class Game implements Runnable {
 			display.getCanvas().createBufferStrategy(3);
 			return; 
 		}
-		{
 		
+		{
 		// graphics object 
 		graphics = bufferStrategy.getDrawGraphics();
 		
@@ -68,17 +68,17 @@ public class Game implements Runnable {
 		//draw
 		graphics.drawImage(testsheet,0,0,null);
 		
-		
 		//end draw
 		bufferStrategy.show();
 		graphics.dispose();
-}}
+		}
+	}
 	
 
 	//run method 
 	public void run () {
 		
-	gameTimer.scheduleAtFixedRate(task,1000,1000);
+		gameTimer.scheduleAtFixedRate(task,1000,1000);
 		
 	// call method initialize graphics
 		initializeGraphics(); 
@@ -87,20 +87,17 @@ public class Game implements Runnable {
 	//update all variables, positions of objects like animals tarzan etc and draw everything to the screen. 
 	// while running variable is true = run over and over again
 		while (running) {
-		tick();
-	    render();
-	    
+			tick();
+			render();
+		}
 	
-	}
-	
-	stop ();
-	
+		stop();
 	}
 	
 	// initialize methods for Thread : start Thread, stop Thread. 
-	public synchronized void start() {
+	public synchronized void start() { 
 		// if it's already running do not do anything
-		if(running)
+		if(running){
 			return ; 
 		// running true while loop and initialize thread
 		running = true; 
@@ -109,6 +106,8 @@ public class Game implements Runnable {
 		// start threat.Call run method 
 		thread.start();		
 	}
+		
+		
 	// stop thread safely
 	public synchronized void stop() {
 		// if not running = equal to false. do not anything
@@ -125,9 +124,15 @@ public class Game implements Runnable {
 	}
 	
 	// Main
-	
-	this.setg = new Settings(endurance, energy, levelNumber);
-	this.lvl = new Level(this.setg.getLevel());
-	this.map = new Map(this.lvl); // 
+	public static void main(String[] args) {
+		DisplayOfGame newGameDisplay = new DisplayOfGame();
 		
+		Game newGame = new Game();
+		
+		// read endurance energy and levelNumber from user entry --> HOW?
+		newGame.setg = new Settings(endurance, energy, levelNumber);
+		newGame.lvl = new Level(newGame.setg.getLevel());
+		newGame.map = new Map(newGame.lvl); // 
+		
+	}
 }
