@@ -6,10 +6,14 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 
 
-public abstract class Hut extends NotLivings {
+public class Hut extends NotLivings {
 	// constructor
-	Hut (int[][] position, String name) {
+	public Hut (int[][] position) {
 		super(position, "Cosy hut"); 
+	}
+	
+	public int getNotLivingsType() {
+		return 3;
 	}
 	
 {

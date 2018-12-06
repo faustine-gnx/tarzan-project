@@ -42,8 +42,7 @@ public class Tarzan {
 		this.name = "Tarzan";
 		this.positionTarzan = pos;
 		this.energy = lvl.getInitialEnergy();
-		this.endurance = Settings.getInitialEndurance();
-		this.strength = Settings.getInitialStrength();
+		this.endurance =setg.getInitialStrength();
 		this.isAlive = true;
 		this.numberOfOpponentsKilled = 0;
 		this.numberOfFlowersPicked = 0;
@@ -217,35 +216,38 @@ public class Tarzan {
 	    float dy = 0;
 	    boolean left = false;
 		if (left) {
-		dx -= 1;
+			dx -= 1;
 	    }
 	    boolean right = false;
 		if (right) {
-		dx += 1;
+			dx += 1;
 	    }
 	    boolean up = false;
 		if (up) {
-		dy -= 1;
+			dy -= 1;
 	    }
 	    boolean down = false;
 		if (down) {
-		dy += 1;
+			dy += 1;
 	    }
 
 	    if ((dx != 0) || (dy != 0)) {
-		Playermove(dx * delta * 0.003f,
-	  		    dy * delta * 0.003f);
+	    	Playermove(dx * delta * 0.003f, dy * delta * 0.003f);
 	    }
 	}
 
 	// listen to the player move and check if it is valid location on the map
 	public boolean Playermove(float dx, float dy) {
-		{ float x = 0;
+		float x = 0;
 		float nx = x + dx; 
 		float y = 0;
 		float ny = y + dy; 
-		if (validLocation(nx, ny)) { x = nx; y = ny; 
-		return true; } return false; }	
+		if (validLocation(nx, ny)) { 
+			x = nx; y = ny; 
+			return true; 
+		} else { 
+		return false; 
+		}	
 	}
 
 	// i have a doubt with validLocation. did we say that rock are invalid location?
