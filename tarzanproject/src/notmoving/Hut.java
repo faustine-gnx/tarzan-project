@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import javax.imageio.ImageIO;
+import javax.swing.text.Position;
 
 
 public class Hut extends NotLivings {
+	public Object getHutPosition;
+
 	// constructor
 	public Hut (Position position) {
 		super(position, "Cosy hut"); 
@@ -38,6 +41,16 @@ if ("Hut-isFound" != null){
 }
 
 public static int getEnergyGiven() {
+	// TODO Auto-generated method stub
+	return 0;
+}
+
+public int getX() {
+	// TODO Auto-generated method stub
+	return 0;
+}
+
+public int getY() {
 	// TODO Auto-generated method stub
 	return 0;
 }

@@ -6,7 +6,7 @@ public class GameLauncher {
 	public static void main(String[] args) {
 				//call constructor and variable 
 				
-				Game game = new Game("Tarzan, the lost adventure", 1000,1000);
+				Game game = new Game();
 				// start game
 				game.start(); 
 		}

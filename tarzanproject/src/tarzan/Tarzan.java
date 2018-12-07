@@ -7,6 +7,8 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.text.Position;
+
 //import com.sun.tools.javac.Main;
 import com.sun.tools.javac.Main;
 import animals.Animal;
@@ -157,7 +159,7 @@ public class Tarzan {
 			}
 		
 		Position bananaPosition = null ;
-		if (bananaPosition == positionTarzan)
+		if (bananaPosition == tarzanPosition)
 			try {
 				eatBanana (null);
 			} catch (Throwable e) {
@@ -165,7 +167,7 @@ public class Tarzan {
 				e.printStackTrace();
 			}
 		
-		int[2] knifePosition = null ;
+		Position knifePosition = null ;
 		if (knifePosition == tarzanPosition)
 			try {
 				pickKnife (null);
@@ -255,6 +257,11 @@ public class Tarzan {
 	// should we create "blocked location"?
 	private boolean validLocation(float nx, float ny) {
 		return true;
+	}
+
+	public int get() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	}
 

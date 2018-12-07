@@ -7,12 +7,11 @@ import notmoving.Jane;
 import notmoving.Kavurus;
 import notmoving.Knife;
 import notmoving.NotLivings;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import javax.swing.text.Position;
 import animals.Animal;
 import animals.Crocodile;
 import animals.Elephant;
@@ -26,8 +25,8 @@ import tilegame.Settings;
 
 public class Map implements Drawable {
 	private final static int SIZE_MAP = 20;	
-	double[SIZE_MAP][SIZE_MAP] landMap; // land type map
-	boolean[SIZE_MAP][SIZE_MAP] freePositions;
+	double[][] landMap; // land type map // Size_map
+	boolean[][] freePositions; // Size_map 
 	
 	//List<int[][],> occupationList = new ArrayList<>(); // 
 	List<Object> positionnableList = new ArrayList <Object>();
@@ -37,7 +36,6 @@ public class Map implements Drawable {
 	
 	private Timer gameTimer;
 	//private TimerTask task; // TimerTask is an abstract class
-	
 	
 	//public final int sizeLandMap; //depends on level
 	//private final static int[][] NOISE_MAP;
@@ -60,8 +58,8 @@ public class Map implements Drawable {
 		SimplexNoiseGenerator mapGen = new SimplexNoiseGenerator(10, 0.7, 0.008);
 		MapImage mapIm = new MapImage();
 		this.landMap = mapGen.createMap(SIZE_MAP);
-		java.util.Array.fills(this.freePositions[0], false);
-		java.util.Array.fills(this.freePositions[1]], false);
+		java.util.Arrays.fill(this.freePositions[0], false);
+		java.util.Arrays.fill(this.freePositions[1], false);
 		//mapIm.visualize(array, "generatedMap");
 		this.mapTarzan = new Tarzan(randomPosition(), l, s);
 		createPositionables(l); 
@@ -73,9 +71,9 @@ public class Map implements Drawable {
 		SimplexNoiseGenerator mapGen = new SimplexNoiseGenerator(10, 0.7, 0.008);
 		MapImage mapIm = new MapImage();
 		this.landMap = mapGen.createMap(SIZE_MAP);
-		java.util.Array.fills(this.freePositions[0], true);
-		java.util.Array.fills(this.freePositions[1], true);
-		freePositions[tarzanPosition.getX()][tarzanPosition.getY()] = false;
+		java.util.Arrays.fill(this.freePositions[0], true);
+		java.util.Arrays.fill(this.freePositions[1], true);
+		freePositions[((Tarzan) tarzanPosition).get()][((Tarzan) tarzanPosition).get()] = false;
 		//mapIm.visualize(array, "generatedMap");
 		this.mapTarzan = new Tarzan(tarzanPosition, l, s);
 		createPositionables(l); 
@@ -112,85 +110,90 @@ public class Map implements Drawable {
 		Lion l = new Lion(randomPosition());
 		mapAnimals.add(l);
 		positionnableList.add(l);
-		freePositions[l.getAnimalPosition.getX()][l.getAnimalPosition.getY()] = false;
+		freePositions[((Lion) l.getLionPosition).getX()][((Lion) l.getLionPosition).getY()] = false;
 		
 		// create Tiger
 		Tiger t = new Tiger(randomPosition());
 		mapAnimals.add(t);
 		positionnableList.add(t);
-		freePositions[t.getAnimalPosition.getX()][t.getAnimalPosition.getY()] = false;
+		freePositions[((Tiger) t.getTigerPosition).getX()][((Tiger) t.getTigerPosition).getY()] = false;
 		
 		Snake s = new Snake(randomPosition());
 		mapAnimals.add(s);
 		positionnableList.add(s);
-		freePositions[s.getAnimalPosition.getX()][s.getAnimalPosition.getY()] = false;
+		freePositions[((Snake) s.getSnakePosition).getX()][((Snake) s.getSnakePosition).getY()] = false;
 		
 		Elephant e = new Elephant(randomPosition());
 		mapAnimals.add(e);
 		positionnableList.add(e);
-		freePositions[e.getAnimalPosition.getX()][e.getAnimalPosition.getY()] = false;
+		freePositions[((Elephant) e.getElephantPosition).getX()][((Elephant) e.getElephantPosition).getY()] = false;
 		
 		Crocodile c = new Crocodile(randomPosition());
 		mapAnimals.add(c);
 		positionnableList.add(c);
-		freePositions[c.getAnimalPosition.getX()][c.getAnimalPosition.getY()] = false;
+		freePositions[((Crocodile) c.getCrocodilePosition).getX()][((Crocodile) c.getCrocodilePosition).getY()] = false;
 	}
 	
 	private Position randomPosition(){ // return a random position which is free
+		Random rand = null;
 		int x = rand.nextInt(SIZE_MAP);
 		int y = rand.nextInt(SIZE_MAP);
 		
-		if (isPositionFree(Position(x,y)) {
+		if (isPositionFree(Position(x,y))) {
 			return Position(x,y); 
 		} else {
 			return randomPosition(); // find other position - not sure if it will work
 		}
 	}
 	
+	private Position Position(int x, int y) {
+		return null;
+	}
+
 	private boolean isPositionFree(Position pos) { 
-		return freePositions[pos.getX][pos.getY];
+		return freePositions[pos.getX()][pos.getY()];
 	}
 	
 	private void createOneBanana() {
 		Banana b = new Banana(randomPosition());
 		mapNotLivings.add(b);
 		positionnableList.add(b);
-		freePositions[b.getAnimalPosition.getX()][b.getAnimalPosition.getY()] = false;
+		freePositions[((Banana) b.getBananaPosition).getX()][((Banana) b.getBananaPosition).getY()] = false;
 	}
 	
 	private void createOneFlower() {
 		Flower f = new Flower(randomPosition());
 		mapNotLivings.add(f);
 		positionnableList.add(f);
-		freePositions[f.getAnimalPosition.getX()][f.getAnimalPosition.getY()] = false;
+		freePositions[((Flower) f.getFlowerPosition).getX()][((Flower) f.getFlowerPosition).getY()] = false;
 	}
 	
 	private void createOneHut() {
 		Hut h = new Hut(randomPosition());
 		mapNotLivings.add(h);
 		positionnableList.add(h);
-		freePositions[h.getAnimalPosition.getX()][h.getAnimalPosition.getY()] = false;
+		freePositions[((Hut) h.getHutPosition).getX()][((Hut) h.getHutPosition).getY()] = false;
 	}
 	
 	private void createJane() {
 		Jane j = new Jane(randomPosition());
-		MapNotLivings.add(j);
+		mapNotLivings.add(j);
 		positionnableList.add(j);
-		freePositions[j.getAnimalPosition.getX()][j.getAnimalPosition.getY()] = false;
+		freePositions[((Jane) j.getJanePosition).getX()][((Jane) j.getJanePosition).getY()] = false;
 	}
 	
 	private void createOneKavurus() {
 		Kavurus k = new Kavurus(randomPosition());
 		mapNotLivings.add(k);
 		positionnableList.add(k);
-		freePositions[k.getAnimalPosition.getX()][k.getAnimalPosition.getY()] = false;
+		freePositions[((Kavurus) k.getKavurusPosition).getX()][((Kavurus) k.getKavurusPosition).getY()] = false;
 	}
 	
 	private void createOneKnife() {
 		Knife k = new Knife(randomPosition());
 		mapNotLivings.add(k);
 		positionnableList.add(k);
-		freePositions[k.getAnimalPosition.getX()][k.getAnimalPosition.getY()] = false;
+		freePositions[((Knife) k.getKnifePosition).getY()][((Knife) k.getKnifePosition).getY()] = false;
 }
 	
 	public void run() { // wrt timer

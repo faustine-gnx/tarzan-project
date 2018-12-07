@@ -16,7 +16,7 @@ public class DisplayOfGame{
 				
 					
 	// constructor 
-	public DisplayOfGame(String title, int width, int height){ // create static values for this?
+	public DisplayOfGame(){ // create static values for this?
 	// set variables equal to the parameters. this since I name class variables equal to my parameters
 		this.title = title; 
 		this.width = width; 

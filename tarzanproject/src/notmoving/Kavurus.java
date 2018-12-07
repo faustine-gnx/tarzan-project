@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import javax.imageio.ImageIO;
+import javax.swing.text.Position;
 
 public class Kavurus extends NotLivings {
 	protected static final int ENERGY_GIVEN = 50; // No idea how much
+	public Object getAnimalPosition;
+	public Kavurus getKavurusPosition;
 	
 	// constructor
 	public Kavurus (Position position) {
@@ -47,5 +50,16 @@ public class Kavurus extends NotLivings {
     
 		    }
 		}
+
+
+public int getY() {
+	// TODO Auto-generated method stub
+	return 0;
+}
+
+public int getX() {
+	// TODO Auto-generated method stub
+	return 0;
+}
 		
 			}

@@ -7,6 +7,8 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.text.Position;
+
 import com.sun.tools.javac.Main;
 
 //import com.sun.tools.javac.Main;
@@ -16,6 +18,8 @@ import com.sun.tools.javac.Main;
 public class Jane extends NotLivings {
 	// int position [][] ; in superclass
 	//String name = "Jane"; in superclass
+
+	public Object getJanePosition;
 
 	// constructor
 	public Jane (Position position) {
@@ -58,5 +62,15 @@ public class Jane extends NotLivings {
 					      }
 					    }
 					  }).start();
+			}
+
+			public int getY() {
+				// TODO Auto-generated method stub
+				return 0;
+			}
+
+			public int getX() {
+				// TODO Auto-generated method stub
+				return 0;
 			}
 	}

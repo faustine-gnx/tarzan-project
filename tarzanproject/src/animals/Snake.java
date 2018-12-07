@@ -3,14 +3,20 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.text.Position;
+
 import com.sun.tools.javac.Main;
+
+
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL; 
 
 public class Snake extends Animal  {
-		// constructor
+	public Snake getSnakePosition;
+
+	// constructor
 	public Snake(Position position) {
 		super(position, 4, "Snake"); 
 	}
@@ -51,4 +57,19 @@ try {
 			    }
 			  }).start();
 			}
+
+	public int getSnake() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	}

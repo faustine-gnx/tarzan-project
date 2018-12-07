@@ -6,12 +6,14 @@ import java.io.InputStream;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.text.Position;
 
 
 
 public class Flower extends NotLivings {
 	
 	private boolean isPicked;
+	public Object getFlowerPosition;
 	
 	// constructor
 	public Flower (Position position) {
@@ -42,6 +44,13 @@ public class Flower extends NotLivings {
 				 System.out.println("Flower picked");
 		} 
 			
+public int getX() {
+  return 0;
+}
+
+public int getY() {
+  return 0;
+				}
 		
 			}
 

@@ -31,6 +31,6 @@ public class Settings {
 	}
 	
 	public int getInitialEnergy() {
-		return initialEnergy;
+		return getInitialEnergy();
 	}
 }

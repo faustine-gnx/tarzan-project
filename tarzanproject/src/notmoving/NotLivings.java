@@ -1,4 +1,7 @@
 package notmoving;
+
+import javax.swing.text.Position;
+
 public abstract class NotLivings { // = non moving
 	protected final Position notLivingsPosition; 
 	protected final String notLivingsName;

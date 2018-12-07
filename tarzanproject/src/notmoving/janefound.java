@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import javax.imageio.ImageIO;
+import javax.swing.text.Position;
 
 public abstract class janefound { // Just change texture in Jane class
 								 // No need for new class

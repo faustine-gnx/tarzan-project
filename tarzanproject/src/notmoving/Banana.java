@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import javax.imageio.ImageIO;
+import javax.swing.text.Position;
 
 public class Banana extends NotLivings {
 	
 	//private boolean isEaten; I don't thing we need this
 	protected static final int ENDURANCE_GIVEN = 10; // no idea how much
+	public Object getBananaPosition;
 	
 	// constructor
 	public Banana (Position position) {
@@ -55,6 +57,19 @@ public class Banana extends NotLivings {
 	    
 			    }
 			}
+
+public int getX() {
+	return 0;
+}
+
+public int getY() {
+	return 0;
+}
+
+public int getBanana() {
+	// TODO Auto-generated method stub
+	return 0;
+}
 		
 		
 			

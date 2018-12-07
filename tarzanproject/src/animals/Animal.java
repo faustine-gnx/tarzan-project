@@ -1,7 +1,9 @@
 package animals;
 
+import javax.swing.text.Position;
+
 public abstract class Animal {
-	protected final Position animalPosition; // don't move for now
+	final Position animalPosition; // don't move for now
 	protected final int animalStrength ;
 	protected final String animalName ; 
 	

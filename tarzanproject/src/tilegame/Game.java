@@ -2,10 +2,10 @@ package tilegame;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-
 import display.DisplayOfGame;
 import imageloader.ImagesLoader;
 import map.Map;
+import java.util.Timer; 
 
 
 //main class of our game --> all methods here 
@@ -15,7 +15,7 @@ public class Game implements Runnable {
 	//display of our game
 	private Map map; 
 	protected Level lvl;
-	protected Settings setg;
+	protected static Settings setg;
 	public int width;
 	public int height; 
 	public String title; 
@@ -34,12 +34,12 @@ public class Game implements Runnable {
 	
 	// Game constructor
 	
-	public Game(String t, int w, int h) {
+	public Game() {
 	}
 	
 	//set method initializeGraphics and new Display 
 	public void initializeGraphics () {
-		DisplayOfGame display = new DisplayOfGame (title, width, height); 
+		DisplayOfGame display = new DisplayOfGame (); 
 		testsheet = ImagesLoader.loadImage("/textures/welcometothejungle.png"); 
 	}
 	
@@ -74,11 +74,15 @@ public class Game implements Runnable {
 		}
 	}
 	
-
+	// new timer 
+	
+	Timer timer = new Timer();
+	
+	
+	// run the timer task 
+	
 	//run method 
 	public void run () {
-		
-		gameTimer.scheduleAtFixedRate(task,1000,1000);
 		
 	// call method initialize graphics
 		initializeGraphics(); 
@@ -95,16 +99,17 @@ public class Game implements Runnable {
 	}
 	
 	// initialize methods for Thread : start Thread, stop Thread. 
-	public synchronized void start() { 
+	public synchronized boolean start() { 
 		// if it's already running do not do anything
 		if(running){
-			return ; 
 		// running true while loop and initialize thread
 		running = true; 
 		// initialize Thread
 		thread = new Thread (this) ; 
 		// start threat.Call run method 
-		thread.start();		
+		thread.start();
+		}
+		return running;
 	}
 		
 		
@@ -129,10 +134,10 @@ public class Game implements Runnable {
 		
 		Game newGame = new Game();
 		
-		// read endurance energy and levelNumber from user entry --> HOW?
-		newGame.setg = new Settings(endurance, energy, levelNumber);
+		// read endurance energy and levelNumber from user entry --> HOW --> M: scanner
+		newGame.setg = new Settings(Scanner.endurance, Scanner.energy, Scanner.levelNumber);
 		newGame.lvl = new Level(newGame.setg.getLevel());
-		newGame.map = new Map(newGame.lvl); // 
+		newGame.map = new Map(newGame.lvl, setg); // 
 		
 	}
 }

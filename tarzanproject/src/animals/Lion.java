@@ -3,6 +3,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.text.Position;
 
 import com.sun.tools.javac.Main;
 
@@ -12,6 +13,8 @@ import java.io.InputStream;
 import java.net.URL; 
 
 public class Lion extends Animal  {
+	public Lion getLionPosition;
+
 	// constructor
 	public Lion(Position position) {
 		super(position, 15, "Lion"); 
@@ -53,5 +56,22 @@ try {
 			    }
 			  }).start();
 			}
+
+	public int getLion() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
+
+	public int getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	}
+	
 	

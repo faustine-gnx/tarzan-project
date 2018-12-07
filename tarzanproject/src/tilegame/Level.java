@@ -26,7 +26,7 @@ public class Level {
 				this.numberOfBananas = 10;
 				this.numberOfFlowers = 10;
 				this.numberOfHuts = 5;
-				this.numberOfKavurus 10; 
+				this.numberOfKavurus = 10; 
 				this.numberOfKnives = 10;
 				this.initialEnergy = 500;
 				break;
@@ -37,7 +37,7 @@ public class Level {
 				this.numberOfBananas = 7;
 				this.numberOfFlowers = 7;
 				this.numberOfHuts = 3;
-				this.numberOfKavurus 7; 
+				this.numberOfKavurus = 7; 
 				this.numberOfKnives = 7;
 				this.initialEnergy = 400;
 				break;
@@ -48,7 +48,7 @@ public class Level {
 				this.numberOfBananas = 5;
 				this.numberOfFlowers = 5;
 				this.numberOfHuts = 1;
-				this.numberOfKavurus 5; 
+				this.numberOfKavurus = 5; 
 				this.numberOfKnives = 5;
 				this.initialEnergy = 300;
 				break;

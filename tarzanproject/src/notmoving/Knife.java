@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import javax.imageio.ImageIO;
+import javax.swing.text.Position;
 
 public class Knife extends NotLivings {
 	protected static final int STRENGTH_GIVEN = 10; // no idea how much
+	public Object getKnifePosition;
 	
 	// constructor
 	public Knife (Position position) {
@@ -45,7 +47,12 @@ public class Knife extends NotLivings {
 			 @Override
 			public void finalize () throws Throwable { 
 				 System.out.println("Knife picked");
-		} 
+		}
+
+			public int getY() {
+				// TODO Auto-generated method stub
+				return 0;
+			} 
 			
 		
 			}
