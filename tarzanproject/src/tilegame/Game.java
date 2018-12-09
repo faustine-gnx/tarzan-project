@@ -1,4 +1,7 @@
 package tilegame;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -128,6 +131,35 @@ public class Game implements Runnable {
 		
 	}
 	
+	// game ended 
+	
+	void endGame(Graphics g) {
+
+	    // Create a message telling the player the game is over
+	    String message = "Game over";
+
+	    // Create a new font instance
+	    Font font = new Font("Times New Roman", Font.BOLD, 14);
+	    FontMetrics metrics = getFontMetrics(font);
+
+	    // Set the color of the text to red, and set the font
+	    g.setColor(Color.red);
+	    g.setFont(font);
+
+	    // Draw the message to the board
+	    g.drawString(message, (width - metrics.stringWidth(message)) / 2,
+	            height / 2);
+
+	    System.out.println("Game Ended");
+
+	}
+
+	
+	private FontMetrics getFontMetrics(Font font) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	// Main
 	public static void main(String[] args) {
 		DisplayOfGame newGameDisplay = new DisplayOfGame();

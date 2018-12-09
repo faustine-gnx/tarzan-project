@@ -36,6 +36,12 @@ public class Tarzan {
 	protected int numberOfFlowersPicked;
 	private Position animalPosition;
 	private Position tarzanPosition;
+	// variable for the pond in swim method 
+	private double angle = 0;
+	private double speed = 0;
+	private double x = 0;
+	private double y = 0;
+	 
 	    
 	// Constructors
 	// Constructor called in game:
@@ -76,8 +82,40 @@ public class Tarzan {
  // M: i deleted levelUp () I thought we could used to go 
   //from one level to another but useless
 	
-	void showAbility() {}
+	 // is showAbility for swim? if it is we can deleted --> create void move for swim  
+	void showAbility() { }
 	
+	// i create a void method for swim in the pond anyway we should find a way 
+	// to link with the keyboard or not? 
+	// is tarzan able just to swim and get outside of the pond by itself?
+	// also we should link the pond that I put in this method to the random one
+	// generated in the map 
+		void moveSwim() {
+			// If he swim at this angle, this is where he'll end up
+	        double newX = x + Math.cos(angle) * speed;
+			double newY = y + Math.sin(angle) * speed;
+
+	        if (isInPond(newX, newY)) {
+	            // That's still in the pond, go there
+	            x = newX;
+	            y = newY;
+	        } else {
+	            // That's outside the pond, change direction
+	            angle = Math.random() * 2 * Math.PI;
+	        }
+			// i added this method but i am not sure it is necessary for the pond
+	        // so i put it as a comment 
+	        // if it doesn't work, try to add it 
+	        //public String toString() {
+	            //return String.format(
+	               // "Position: %.0f,%.0f. Angle: %.0f degrees.",
+	               // x, y, angle * 180/Math.PI);
+	        }
+	// Check whether some coordinates are within a circular pond with radius 100
+	private boolean isInPond(double newX, double newY) {
+		return Math.sqrt(x*x+y*y) < 100;
+		}
+
 	void eatBanana(Banana b) throws Throwable{
 		this.endurance += Banana.getEnduranceGiven();
 		b.finalize(); // destroy banana
@@ -103,7 +141,7 @@ public class Tarzan {
 		this.energy += Hut.getEnergyGiven(); // how much? type name = new type(); 
 	}
 	
-	// should we add a method also if JaveFound = end of the game in Tarzan class?
+	// M: should we add a method also if JaveFound = end of the game in Tarzan class?
 	
 	void fieldOfView() {} // M: what is this for ? 
 	
@@ -260,7 +298,6 @@ public class Tarzan {
 	}
 
 	public int get() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	}
