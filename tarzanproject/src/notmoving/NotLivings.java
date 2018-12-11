@@ -1,21 +1,21 @@
 package notmoving;
 
-import javax.swing.text.Position;
+import tilegame.Position2D;
 
 public abstract class NotLivings { // = non moving
-	protected final Position notLivingsPosition; 
+	protected final Position2D notLivingsPosition; 
 	protected final String notLivingsName;
 	
 	/*NotLivings (int[][] position) { 
-		notLivingPosition = position;  
+		notLivingPosition2D = position;  
 	}*/
 	
-	NotLivings (Position position, String name) {
+	NotLivings (Position2D position, String name) {
 		notLivingsName = name;  
 		notLivingsPosition = position;  
 	}
 	
-	public Position getPosition() {
+	public Position2D getNotLivingsPosition() {
 		return this.notLivingsPosition;
 	}
 	

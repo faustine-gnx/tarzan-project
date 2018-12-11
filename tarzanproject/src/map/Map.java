@@ -26,14 +26,17 @@ import interfaces.Drawable;
 import tarzan.Tarzan;
 import tilegame.Level;
 import tilegame.Settings;
-import tilegame.Position;
+import tilegame.Position2D;
 
 public class Map implements Drawable {
 	private final static int SIZE_MAP = 20;	
+	private final int PIXEL_SCALE = 10;
+	
 	double[][] landMap; // land type map // Size_map; set directly double[SIZE_MAP][SIZE_MAP]?
 	boolean[][] freePositions; // Size_map ; set directly double[SIZE_MAP][SIZE_MAP]
 	boolean[][] fieldOfViewMatrix; // true if in fov, false otherwise ; set directly double[SIZE_MAP][SIZE_MAP]
 	MapImage mapIm; 
+	Graphics2D g2d;
 
 	//List<int[][],> occupationList = new ArrayList<>(); // 
 	List<Object> positionnableList = new ArrayList <Object>();
@@ -50,7 +53,7 @@ public class Map implements Drawable {
 
 	List<Animal> mapAnimals = new ArrayList<Animal>();
 	List<NotLivings> mapNotLivings = new ArrayList<NotLivings>();
-	List<Position> tarzanFieldOfView = new ArrayList<Position>();
+	List<Position2D> tarzanFieldOfView = new ArrayList<Position2D>();
 
 	//Animal[] MapAnimals;
 	//NotLivings[] MapNotLivings;
@@ -67,30 +70,35 @@ public class Map implements Drawable {
 		this.landMap = mapGen.createMap(SIZE_MAP);
 		// Can we do this:
 		// this.landMap = SimplexNoiseGenerator(10, 0.7, 0.008).createMap(SIZE_MAP);
-		this.mapIm = new MapImage();
+		//this.mapIm = new MapImage();
+		BufferedImage bufferedImage = new BufferedImage(SIZE_MAP, SIZE_MAP, BufferedImage.TYPE_INT_RGB);
+		this.g2d = bufferedImage.createGraphics();
 		java.util.Arrays.fill(this.freePositions[0], true); // or when rock put false
 		java.util.Arrays.fill(this.freePositions[1], true);
 		//mapIm.visualize(array, "generatedMap");
 		this.mapTarzan = new Tarzan(randomPosition(), l, s);
 		createPositionables(l); 
-		this.tarzanFieldOfView = setTarzanFieldOfView(); // not sure if possible to call here
-		this.fieldOfViewMatrix = setFieldOfViewMatrix();
+		setTarzanFieldOfView(); 
+		setFieldOfViewMatrix();
 	}
 
-	public Map(Position tarzanPosition, Level l, Settings s){
+	public Map(Position2D tarzanPosition, Level l, Settings s){
 		this.gameTimer = new Timer(); 
 		//this.task = new TimerTask();
 		SimplexNoiseGenerator mapGen = new SimplexNoiseGenerator(10, 0.7, 0.008);
 		this.landMap = mapGen.createMap(SIZE_MAP);
 		// this.landMap = SimplexNoiseGenerator(10, 0.7, 0.008).createMap(SIZE_MAP);
-		this.mapIm = new MapImage();
+		//this.mapIm = new MapImage();
+		BufferedImage bufferedImage = new BufferedImage(SIZE_MAP, SIZE_MAP, BufferedImage.TYPE_INT_RGB);
+		this.g2d = bufferedImage.createGraphics();
 		java.util.Arrays.fill(this.freePositions[0], true);
 		java.util.Arrays.fill(this.freePositions[1], true);
-		freePositions[((Tarzan) tarzanPosition).get()][((Tarzan) tarzanPosition).get()] = false;
+		freePositions[tarzanPosition.getX()][tarzanPosition.getY()] = false;
 		//mapIm.visualize(array, "generatedMap");
 		this.mapTarzan = new Tarzan(tarzanPosition, l, s);
 		createPositionables(l); 
-		this.tarzanFieldOfView = setTarzanFieldOfView(); // not sure if possible to call here
+		setTarzanFieldOfView(); 
+		setFieldOfViewMatrix();
 	}
 
 
@@ -124,36 +132,37 @@ public class Map implements Drawable {
 		Lion l = new Lion(randomPosition());
 		mapAnimals.add(l);
 		positionnableList.add(l);
-		freePositions[((Lion) l.getLionPosition).getX()][((Lion) l.getLionPosition).getY()] = false;
+		freePositions[l.getAnimalPosition().getX()][l.getAnimalPosition().getY()] = false;
 
 		// create Tiger
 		Tiger t = new Tiger(randomPosition());
 		mapAnimals.add(t);
 		positionnableList.add(t);
-		freePositions[((Tiger) t.getTigerPosition).getX()][((Tiger) t.getTigerPosition).getY()] = false;
+		freePositions[t.getAnimalPosition().getX()][t.getAnimalPosition().getY()] = false;
 
 		Snake s = new Snake(randomPosition());
 		mapAnimals.add(s);
 		positionnableList.add(s);
-		freePositions[((Snake) s.getSnakePosition).getX()][((Snake) s.getSnakePosition).getY()] = false;
+		freePositions[s.getAnimalPosition().getX()][s.getAnimalPosition().getY()] = false;
 
 		Elephant e = new Elephant(randomPosition());
 		mapAnimals.add(e);
 		positionnableList.add(e);
-		freePositions[((Elephant) e.getElephantPosition).getX()][((Elephant) e.getElephantPosition).getY()] = false;
+		freePositions[e.getAnimalPosition().getX()][e.getAnimalPosition().getY()] = false;
 
 		Crocodile c = new Crocodile(randomPosition());
 		mapAnimals.add(c);
 		positionnableList.add(c);
-		freePositions[((Crocodile) c.getCrocodilePosition).getX()][((Crocodile) c.getCrocodilePosition).getY()] = false;
-	}
+		freePositions[c.getAnimalPosition().getX()][c.getAnimalPosition().getY()] = false;
+}
 
-	private Position randomPosition(){ // return a random position which is free
+	private Position2D randomPosition(){ // return a random position which is free
+		Random rand = new Random();
 		int x = rand.nextInt(SIZE_MAP);
 		int y = rand.nextInt(SIZE_MAP);
-
-		if (isPositionFree(Position(x,y))) {
-			return Position(x,y); 
+		Position2D pos = new Position2D(x,y);
+		if (isPositionFree(pos)) {
+			return pos; 
 		} else {
 			return randomPosition(); // find other position - not sure if it will work
 		}
@@ -165,7 +174,7 @@ public class Map implements Drawable {
 		return null;
 	}*/
 
-	private boolean isPositionFree(Position pos) { 
+	private boolean isPositionFree(Position2D pos) { 
 		return freePositions[pos.getX()][pos.getY()];
 	}
 
@@ -218,9 +227,9 @@ public class Map implements Drawable {
 	}	
 
 
-	public boolean hasAnimal(Position p) {
-		for (int i=0 ; i < mapAnimals.length() ; ++i) { 
-			posAnim = Position(mapAnimals[i].getAnimalPosition()) ; 
+	public boolean hasAnimal(Position2D p) {
+		for (int i=0 ; i < mapAnimals.size() ; ++i) { 
+			Position2D posAnim = new Position2D(mapAnimals.get(i).getAnimalPosition()) ; 
 			if (p.isEqual(posAnim)) { 
 				return true; 
 			} 
@@ -228,9 +237,9 @@ public class Map implements Drawable {
 		return false; 
 	}
 
-	public boolean hasNotLivings(Position p) {
-		for (int i=0 ; i < mapNotLivings.length() ; ++i) { 
-			posNotLiv = Position(mapNotLivings[i].getAnimalPosition()) ; 
+	public boolean hasNotLivings(Position2D p) {
+		for (int i=0 ; i < mapNotLivings.size() ; ++i) { 
+			Position2D posNotLiv = new Position2D(mapNotLivings.get(i).getNotLivingsPosition()) ; 
 			if (p.isEqual(posNotLiv)) { 
 				return true; 
 			} 
@@ -246,19 +255,19 @@ public class Map implements Drawable {
 		int size = radius*2 + 1; 
 		for (int x = 0; x < size; x++) { // or radius and do -radius to +radius in x and y directions
 			for (int y=0; y < size; y++) {
-				this.tarzanFieldOfView.add(Position((x + mapTarzan.getTarzanPosition.getX() - radius), (y + mapTarzan.getTarzanPosition.getY() - radius)));
+				this.tarzanFieldOfView.add(new Position2D((x + mapTarzan.getTarzanPosition().getX() - radius), (y + mapTarzan.getTarzanPosition().getY() - radius)));
 			}
 		}		
 	}
 
-	public List<Position> getTarzanFieldOfView() { // return only positions of field of view OR
+	public List<Position2D> getTarzanFieldOfView() { // return only positions of field of view OR
 		// return boolean map of size_map*size_map with true if position is in FoV ???
 		// is tarzanPosition itself part of the field of view? --> i would say yes
 		int radius = mapTarzan.getFieldOfViewRadius();
 		int size = radius*2 + 1; 
 		for (int x = 0; x < size; x++) { // or radius and do -radius to +radius in x and y directions
 			for (int y=0; y < size; y++) {
-				this.tarzanFieldOfView.add(Position((x + mapTarzan.getTarzanPosition.getX() - radius), (y + mapTarzan.getTarzanPosition.getY() - radius)));
+				this.tarzanFieldOfView.add(new Position2D((x + mapTarzan.getTarzanPosition().getX() - radius), (y + mapTarzan.getTarzanPosition().getY() - radius)));
 			}
 		}
 		return this.tarzanFieldOfView;
@@ -271,15 +280,14 @@ public class Map implements Drawable {
 		int size = radius*2 + 1; 
 		for (int x = 0; x < size; x++) { // or radius and do -radius to +radius in x and y directions
 			for (int y=0; y < size; y++) {
-				this.fieldOfViewMatrix[x + mapTarzan.getTarzanPosition.getX() - radius][y + mapTarzan.getTarzanPosition.getY() - radius] = true;
+				this.fieldOfViewMatrix[x + mapTarzan.getTarzanPosition().getX() - radius][y + mapTarzan.getTarzanPosition().getY() - radius] = true;
 			}
 		}
 	}
 
-	public boolean isInFieldOfView(Position p) {
-		for (int i=0 ; i < mapNotLivings.length() ; ++i) { 
-			posFoV = Position(tarzanFieldOfView[i]) ; 
-			if (p.isEqual(posFoV)) { 
+	public boolean isInFieldOfView(Position2D p) {
+		for (int i=0 ; i < tarzanFieldOfView.size() ; ++i) { 
+			if (p.isEqual(tarzanFieldOfView.get(i))) { 
 				return true; 
 			} 
 		}

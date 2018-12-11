@@ -3,7 +3,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.text.Position;
+import tilegame.Position2D;
 
 import com.sun.tools.javac.Main;
 import java.awt.image.BufferedImage;
@@ -13,7 +13,7 @@ import java.net.URL;
 
 public class Tiger extends Animal  {
 	// constructor
-	public Tiger(Position position) {
+	public Tiger(Position2D position) {
 		super(position, 10, "Tiger"); 
 	}
 	

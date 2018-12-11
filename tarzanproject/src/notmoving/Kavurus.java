@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import javax.imageio.ImageIO;
-import javax.swing.text.Position;
+import tilegame.Position2D;
 
 public class Kavurus extends NotLivings {
 	protected static final int ENERGY_GIVEN = 50; // No idea how much
@@ -12,7 +12,7 @@ public class Kavurus extends NotLivings {
 	public Kavurus getKavurusPosition;
 	
 	// constructor
-	public Kavurus (Position position) {
+	public Kavurus (Position2D position) {
 		super(position, "Kavurus magic pill"); 
 	}
 	

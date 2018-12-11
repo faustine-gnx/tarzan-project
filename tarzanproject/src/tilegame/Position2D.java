@@ -1,13 +1,13 @@
 package tilegame;
- public class Position {
+ public class Position2D {
 	private int x, y; 
 	 
-    public Position(int x, int y) { 
+    public Position2D(int x, int y) { 
         this.x = x; 
         this.y = y; 
     } 
     
-    public Position(Position p) { 
+    public Position2D(Position2D p) { 
         this.x = p.getX(); 
         this.y = p.getY(); 
     } 
@@ -20,23 +20,23 @@ package tilegame;
         return y; 
     } 
     
-    public Position setX(int x) { 
+    public Position2D setX(int x) { 
         this.x = x; 
         return this; 
     } 
  
-    public Position setY(int y) { 
+    public Position2D setY(int y) { 
         this.y = y; 
         return this; 
     } 
  
-    public Position set(double x, double y) { 
+    public Position2D set(int x, int y) { 
         this.x = x; 
         this.y = y; 
         return this; 
     }
     
-    public boolean isEqual(Position p) {
+    public boolean isEqual(Position2D p) {
     	if (this.x == p.getX() && this.y == p.getY()) {
     		return true;
     	} else {

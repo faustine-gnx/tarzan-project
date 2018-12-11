@@ -3,7 +3,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.text.Position;
+import tilegame.Position2D;
 
 import com.sun.tools.javac.Main;
 
@@ -14,7 +14,7 @@ import java.net.URL;
 
 public class Lion extends Animal  {
 	// constructor
-	public Lion(Position position) {
+	public Lion(Position2D position) {
 		super(position, 15, "Lion"); 
 	}
 	

@@ -1,15 +1,15 @@
 package animals;
 
-import javax.swing.text.Position;
+import tilegame.Position2D;
 
 public abstract class Animal {
-	protected final Position animalPosition; // don't move for now
+	protected final Position2D animalPosition; // don't move for now
 	protected final int animalStrength ;
 	protected final String animalName ; 
 
-	Animal (Position position, int strength, String name) {	
+	Animal (Position2D Position2D, int strength, String name) {	
 		this.animalName = name;  
-		this.animalPosition = position; 
+		this.animalPosition = Position2D; 
 		this.animalStrength = strength; 
 	}
 
@@ -17,7 +17,7 @@ public abstract class Animal {
 		return this.animalStrength;
 	}
 
-	public Position getAnimalPosition() {
+	public Position2D getAnimalPosition() {
 		return this.animalPosition;
 	}
 

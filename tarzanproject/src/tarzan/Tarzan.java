@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.text.Position;
+import tilegame.Position2D;
 
 //import com.sun.tools.javac.Main;
 import com.sun.tools.javac.Main;
@@ -35,8 +35,7 @@ public class Tarzan {
 	// lol the question was: is it an attribute OR is it a method? ^^
 	protected int numberOfOpponentsKilled;
 	protected int numberOfFlowersPicked;
-	//private Position animalPosition; // what is this?
-	private Position tarzanPosition;
+	private Position2D tarzanPosition;
 	protected int fieldOfViewRadius;
 	protected String movingState; // walking or swimming
 	// variable for the pond in swim method --> Actually I don't think we need this
@@ -50,7 +49,7 @@ public class Tarzan {
 	// Constructors
 	// Constructor called in game:
 	// lvl and setg passed as arguments are attributes of game
-	public Tarzan(Position pos, Level lvl, Settings setg){
+	public Tarzan(Position2D pos, Level lvl, Settings setg){
 		this.name = "Tarzan";
 		this.tarzanPosition = pos;
 		this.energy = lvl.getInitialEnergy();
@@ -63,13 +62,14 @@ public class Tarzan {
 		//this.level = setg.getLevel();		
 	}
 	
-	public Position getTarzanPosition() {
+	public Position2D getTarzanPosition() {
 		return this.tarzanPosition;
 	}
 	
-	public int[2] getTarzanPositionXY() { // not sure it will work
-		return {this.tarzanPosition.getX(), this.tarzanPosition.getY()};
-	}
+	/*public int[2] getTarzanPositionXY() { // not sure it will work
+		new int[2]={this.tarzanPosition.getX(), this.tarzanPosition.getY()};
+		return 
+	}*/
 	
 	public int getFieldOfViewRadius() {
 		return this.fieldOfViewRadius;
@@ -187,7 +187,7 @@ public class Tarzan {
 		}
 	}
 
-	void update() { // DO THIS IN GAME: CHECK IF TARZANPOSITION == ANIMAL/NOTLIVINGSPOSITION
+	/*void update() { // DO THIS IN GAME: CHECK IF TARZANPOSITION == ANIMAL/NOTLIVINGSPOSITION
 
 		// called at each time step --> M: what does it mean? 
 
@@ -253,7 +253,7 @@ public class Tarzan {
 		// --> value depends on mode: wailing, swimming, swinging
 		// M: should we add a class mode or just made the methods inside Tarzan class? 
 	}
-
+*/
 	// CREATE getTexture / get Sound? M: yes better use create I modified it 
 	void createTexture(){ 
 		//texture 

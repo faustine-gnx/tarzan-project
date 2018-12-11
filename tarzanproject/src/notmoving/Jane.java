@@ -7,7 +7,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.swing.text.Position;
+import tilegame.Position2D;
 
 import com.sun.tools.javac.Main;
 
@@ -22,7 +22,7 @@ public class Jane extends NotLivings {
 	public Object getJanePosition;
 
 	// constructor
-	public Jane (Position position) {
+	public Jane (Position2D position) {
 		super(position,  "Jane");
 	}	
 	

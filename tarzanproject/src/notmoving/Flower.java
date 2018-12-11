@@ -6,7 +6,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import javax.imageio.ImageIO;
-import javax.swing.text.Position;
+import tilegame.Position2D;
 
 
 
@@ -16,7 +16,7 @@ public class Flower extends NotLivings {
 	public Object getFlowerPosition;
 	
 	// constructor
-	public Flower (Position position) {
+	public Flower (Position2D position) {
 		super(position, "Exotic beautiful pink flower"); 
 		this.isPicked = false;
 	}

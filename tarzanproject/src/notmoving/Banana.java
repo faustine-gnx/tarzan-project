@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import javax.imageio.ImageIO;
-import javax.swing.text.Position;
+import tilegame.Position2D;
 
 public class Banana extends NotLivings {
 
@@ -15,7 +15,7 @@ public class Banana extends NotLivings {
 	public Object getBananaPosition;
 
 	// constructor
-	public Banana (Position position) {
+	public Banana (Position2D position) {
 		super(position, "Banana"); 
 		//this.isEaten = false;
 	}
