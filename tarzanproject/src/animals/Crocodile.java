@@ -12,8 +12,6 @@ import java.io.InputStream;
 import java.net.URL; 
 
 public class Crocodile extends Animal {
-		public Object getCrocodilePosition;
-
 	// constructor
 	public Crocodile(Position position) {
 		super(position, 6, "Crocodile"); 

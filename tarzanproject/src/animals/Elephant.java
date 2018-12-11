@@ -13,8 +13,6 @@ import java.io.InputStream;
 import java.net.URL; 
 
 public class Elephant extends Animal {
-	public Elephant getElephantPosition;
-
 	// constructor
 	public Elephant(Position position) {
 		super(position, 2, "Elephant"); 
@@ -57,7 +55,8 @@ public class Elephant extends Animal {
 			    }
 			  }).start();
 			}
-
+	
+	// NOT NECESSARY: ???
 	public int getElephant() {
 		// TODO Auto-generated method stub
 		return 0;

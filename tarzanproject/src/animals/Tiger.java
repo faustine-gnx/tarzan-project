@@ -12,8 +12,6 @@ import java.io.InputStream;
 import java.net.URL; 
 
 public class Tiger extends Animal  {
-	public Tiger getTigerPosition;
-
 	// constructor
 	public Tiger(Position position) {
 		super(position, 10, "Tiger"); 

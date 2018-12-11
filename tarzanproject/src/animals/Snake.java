@@ -14,9 +14,7 @@ import java.io.InputStream;
 import java.net.URL; 
 
 public class Snake extends Animal  {
-	public Snake getSnakePosition;
-
-	// constructor
+// constructor
 	public Snake(Position position) {
 		super(position, 4, "Snake"); 
 	}

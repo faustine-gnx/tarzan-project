@@ -9,7 +9,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class MapImage {
-	
+
 	private final int PIXEL_SCALE = 10;
 
 	/**
@@ -49,13 +49,13 @@ public class MapImage {
 	 */
 	private void createImage(double[][] array, String filename) {
 
-		System.out.println("Creating MapImage, please wait...");
+		//System.out.println("Creating MapImage, please wait...");
 
 		int IMAGE_HEIGHT = array.length * PIXEL_SCALE;
 		int IMAGE_WIDTH = array[0].length * PIXEL_SCALE;
 
-		System.out.println("Image Width: " + IMAGE_WIDTH + "px");
-		System.out.println("Image Height: " + IMAGE_HEIGHT + "px");
+		//System.out.println("Image Width: " + IMAGE_WIDTH + "px");
+		//System.out.println("Image Height: " + IMAGE_HEIGHT + "px");
 
 		// Constructs a BufferedImage of one of the predefined image types.
 		BufferedImage bufferedImage = new BufferedImage(IMAGE_WIDTH, IMAGE_HEIGHT, BufferedImage.TYPE_INT_RGB);
@@ -69,27 +69,10 @@ public class MapImage {
 		for (int x = 0; x < array.length; x++) {
 			for (int y = 0; y < array[x].length; y++) {
 
-          //Defining coloring rules for each value
-          //Use enums with switch case here!
+				//Defining coloring rules for each value
+				//Use enums with switch case here!
 				//System.out.println(array[x][y]);
 
-				/*if (array[x][y] <= 0.02 || array[x][y] >= 0.98) { // if value equals 0, fill with water
-					g2d.setColor(Color.BLUE);
-					g2d.fillRect(y * PIXEL_SCALE, x * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
-
-				} else if (array[x][y] <= 0.25 || array[x][y] >= 0.85) { // if value equals 2, fill with grass
-					g2d.setColor(Color.YELLOW);
-					g2d.fillRect(y * PIXEL_SCALE, x * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
-					
-				} else if (array[x][y] <= 0.5 || array[x][y] >= 0.65) { // if value equals 1, fill with forest
-					g2d.setColor(Color.GREEN);
-					g2d.fillRect(y * PIXEL_SCALE, x * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
-					
-				} else if (array[x][y] <= 0.65 || array[x][y] >= 0.5) { // if value equals 1, fill with rocks
-					g2d.setColor(Color.DARK_GRAY);
-					g2d.fillRect(y * PIXEL_SCALE, x * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
-				}*/
-				
 				if (array[x][y] <= 0.01) { // if value equals 0, fill with water
 					g2d.setColor(Color.BLUE);
 					g2d.fillRect(y * PIXEL_SCALE, x * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
@@ -97,11 +80,11 @@ public class MapImage {
 				} else if (array[x][y] <= 0.45) { // if value equals 2, fill with grass
 					g2d.setColor(Color.YELLOW);
 					g2d.fillRect(y * PIXEL_SCALE, x * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
-					
+
 				} else if (array[x][y] <= 0.9) { // if value equals 1, fill with forest
 					g2d.setColor(Color.GREEN);
 					g2d.fillRect(y * PIXEL_SCALE, x * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
-					
+
 				} else if (array[x][y] > 0.9) { // if value equals 1, fill with rocks
 					g2d.setColor(Color.DARK_GRAY);
 					g2d.fillRect(y * PIXEL_SCALE, x * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
@@ -111,9 +94,9 @@ public class MapImage {
 		// Disposes of this graphics context and releases any system resources
 		// that it is using.
 		g2d.dispose();
-		
 
-		System.out.printf("Saving MapImage to Disk as %s.png ... \n", filename);
+
+		/*System.out.printf("Saving MapImage to Disk as %s.png ... \n", filename);
 		// Save as PNG
 		File file = new File(filename + ".png");
 		try {
@@ -122,7 +105,7 @@ public class MapImage {
 			e.printStackTrace();
 		}
 
-		System.out.println("Done! \n");
+		System.out.println("Done! \n");*/
 	}
 }
 

@@ -22,7 +22,7 @@ import tilegame.Level;
 import tilegame.Settings; 
 
 public class Tarzan { 
-	
+
 	// I would set everything private? since there is no subclass - true 
 	// + make getters
 	protected String name; 
@@ -32,17 +32,21 @@ public class Tarzan {
 	protected int strength;
 	protected boolean isAlive ; 
 	// attribute or method depending on energy? M:--> true : but in order to make the game fails if tarzan is killed? 
+	// lol the question was: is it an attribute OR is it a method? ^^
 	protected int numberOfOpponentsKilled;
 	protected int numberOfFlowersPicked;
-	private Position animalPosition;
+	//private Position animalPosition; // what is this?
 	private Position tarzanPosition;
-	// variable for the pond in swim method 
-	private double angle = 0;
-	private double speed = 0;
-	private double x = 0;
-	private double y = 0;
-	 
-	    
+	protected int fieldOfViewRadius;
+	protected String movingState; // walking or swimming
+	// variable for the pond in swim method --> Actually I don't think we need this
+	/*
+	private double angle = 0; // why do we need this?
+	private double speed = 0; // why do we need this?
+	private double x = 0; // we should use Position
+	private double y = 0; // we should use Position
+	*/
+
 	// Constructors
 	// Constructor called in game:
 	// lvl and setg passed as arguments are attributes of game
@@ -54,99 +58,124 @@ public class Tarzan {
 		this.isAlive = true;
 		this.numberOfOpponentsKilled = 0;
 		this.numberOfFlowersPicked = 0;
+		this.fieldOfViewRadius = lvl.getVisibilitySize();
 		//this.animalPosition = animalPosition;
 		//this.level = setg.getLevel();		
 	}
+	
+	public Position getTarzanPosition() {
+		return this.tarzanPosition;
+	}
+	
+	public int[2] getTarzanPositionXY() { // not sure it will work
+		return {this.tarzanPosition.getX(), this.tarzanPosition.getY()};
+	}
+	
+	public int getFieldOfViewRadius() {
+		return this.fieldOfViewRadius;
+	}
 
-	void fight(Animal a) throws Throwable {
-		this.energy -= a.getAnimalStrength();
-		this.numberOfOpponentsKilled += 1;
+	public void fight(Animal a) throws Throwable {
+		//this.energy -= a.getAnimalStrength();
+		takeDamage(a.getAnimalStrength());
 		// need to destroy animal ! (for optimization of memory)
 		// a finalize () can we do this? I think so. I completed then we can decide
 		a.finalize();}	
-	
-	// I added a method dead and a method to check conditions
-	// if it's dead or alive
-	 public void takeDamage(int damage) {
-	        //manipulate the amount of damage taken
-	        if(this.endurance - damage <= 0) {
-	            endurance = 0;
-	            isAlive = false;
-	            System.out.println("This is the end of the game!");
-	        } else {
-	            endurance -= damage;
-	        }
-	    }
 
- // void levelUp() {} F: what is this used for? 
- // M: i deleted levelUp () I thought we could used to go 
-  //from one level to another but useless
+	// I added a method dead and a method to check conditions
+	// if it's dead or alive^
 	
-	 // is showAbility for swim? if it is we can deleted --> create void move for swim  
-	void showAbility() { }
-	
+	public void takeDamage(int damage) {
+		//manipulate the amount of damage taken
+		if(damage >= this.energy) { // F: THIS SHOULD BE ENERGY AND NOT ENDURANCE?
+			energy = 0;
+			isAlive = false;
+			System.out.println("This is the end of the game!");
+		} else {
+			energy -= damage;
+			this.numberOfOpponentsKilled += 1;
+		}
+	}
+
+	// is showAbility for swim? if it is we can deleted --> create void move for swim  
+	// I have no idea what this is either... I deleted it
+
 	// i create a void method for swim in the pond anyway we should find a way 
 	// to link with the keyboard or not? 
+				// I think it does not change anything, we still move with the arrows of the keyboard, just the energy
+				// decrease is larger than when walking
+				// I think our map is too small to also have a forest and that we should just have water and grass,
+				// no forest. We can have rock too if we implement that we cannot walk/swim on it; if it's taking too
+				// much time I think we shouldn't do it right now
 	// is tarzan able just to swim and get outside of the pond by itself?
+				// yes? like I wrote above, swim only changes the energy lost at each time step?
 	// also we should link the pond that I put in this method to the random one
 	// generated in the map 
-		void moveSwim() {
-			// If he swim at this angle, this is where he'll end up
-	        double newX = x + Math.cos(angle) * speed;
-			double newY = y + Math.sin(angle) * speed;
+				// I don't think we need a special method for swim :( we cannot have a proper pond; just some tiles are
+				// grass, and some are water. Some method in map (or game?) should determine whether Tarzan is on grass
+				// or water, and this will influence the energy decrease per time step
+				// --> We cannot have a round pond because our tiles are squared
+				
+	/*void moveSwim() {
+		// If he swims at this angle, this is where he'll end up
+		double newX = x + Math.cos(angle) * speed;
+		double newY = y + Math.sin(angle) * speed;
 
-	        if (isInPond(newX, newY)) {
-	            // That's still in the pond, go there
-	            x = newX;
-	            y = newY;
-	        } else {
-	            // That's outside the pond, change direction
-	            angle = Math.random() * 2 * Math.PI;
-	        }
-			// i added this method but i am not sure it is necessary for the pond
-	        // so i put it as a comment 
-	        // if it doesn't work, try to add it 
-	        //public String toString() {
-	            //return String.format(
-	               // "Position: %.0f,%.0f. Angle: %.0f degrees.",
-	               // x, y, angle * 180/Math.PI);
-	        }
+		if (isInPond(newX, newY)) {
+			// That's still in the pond, go there
+			x = newX;
+			y = newY;
+		} else {
+			// That's outside the pond, change direction
+			angle = Math.random() * 2 * Math.PI;
+		}
+		// i added this method but i am not sure it is necessary for the pond
+		// so i put it as a comment 
+		// if it doesn't work, try to add it 
+		//public String toString() {
+		//return String.format(
+		// "Position: %.0f,%.0f. Angle: %.0f degrees.",
+		// x, y, angle * 180/Math.PI);
+	}
 	// Check whether some coordinates are within a circular pond with radius 100
 	private boolean isInPond(double newX, double newY) {
 		return Math.sqrt(x*x+y*y) < 100;
-		}
+	}*/
 
 	void eatBanana(Banana b) throws Throwable{
 		this.endurance += Banana.getEnduranceGiven();
 		b.finalize(); // destroy banana
 	}
-	
+
 	void pickFlower(Flower f) throws Throwable{
 		this.numberOfFlowersPicked += 1;
 		f.finalize(); // destroy flower
 	}
-	
+
 	void pickKnife(Knife k) throws Throwable{
 		this.strength += Knife.getStrengthGiven();
 		k.finalize(); // destroy knife
 	}
-	
+
 	void takePill(Kavurus k) throws Throwable {
 		this.energy += Kavurus.getEnergyGiven(); // no idea how much
 		k.finalize(); // destroy pill
 	}
-	
+
 	// added the hut how much energy ? 
 	void insideHut(Hut hut) {
 		this.energy += Hut.getEnergyGiven(); // how much? type name = new type(); 
 	}
-	
-	// M: should we add a method also if JaveFound = end of the game in Tarzan class?
-	
+
+	// M: should we add a method also isJaneFound = end of the game in Tarzan class?
+			// I think that we could have a method findingJane that checks if the goals are met, and if they are, 
+			// it ends the game, if not, it reminds the player how much opponents he still has to kill / flowers 
+			// to pick / bananas to eat / knives to find
+
 	void fieldOfView() {} // M: what is this for ? 
-	
-	void inReachDistance() {} // M: what is this for ? 
-	
+		// --> to know which animals / notlivings are in Tarzan's sight = to know whether to draw them or not
+		// But I think it should go in Map / Game
+
 	boolean hasReachedGoal(Goal g) {
 		if ((this.numberOfOpponentsKilled >= g.getAnimalKilled()) 
 				&& (this.numberOfFlowersPicked >= g.getFlowerPickedUp())
@@ -157,12 +186,12 @@ public class Tarzan {
 			return false;
 		}
 	}
-	
+
 	void update() { // DO THIS IN GAME: CHECK IF TARZANPOSITION == ANIMAL/NOTLIVINGSPOSITION
-		
+
 		// called at each time step --> M: what does it mean? 
-		
-		
+
+
 		// if position of animal or not living = position of tarzan
 		// call fight 
 		if (animalPosition == tarzanPosition);
@@ -174,9 +203,9 @@ public class Tarzan {
 				e.printStackTrace();
 			}			
 		}	
-		
+
 		// several methods to check the position of not livings == tarzan then method associated 
-		
+
 		Position kavarusPosition = null ; // why ???
 		if (kavarusPosition == tarzanPosition)
 			try {
@@ -185,7 +214,7 @@ public class Tarzan {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
+
 
 		Position flowerPosition = null ;
 		if (flowerPosition == tarzanPosition)
@@ -195,7 +224,7 @@ public class Tarzan {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
+
 		Position bananaPosition = null ;
 		if (bananaPosition == tarzanPosition)
 			try {
@@ -204,7 +233,7 @@ public class Tarzan {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		
+
 		Position knifePosition = null ;
 		if (knifePosition == tarzanPosition)
 			try {
@@ -213,19 +242,19 @@ public class Tarzan {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		// if goals are reached
 		// --> message stating goals are reached
 		if (hasReachedGoal(null)== true) {
 			System.out.println("The goals are reached ! Congratulations");
 		}
-		
+
 		// decrease energy by value
 		// --> value depends on mode: wailing, swimming, swinging
 		// M: should we add a class mode or just made the methods inside Tarzan class? 
 	}
 
-// CREATE getTexture / get Sound? M: yes better use create I modified it 
+	// CREATE getTexture / get Sound? M: yes better use create I modified it 
 	void createTexture(){ 
 		//texture 
 		try {
@@ -237,7 +266,7 @@ public class Tarzan {
 			//log the error
 		}
 	}
-					    
+
 	public void run() {
 		try {
 			Clip clip = AudioSystem.getClip();
@@ -249,35 +278,36 @@ public class Tarzan {
 			System.err.println(e.getMessage());
 		}
 	}
-   
+
 	// move with keyboard  
 	public void logic(long delta) {
-	    float dx = 0;
-	    float dy = 0;
-	    boolean left = false;
+		float dx = 0; // shouldn't it be this.
+		float dy = 0;
+		boolean left = false;
 		if (left) {
 			dx -= 1;
-	    }
-	    boolean right = false;
+		}
+		boolean right = false;
 		if (right) {
 			dx += 1;
-	    }
-	    boolean up = false;
+		}
+		boolean up = false;
 		if (up) {
 			dy -= 1;
-	    }
-	    boolean down = false;
+		}
+		boolean down = false;
 		if (down) {
 			dy += 1;
-	    }
+		}
 
-	    if ((dx != 0) || (dy != 0)) {
-	    	Playermove(dx * delta * 0.003f, dy * delta * 0.003f);
-	    }
+		if ((dx != 0) || (dy != 0)) {
+			playerMove(dx * delta * 0.003f, dy * delta * 0.003f);
+		}
 	}
 
 	// listen to the player move and check if it is valid location on the map
-	public boolean Playermove(float dx, float dy) {
+	// F: I think this should be done in Map
+	public boolean playerMove(float dx, float dy) {
 		float x = 0;
 		float nx = x + dx; 
 		float y = 0;
@@ -286,20 +316,22 @@ public class Tarzan {
 			x = nx; y = ny; 
 			return true; 
 		} else { 
-		return false; 
+			return false; 
 		}	
 	}
 
 	// i have a doubt with validLocation. did we say that rock are invalid location?
 	// should we check if it's valid location in this case? 
 	// should we create "blocked location"?
+			// F: I think it's sufficient to have freePositions / isPositionFree in Map
 	private boolean validLocation(float nx, float ny) {
 		return true;
 	}
-
+	
+	/* 	F: What is this?
 	public int get() {
 		return 0;
-	}
-	}
+	}*/
+}
 
 

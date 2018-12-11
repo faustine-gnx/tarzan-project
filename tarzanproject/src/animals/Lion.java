@@ -13,8 +13,6 @@ import java.io.InputStream;
 import java.net.URL; 
 
 public class Lion extends Animal  {
-	public Lion getLionPosition;
-
 	// constructor
 	public Lion(Position position) {
 		super(position, 15, "Lion"); 
