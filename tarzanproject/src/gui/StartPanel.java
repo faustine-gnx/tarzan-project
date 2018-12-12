@@ -8,6 +8,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -30,7 +32,7 @@ public class StartPanel extends JPanel {
 	// create JPanel to group some components
 
 	public StartPanel() {	
-		this.welcomeLabel = new JLabel("Welcome to our game: Tarzan - The Lost Adventure!", SwingConstants.CENTER);
+		this.welcomeLabel = new JLabel("Welcome to our game: Tarzan - The Lost Adventure!",SwingConstants.CENTER);
 		this.startButton = new JButton("Start");
 		this.highScoresButton = new JButton("High Scores");
 		this.rulesButton = new JButton("Game rules");
@@ -52,15 +54,15 @@ public class StartPanel extends JPanel {
 		this.add(rulesButton);
 		this.add(strengthEnduranceSlider);
 		
-		/*this.add(welcomeLabel, BorderLayout.NORTH);
+		this.add(welcomeLabel, BorderLayout.NORTH);
 		this.add(nameArea, BorderLayout.SOUTH);
 		this.add(startButton, BorderLayout.CENTER);
 		this.add(highScoresButton, BorderLayout.WEST);
-		this.add(rulesButton, BorderLayout.EAST);*/
+		this.add(rulesButton, BorderLayout.EAST);
 
 		setVisible(true);
+	
 	}
-
-
+	
 }
 
