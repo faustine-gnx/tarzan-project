@@ -2,7 +2,7 @@ package tilegame;
 
 import javax.swing.JFrame;
 
-import gui.GameFrame;
+import gui.GamePanel;
 
 public class Launcher {
 	public static void main(String[] args) {
@@ -12,7 +12,7 @@ public class Launcher {
 		// start game
 		game.start(); 
 		
-		GameFrame frame = new GameFrame();
+		GamePanel frame = new GamePanel();
         frame.setVisible(true);
 	}
 	

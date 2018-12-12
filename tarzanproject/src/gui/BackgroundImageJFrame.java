@@ -1,4 +1,4 @@
-package gui;
+/*package gui;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-public class BackgroundImageJFrame extends GameFrame {
+public class BackgroundImageJFrame extends GamePanel {
 
 	JButton b1;
 	JButton b2;
@@ -46,3 +46,4 @@ public class BackgroundImageJFrame extends GameFrame {
 	}
 
 }
+*/
