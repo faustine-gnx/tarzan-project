@@ -5,7 +5,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import tilegame.Position2D;
 
-import com.sun.tools.javac.Main;
+//import com.sun.tools.javac.Main;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +20,8 @@ public class Crocodile extends Animal {
 	public int getAnimalType(){
 		return 11;
 	}
-		
+}
+/*		
 		{
 //texture animal 
 		try {
@@ -51,17 +52,4 @@ public class Crocodile extends Animal {
 			    }
 			  }).start(); }
 
-	public int getCrocodile() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getX() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getY() {
-		// TODO Auto-generated method stub
-		return 0;
-	}}
+}*/

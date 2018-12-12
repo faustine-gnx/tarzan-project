@@ -182,42 +182,42 @@ public class Map implements Drawable {
 		Banana b = new Banana(randomPosition());
 		mapNotLivings.add(b);
 		positionnableList.add(b);
-		freePositions[((Banana) b.getBananaPosition).getX()][((Banana) b.getBananaPosition).getY()] = false;
+		freePositions[b.getNotLivingsPosition().getX()][b.getNotLivingsPosition().getY()] = false;
 	}
 
 	private void createOneFlower() {
 		Flower f = new Flower(randomPosition());
 		mapNotLivings.add(f);
 		positionnableList.add(f);
-		freePositions[((Flower) f.getFlowerPosition).getX()][((Flower) f.getFlowerPosition).getY()] = false;
+		freePositions[f.getNotLivingsPosition().getX()][f.getNotLivingsPosition().getY()] = false;
 	}
 
 	private void createOneHut() {
 		Hut h = new Hut(randomPosition());
 		mapNotLivings.add(h);
 		positionnableList.add(h);
-		freePositions[((Hut) h.getHutPosition).getX()][((Hut) h.getHutPosition).getY()] = false;
+		freePositions[h.getNotLivingsPosition().getX()][h.getNotLivingsPosition().getY()] = false;
 	}
 
 	private void createJane() {
 		Jane j = new Jane(randomPosition());
 		mapNotLivings.add(j);
 		positionnableList.add(j);
-		freePositions[((Jane) j.getJanePosition).getX()][((Jane) j.getJanePosition).getY()] = false;
+		freePositions[j.getNotLivingsPosition().getX()][j.getNotLivingsPosition().getY()] = false;
 	}
 
 	private void createOneKavurus() {
 		Kavurus k = new Kavurus(randomPosition());
 		mapNotLivings.add(k);
 		positionnableList.add(k);
-		freePositions[((Kavurus) k.getKavurusPosition).getX()][((Kavurus) k.getKavurusPosition).getY()] = false;
+		freePositions[k.getNotLivingsPosition().getX()][k.getNotLivingsPosition().getY()] = false;
 	}
 
 	private void createOneKnife() {
 		Knife k = new Knife(randomPosition());
 		mapNotLivings.add(k);
 		positionnableList.add(k);
-		freePositions[((Knife) k.getKnifePosition).getY()][((Knife) k.getKnifePosition).getY()] = false;
+		freePositions[k.getNotLivingsPosition().getY()][k.getNotLivingsPosition().getY()] = false;
 	}
 
 	public void run() { // wrt timer

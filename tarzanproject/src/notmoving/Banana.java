@@ -35,7 +35,7 @@ public class Banana extends NotLivings {
 	public void finalize () throws Throwable { 
 		System.out.println("Banana eaten. Congratulations! Your endurance increased!");
 	} 
-
+/*
 	{
 		//texture 
 		try {
@@ -73,6 +73,6 @@ public class Banana extends NotLivings {
 
 
 
-
+*/
 }
 

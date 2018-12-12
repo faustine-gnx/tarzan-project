@@ -18,7 +18,7 @@ public class Hut extends NotLivings {
 	public int getNotLivingsType() {
 		return 3;
 	}
-	
+/*
 {
 			//texture 
 			try {
@@ -39,19 +39,5 @@ if ("Hut-isFound" != null){
 
 } 
 }
-
-public static int getEnergyGiven() {
-	// TODO Auto-generated method stub
-	return 0;
+*/
 }
-
-public int getX() {
-	// TODO Auto-generated method stub
-	return 0;
-}
-
-public int getY() {
-	// TODO Auto-generated method stub
-	return 0;
-}
-}	

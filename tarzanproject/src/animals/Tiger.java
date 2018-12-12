@@ -5,7 +5,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import tilegame.Position2D;
 
-import com.sun.tools.javac.Main;
+//import com.sun.tools.javac.Main;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +21,8 @@ public class Tiger extends Animal  {
 		return 15;
 	}
 
-			{
+}
+/*{
 	
 //texture animal 
 try {
@@ -54,18 +55,4 @@ try {
 			  }).start();
 			}
 
-	public int getTiger() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getX() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getY() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	}
+*/

@@ -6,6 +6,8 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import javax.swing.text.Position;
 
+// I THINK WE SHOULD DELETE THIS CLASS
+
 public abstract class janefound { // Just change texture in Jane class
 								 // No need for new class
 	{

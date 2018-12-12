@@ -9,8 +9,6 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import tilegame.Position2D;
 
-import com.sun.tools.javac.Main;
-
 //import com.sun.tools.javac.Main;
 
 
@@ -29,7 +27,8 @@ public class Jane extends NotLivings {
 	public int getNotLivingsType() {
 		return 4;
 	}
-	
+}
+/*
 	{
 
 	//texture --> get Texture? 
@@ -43,7 +42,7 @@ public class Jane extends NotLivings {
 	    //log the error
 	}
 	
-}
+	}
 
 //sound Tarzan find Jane music starts 
 			public static synchronized void callSound(final String url) {
@@ -64,13 +63,4 @@ public class Jane extends NotLivings {
 					  }).start();
 			}
 
-			public int getY() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-
-			public int getX() {
-				// TODO Auto-generated method stub
-				return 0;
-			}
-	}
+	}*/

@@ -5,7 +5,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import tilegame.Position2D;
 
-import com.sun.tools.javac.Main;
+//import com.sun.tools.javac.Main;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -21,8 +21,8 @@ public class Elephant extends Animal {
 	public int getAnimalType(){
 		return 12;
 	}
-		
-	{
+}	
+	/*{
 	
 			
 	//texture animal 
@@ -55,20 +55,4 @@ public class Elephant extends Animal {
 			    }
 			  }).start();
 			}
-	
-	// NOT NECESSARY: ???
-	public int getElephant() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getX() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getY() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	}
+	}*/

@@ -29,7 +29,7 @@ public class Kavurus extends NotLivings {
 		System.out.println("Kavurus pill taken. Congratulations! Your energy increased!");
 	}
 		
-
+/*
 {
 			//texture 
 			try {
@@ -52,14 +52,6 @@ public class Kavurus extends NotLivings {
 		}
 
 
-public int getY() {
-	// TODO Auto-generated method stub
-	return 0;
-}
-
-public int getX() {
-	// TODO Auto-generated method stub
-	return 0;
-}
+*/
 		
-			}
+}

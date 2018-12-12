@@ -5,8 +5,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import tilegame.Position2D;
 
-import com.sun.tools.javac.Main;
-
+//import com.sun.tools.javac.Main;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -22,7 +21,8 @@ public class Snake extends Animal  {
 	public int getAnimalType(){
 		return 14;
 	}
-	
+}
+/*
 	{
 	
 //texture animal 
@@ -55,19 +55,4 @@ try {
 			    }
 			  }).start();
 			}
-
-	public int getSnake() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getY() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int getX() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	}
+*/

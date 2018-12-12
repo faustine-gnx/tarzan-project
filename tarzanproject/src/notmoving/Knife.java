@@ -22,7 +22,13 @@ public class Knife extends NotLivings {
 	public int getNotLivingsType() {
 		return 6;
 	}
-
+	
+	//overriding finalize method 
+	@Override
+	public void finalize () throws Throwable { 
+		 System.out.println("Knife picked");
+	}
+/*
 {
 			//texture 
 			try {
@@ -43,16 +49,6 @@ public class Knife extends NotLivings {
     
 		    }
 		}
-			//overriding finalize method 
-			 @Override
-			public void finalize () throws Throwable { 
-				 System.out.println("Knife picked");
-		}
-
-			public int getY() {
-				// TODO Auto-generated method stub
-				return 0;
-			} 
 			
-		
-			}
+*/
+}

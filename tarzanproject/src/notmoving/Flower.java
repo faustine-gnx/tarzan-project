@@ -24,8 +24,14 @@ public class Flower extends NotLivings {
 	public int getNotLivingsType() {
 		return 2;
 	}
+	
+	//overriding finalize method 
+	@Override
+	public void finalize () throws Throwable { 
+		 System.out.println("Flower picked");
+} 
 
-
+/*
 {
 			//texture 
 			try {
@@ -38,19 +44,9 @@ public class Flower extends NotLivings {
 			    //log the error
 			}
 }
-			//overriding finalize method 
-			 @Override
-			public void finalize () throws Throwable { 
-				 System.out.println("Flower picked");
-		} 
 			
-public int getX() {
-  return 0;
-}
+			
 
-public int getY() {
-  return 0;
-				}
-		
-			}
+		*/
+}
 

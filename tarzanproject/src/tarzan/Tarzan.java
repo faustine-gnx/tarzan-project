@@ -10,7 +10,6 @@ import javax.sound.sampled.Clip;
 import tilegame.Position2D;
 
 //import com.sun.tools.javac.Main;
-import com.sun.tools.javac.Main;
 import animals.Animal;
 import notmoving.Banana;
 import notmoving.Flower;
@@ -25,6 +24,7 @@ public class Tarzan {
 
 	// I would set everything private? since there is no subclass - true 
 	// + make getters
+	private final int INITIAL_ENERGY;
 	protected String name; 
 	protected int energy;
 	protected int endurance;
@@ -52,6 +52,7 @@ public class Tarzan {
 	public Tarzan(Position2D pos, Level lvl, Settings setg){
 		this.name = "Tarzan";
 		this.tarzanPosition = pos;
+		this.INITIAL_ENERGY = lvl.getInitialEnergy();
 		this.energy = lvl.getInitialEnergy();
 		this.endurance = setg.getInitialStrength();
 		this.isAlive = true;
@@ -162,9 +163,9 @@ public class Tarzan {
 		k.finalize(); // destroy pill
 	}
 
-	// added the hut how much energy ? 
+	// Hut --> refill energy
 	void insideHut(Hut hut) {
-		this.energy += Hut.getEnergyGiven(); // how much? type name = new type(); 
+		this.energy = this.INITIAL_ENERGY; 
 	}
 
 	// M: should we add a method also isJaneFound = end of the game in Tarzan class?
@@ -268,7 +269,7 @@ public class Tarzan {
 	}
 
 	public void run() {
-		try {
+	/*	try {
 			Clip clip = AudioSystem.getClip();
 			AudioInputStream inputStream = AudioSystem.getAudioInputStream(
 					Main.class.getResourceAsStream("/path/to/sounds/" + new URL ("https://www.youtube.com/watch?v=6O0lLgV6KpQ") ));
@@ -276,7 +277,7 @@ public class Tarzan {
 			clip.start(); 
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
-		}
+		}*/
 	}
 
 	// move with keyboard  
@@ -327,11 +328,7 @@ public class Tarzan {
 	private boolean validLocation(float nx, float ny) {
 		return true;
 	}
-	
-	/* 	F: What is this?
-	public int get() {
-		return 0;
-	}*/
+
 }
 
 
