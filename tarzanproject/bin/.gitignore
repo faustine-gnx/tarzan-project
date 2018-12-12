@@ -1,9 +1,10 @@
 /animals/
 /display/
+/gui/
 /imageloader/
 /interfaces/
 /map/
 /notmoving/
 /tarzan/
 /tilegame/
-/gui/
+/highscores/
