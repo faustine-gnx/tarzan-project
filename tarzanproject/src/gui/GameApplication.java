@@ -3,6 +3,8 @@ package gui;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
@@ -10,7 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class GameApplication extends JFrame {
+public class GameApplication extends JFrame implements ActionListener {
 	StartPanel start;
 	GamePanel game;
 	public JLabel image ;
@@ -43,5 +45,14 @@ public class GameApplication extends JFrame {
 
 		GameApplication newGame = new GameApplication();
 
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		 // if start button pressed game start 
+		
+		// if high score button pressed high scores  
+		
+		// if rules button clicked game rules 
 	}
 }

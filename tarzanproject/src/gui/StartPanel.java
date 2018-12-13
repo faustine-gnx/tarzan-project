@@ -54,6 +54,7 @@ public class StartPanel extends JPanel {
 		this.add(rulesButton);
 		this.add(strengthEnduranceSlider);
 		
+		
 		this.add(welcomeLabel, BorderLayout.NORTH);
 		this.add(nameArea, BorderLayout.SOUTH);
 		this.add(startButton, BorderLayout.CENTER);
