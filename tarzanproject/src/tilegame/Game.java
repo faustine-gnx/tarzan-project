@@ -17,65 +17,32 @@ public class Game implements Runnable { // does it need to implement runnable? a
 
 	//display of our game
 	private Map map; 
-	protected Level lvl;
-	protected static Settings setg;
-	public int width;
-	public int height; 
-	public String title; 
-
-	// while does not run 
-	private boolean running = false; 
+	protected Level level;
+	protected final Settings setg;
+	
 	//thread = run class separately from our program = more efficient
 	private Thread thread;
+	private boolean running; 
 
-	//variables for Draw 
-	// how draw things to the screen
-	private BufferStrategy bufferStrategy; 
-	private Graphics graphics; 
-	private BufferedImage ImageTitle ; 
-	private BufferedImage testsheet;
+	private KeyManager keyManager ;
 
 	// Game constructor
 
-	public Game() {
-	}
-
-	//set method initializeGraphics and new Display 
-	public void initializeGraphics () {
-		DisplayOfGame display = new DisplayOfGame (); 
-		testsheet = ImagesLoader.loadImage("/textures/welcometothejungle.png"); 
+	public Game(int lvl, int strength, int endurance) {
+		
+		keyManager = new KeyManager();
+		this.level = new Level(lvl);
+		this.setg = new Settings(strength, endurance, lvl);
+		this.map = new Map(this.level, this.setg);
+		
 	}
 
 	// update everything 
 	private void tick () {
+		
+	
 	}
 
-	// draw everything 
-	private void render() {
-		//set buffer strategy to whatever buffer strategy is in our canvas 
-		DisplayOfGame display = null;
-		bufferStrategy = display.getCanvas().getBufferStrategy();
-		if(bufferStrategy == null) {
-			// three buffers
-			display.getCanvas().createBufferStrategy(3);
-			return; 
-		}
-
-		{
-			// graphics object 
-			graphics = bufferStrategy.getDrawGraphics();
-
-			// Screen empty
-			graphics.clearRect(0, 0, width, height);
-
-			//draw
-			graphics.drawImage(testsheet,0,0,null);
-
-			//end draw
-			bufferStrategy.show();
-			graphics.dispose();
-		}
-	}
 
 	// new timer 
 
@@ -86,19 +53,45 @@ public class Game implements Runnable { // does it need to implement runnable? a
 
 	//run method 
 	public void run () {
-
-		// call method initialize graphics
-		initializeGraphics(); 
+		
+		int fps = 60;
+		double timePerTick = 1000000000 / fps;
+		double delta = 0;
+		long now;
+		long lastTime = System.nanoTime();
+		long timer = 0;
+		int ticks = 0;
 
 		// game loop. 
 		//update all variables, positions of objects like animals tarzan etc and draw everything to the screen. 
 		// while running variable is true = run over and over again
 		while (running) {
-			tick();
-			render();
+			now = System.nanoTime();
+			delta += (now - lastTime) / timePerTick;
+			timer += now - lastTime;
+			lastTime = now;
+			
+			if(delta >= 1){
+				tick();
+				render();
+				ticks++;
+				delta--;
+			}
+			
+			if(timer >= 1000000000){
+				System.out.println("Ticks and Frames: " + ticks);
+				ticks = 0;
+				timer = 0;
+			}
 		}
-
+		
 		stop();
+		
+	}
+	
+	private void render() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	// initialize methods for Thread : start Thread, stop Thread. 
@@ -133,43 +126,11 @@ public class Game implements Runnable { // does it need to implement runnable? a
 
 	// game ended 
 
-	void endGame(Graphics g) {
-
-		// Create a message telling the player the game is over
-		String message = "Game over";
-
-		// Create a new font instance
-		Font font = new Font("Times New Roman", Font.BOLD, 14);
-		FontMetrics metrics = getFontMetrics(font);
-
-		// Set the color of the text to red, and set the font
-		g.setColor(Color.red);
-		g.setFont(font);
-
+	void endGame() {
 		// Draw the message to the board
-		g.drawString(message, (width - metrics.stringWidth(message)) / 2,
-				height / 2);
-
 		System.out.println("Game Ended");
 
 	}
 
-
-	private FontMetrics getFontMetrics(Font font) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	// Main
-	public static void main(String[] args) {
-		DisplayOfGame newGameDisplay = new DisplayOfGame();
-
-		Game newGame = new Game();
-
-		// read endurance energy and levelNumber from user entry --> HOW --> M: scanner
-		newGame.setg = new Settings(Scanner.endurance, Scanner.energy, Scanner.levelNumber);
-		newGame.lvl = new Level(newGame.setg.getLevel());
-		newGame.map = new Map(newGame.lvl, setg); // 
-
-	}
+	
 }

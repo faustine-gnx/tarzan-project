@@ -43,12 +43,12 @@ public class GameApplication extends JFrame {
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			   public void run() {                 
-				   GameApplication newGame = new GameApplication();
+				   GameApplication newApp = new GameApplication();
 				   // call action & change listeners:
 				   		// read the name of player
 				   		// level
 				   		// strength & endurance
-				   int initialStrength = newGame.start.strengthEnduranceSlider.getValue(); // call changeListener?
+				   int initialStrength = newApp.start.strengthEnduranceSlider.getValue(); // call changeListener?
 				   int initialEndurance = 100 - initialStrength;
 				   //int level = 
 				   // call action & change listeners:
