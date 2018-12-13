@@ -18,14 +18,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
-// start our game
+// Game display
 public class GamePanel extends JPanel {
-	JLabel welcomeLabel; 
-	JButton startButton;
-	JButton highScoresButton;
-	JButton rulesButton;
-	JComponent nameArea;
-	// create JPanel to group some components
 
 	public GamePanel() {	
 	}

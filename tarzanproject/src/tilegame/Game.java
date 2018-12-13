@@ -13,7 +13,7 @@ import java.util.Timer;
 
 //main class of our game --> all methods here 
 
-public class Game implements Runnable {
+public class Game implements Runnable { // does it need to implement runnable? already in GameApp
 
 	//display of our game
 	private Map map; 

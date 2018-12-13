@@ -5,54 +5,61 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 
-public class GameApplication extends JFrame implements ActionListener {
+public class GameApplication extends JFrame {
 	StartPanel start;
 	GamePanel game;
-	public JLabel image ;
-    public Container c; 
 	
+
 	public GameApplication() {
+		initUI();
+	}   
+	
+	private void initUI() {
+		this.setTitle("Tarzan - The Lost Adventure");
 		this.setPreferredSize(new Dimension(1000, 1000));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//this.setLocationRelativeTo(null);
 		this.setResizable(false);
-		this.setTitle("Tarzan - The Lost Adventure");
+		
 		this.start = new StartPanel();
 		this.pack();
 		this.setLayout(new FlowLayout()); // to change
 		this.add(start);
-		
-		  	c=this.getContentPane();
-	        image=new JLabel(new ImageIcon("/Users/martinagalletti/Desktop/AI Leuven/First term/Basic Programming/progetto /ELIAS_GITHUB/repository3/tarzanproject/resources/textures/behang-met-een-houten-brug-door-een-groene-jungle.jpg"));
-	        image.setSize(1000, 1000);
-
-	        c.setLayout(new FlowLayout());
-	        c.add(image);
-
-	         add(image);
+		setVisible(true);	
+		// Image must go in StartPanel --> no need for container then?
+	}
 	
-		setVisible(true);
-		
-		
-	}   
 	public static void main(String[] args) {
-
-		GameApplication newGame = new GameApplication();
+		
+		SwingUtilities.invokeLater(new Runnable() {
+			   public void run() {                 
+				   GameApplication newGame = new GameApplication();
+				   // call action & change listeners:
+				   		// read the name of player
+				   		// level
+				   		// strength & endurance
+				   int initialStrength = newGame.start.strengthEnduranceSlider.getValue(); // call changeListener?
+				   int initialEndurance = 100 - initialStrength;
+				   //int level = 
+				   // call action & change listeners:
+				   		// if start button pressed game start --> GamePanel
+				   		// if high score button pressed high scores  --> HighScoresPanel
+				   		// if rules button clicked game rules --> RulesPanel
+				   		// etc.
+			   }
+		});
 
 	}
-	@Override
-	public void actionPerformed(ActionEvent e) {
+
 		
-		 // if start button pressed game start 
-		
-		// if high score button pressed high scores  
-		
-		// if rules button clicked game rules 
-	}
 }
