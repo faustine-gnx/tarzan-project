@@ -1,7 +1,7 @@
 package tilegame;
 // insert the Gui
 
-public class Settings {
+public class Settings { // PROBABLY USELESS
 	private final int initialStrength;
 	private final int initialEndurance;
 	//private final int initialEnergy; // depends on level NOT A SETTING, DEPENDS ON LEVEL

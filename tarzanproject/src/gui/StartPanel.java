@@ -6,6 +6,8 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Hashtable;
 
 import javax.swing.*;
@@ -29,20 +31,16 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;*/
 
 // start our game
-public class StartPanel extends JPanel implements ActionListener, ChangeListener {
+public class StartPanel extends JPanel implements ItemListener, ChangeListener {
 	protected JLabel welcomeLabel; 
-	protected JButton startButton;
-	protected JButton highScoresButton;
-	protected JButton rulesButton;
 	protected JTextField nameField;
 	protected JSlider strengthEnduranceSlider;
-	protected JComboBox<String> levelComboBox;
+	protected JComboBox<Integer> levelComboBox;
 	protected JLabel enterName;
 	protected JLabel chooseLevel;
 	protected JLabel chooseStrengthEndurance;
-	private String START = "Start";
-	private String SCORES = "High Scores";
-	private String RULES = "Rules";
+	private String LEVEL = "level";
+	private int levelNumber = 1; // default level = 1
 
 	public JLabel image ;
 	public Container c; 
@@ -55,12 +53,7 @@ public class StartPanel extends JPanel implements ActionListener, ChangeListener
 		//this.enterName.setBounds(10, 10, 10, 10);
 		this.chooseLevel = new JLabel("Choose a level:");
 		this.chooseStrengthEndurance = new JLabel("Choose the strength-endurance distribution:");
-		this.startButton = new JButton("Start");
-		this.startButton.setActionCommand(START);
-		this.highScoresButton = new JButton("High Scores");
-		this.highScoresButton.setActionCommand(SCORES);
-		this.rulesButton = new JButton("Game rules");
-		this.rulesButton.setActionCommand(RULES);
+		
 		this.nameField = new JTextField("Anonymous");
 		this.strengthEnduranceSlider = new JSlider(0,100,50);
 		Hashtable labelTable = new Hashtable();
@@ -68,21 +61,11 @@ public class StartPanel extends JPanel implements ActionListener, ChangeListener
 		labelTable.put(new Integer(100), new JLabel("Endurance"));
 		this.strengthEnduranceSlider.setLabelTable(labelTable);
 		this.strengthEnduranceSlider.setPaintLabels(true);
-		this.levelComboBox = new JComboBox<String>(new String[]{" Level 1 ", " Level 2 ", " Level 3 "});
+		this.levelComboBox = new JComboBox<Integer>(new Integer[]{1, 2, 3});
 
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
-		/*this.startButton.addActionListener(new StartButtonListener());
-		this.highScoresButton.addActionListener(new HighScoresButtonListener());
-		this.rulesButton.addActionListener(new RulesButtonListener());
-		this.strengthEnduranceSlider.addChangeListener(new SliderListener());
-		this.levelComboBox.addActionListener(new LevelComboListener());*/
-		
-		this.startButton.addActionListener(this);
-		this.highScoresButton.addActionListener(this);
-		this.rulesButton.addActionListener(this);
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));		
 		this.strengthEnduranceSlider.addChangeListener(this);
-		this.levelComboBox.addActionListener(this);
+		this.levelComboBox.addItemListener(this);
 
 		ImageIcon img = new ImageIcon("resources/jungle_tarzan.jpg");
 		this.image = new JLabel(img);
@@ -90,13 +73,12 @@ public class StartPanel extends JPanel implements ActionListener, ChangeListener
 		this.add(this.welcomeLabel);
 		this.add(this.enterName);
 		this.add(this.nameField);
-		this.add(this.highScoresButton);
-		this.add(this.rulesButton);
+		
 		this.add(this.chooseStrengthEndurance);
 		this.add(this.strengthEnduranceSlider);
 		this.add(this.chooseLevel);
 		this.add(this.levelComboBox);
-		this.add(this.startButton);
+		
 		this.add(this.image);
 
 		/*this.add(welcomeLabel, BorderLayout.NORTH);
@@ -123,24 +105,28 @@ public class StartPanel extends JPanel implements ActionListener, ChangeListener
 	public JTextField getNameField() {
 		return this.nameField;
 	}
+	
+	public int getLevelNumber() {
+		return this.levelNumber;
+	}
 
-	@Override
+	/*@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
-		if (action.equals(START)) {
-			String storedName = this.nameField.getText();
-			// --> new GamePanel
-		} else if (action.equals(SCORES)) {
-			// --> new HighScoresPanel
-		} else if (action.equals(RULES)) {
-			// --> new RulesPanel
+		if (action.equals(LEVEL)) {
+			this.levelNumber = (int)this.levelComboBox.getSelectedItem();
 		}
 
-	}
+	}*/
 
 	@Override
 	public void stateChanged(ChangeEvent arg0) {
 		
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent arg0) {
+		this.levelNumber = (Integer) this.levelComboBox.getSelectedItem();
 	}
 
 }

@@ -3,6 +3,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Random;
+
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -54,7 +56,23 @@ public class Tarzan {
 		this.tarzanPosition = pos;
 		this.INITIAL_ENERGY = lvl.getInitialEnergy();
 		this.energy = lvl.getInitialEnergy();
-		this.endurance = setg.getInitialStrength();
+		this.strength = setg.getInitialStrength();
+		this.endurance = setg.getInitialEndurance();
+		this.isAlive = true;
+		this.numberOfOpponentsKilled = 0;
+		this.numberOfFlowersPicked = 0;
+		this.fieldOfViewRadius = lvl.getVisibilitySize();
+		//this.animalPosition = animalPosition;
+		//this.level = setg.getLevel();		
+	}
+	
+	public Tarzan(Position2D pos, Level lvl, int s, int e){
+		this.name = "Tarzan";
+		this.tarzanPosition = pos;
+		this.INITIAL_ENERGY = lvl.getInitialEnergy();
+		this.energy = lvl.getInitialEnergy();
+		this.endurance = e;
+		this.strength = s;
 		this.isAlive = true;
 		this.numberOfOpponentsKilled = 0;
 		this.numberOfFlowersPicked = 0;
@@ -81,10 +99,18 @@ public class Tarzan {
 		takeDamage(a.getAnimalStrength());
 		// need to destroy animal ! (for optimization of memory)
 		// a finalize () can we do this? I think so. I completed then we can decide
-		a.finalize();}	
+		Random rand = new Random();
+		int winningChance = this.strength*rand.nextInt(10);
+		if (winningChance > 100) {
+			this.numberOfOpponentsKilled += 1;
+			a.finalize();
+		} else {
+			// what happens if Tarzan looses ?
+		}
+	}	
 
 	// I added a method dead and a method to check conditions
-	// if it's dead or alive^
+	// if it's dead or alive
 	
 	public void takeDamage(int damage) {
 		//manipulate the amount of damage taken
@@ -94,7 +120,6 @@ public class Tarzan {
 			System.out.println("This is the end of the game!");
 		} else {
 			energy -= damage;
-			this.numberOfOpponentsKilled += 1;
 		}
 	}
 

@@ -16,7 +16,7 @@ import java.util.Timer;
 public class Game implements Runnable { // does it need to implement runnable? already in GameApp
 
 	//display of our game
-	private Map map; 
+	protected Map map; 
 	protected Level level;
 	protected final Settings setg;
 	protected final String playerName;
@@ -32,7 +32,7 @@ public class Game implements Runnable { // does it need to implement runnable? a
 	public Game(int lvl, int strength, int endurance, String name) {
 		
 		keyManager = new KeyManager();
-		this.level = new Level(lvl);
+		this.level = new Level(lvl, this.map.getSize());
 		this.setg = new Settings(strength, endurance, lvl);
 		this.map = new Map(this.level, this.setg);
 		this.playerName = name;		

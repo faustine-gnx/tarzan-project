@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,7 +32,14 @@ public class GameApplication extends JFrame implements ActionListener {
 	private String START = "Start";
 	private String SCORES = "High Scores";
 	private String RULES = "Rules";
-
+	private String BACK = "Back";
+	
+	protected JButton startButton;
+	protected JButton highScoresButton;
+	protected JButton rulesButton;
+	protected JButton backButton1;
+	protected JButton backButton2;
+	
 	public GameApplication() {
 		initUI();
 	}   
@@ -45,17 +53,78 @@ public class GameApplication extends JFrame implements ActionListener {
 		this.start = new StartPanel();
 		this.rules = new RulesPanel();
 		this.scores = new HighScoresPanel();
+		
+		this.highScoresButton = new JButton("High Scores");
+		this.highScoresButton.setActionCommand(SCORES);
+		this.highScoresButton.addActionListener(this);
+		
+		this.startButton = new JButton("Start");
+		this.startButton.setActionCommand(START);
+		this.startButton.addActionListener(this);
+		
+		this.rulesButton = new JButton("Game rules");
+		this.rulesButton.setActionCommand(RULES);
+		this.rulesButton.addActionListener(this);
+		
+		this.backButton1 = new JButton("Back");
+		this.backButton1.setActionCommand(BACK);
+		this.backButton1.addActionListener(this);
+		
+		this.backButton2 = new JButton("Back");
+		this.backButton2.setActionCommand(BACK);
+		this.backButton2.addActionListener(this);
+		
+		this.start.add(this.highScoresButton);
+		this.start.add(this.rulesButton);
+		this.rules.add(this.backButton1);
+		this.scores.add(this.backButton2);
+		this.start.add(this.startButton);
+
 		// can we already create GamePanel?
 		this.pack();
 		this.allPanels = new JPanel(new CardLayout());
-		this.allPanels.add(start, START_PANEL);
-		this.allPanels.add(scores, SCORES_PANEL);
-		this.allPanels.add(rules, RULES_PANEL);
+		this.allPanels.add(this.start, START_PANEL);
+		this.allPanels.add(this.scores, SCORES_PANEL);
+		this.allPanels.add(this.rules, RULES_PANEL);
+
 		//this.allPanels.add(game, GAME_PANEL); // ? Or can we add it later, once it is created?
-		this.add(allPanels);
+		//this.add(allPanels);
+		getContentPane().add(this.allPanels);
 		setVisible(true);	
 		// Image must go in StartPanel --> no need for container then?
 	}
+	
+	
+	@Override // not working yet
+	public void actionPerformed(ActionEvent e) {
+		String action = e.getActionCommand();
+		if (action.equals(START)) {
+			String storedName = this.start.getNameField().getText();
+			int initialStrength = this.start.strengthEnduranceSlider.getValue();
+			int initialEndurance = 100 - initialStrength;
+			int level = this.start.getLevelNumber();
+			this.game = new GamePanel(storedName, initialStrength, initialEndurance, level);
+			this.allPanels.add(this.game, GAME_PANEL);
+			// --> new GamePanel
+			CardLayout cl = (CardLayout)(this.allPanels.getLayout());
+			cl.show(this.allPanels, GAME_PANEL);
+			//cl.next(this.allPanels);
+		} else if (action.equals(SCORES)) {
+			// --> new HighScoresPanel
+			CardLayout cl = (CardLayout)(this.allPanels.getLayout());
+			//cl.show(this.allPanels, SCORES_PANEL);
+			cl.next(this.allPanels);
+		} else if (action.equals(RULES)) {
+			// --> new RulesPanel
+			CardLayout cl = (CardLayout)(this.allPanels.getLayout());
+			cl.show(this.allPanels, RULES_PANEL);
+		} else if (action.equals(BACK)) {
+			// --> back to startPanel
+			CardLayout cl = (CardLayout)(this.allPanels.getLayout());
+			cl.show(this.allPanels, START_PANEL);
+		}
+	}
+	
 	
 	public static void main(String[] args) {
 		
@@ -66,8 +135,8 @@ public class GameApplication extends JFrame implements ActionListener {
 				   		// read the name of player
 				   		// level
 				   		// strength & endurance
-				   int initialStrength = newApp.start.strengthEnduranceSlider.getValue(); // call changeListener?
-				   int initialEndurance = 100 - initialStrength;
+				    // call changeListener?
+
 				   //int level = 
 				   // call action & change listeners:
 				   		// if start button pressed game start --> GamePanel
@@ -79,24 +148,7 @@ public class GameApplication extends JFrame implements ActionListener {
 
 	}
 
-	@Override // not working yet
-	public void actionPerformed(ActionEvent e) {
-		String action = e.getActionCommand();
-		if (action.equals(START)) {
-			String storedName = this.start.getNameField().getText();
-			// --> new GamePanel
-			CardLayout cl = (CardLayout)(allPanels.getLayout());
-			cl.show(this.allPanels, "Game");
-		} else if (action.equals(SCORES)) {
-			// --> new HighScoresPanel
-			CardLayout cl = (CardLayout)(allPanels.getLayout());
-			cl.show(this.allPanels, "Scores");
-		} else if (action.equals(RULES)) {
-			// --> new RulesPanel
-			CardLayout cl = (CardLayout)(allPanels.getLayout());
-			cl.show(this.allPanels, "Rules");
-		}
-	}
+
 
 		
 }

@@ -15,23 +15,23 @@ public class Level {
 	// public final int mapSize;
 
 
-	Level(int lvl){
+	public Level(int lvl, int sizeMap){
 		this.levelNumber = lvl;
 
 		switch(lvl) {
-		case 0:
-			this.visibilitySize = 10;
+		case 1:
+			this.visibilitySize = (int) sizeMap;
 			goal = new Goal(1, 1, 10, 10); // animalKilled, flowerPickedUp,	fightingStrength, mobilityEndurance
 			this.numberOfOpponents = 1; // 1 of each
-			this.numberOfBananas = 10;
-			this.numberOfFlowers = 10;
-			this.numberOfHuts = 5;
-			this.numberOfKavurus = 10; 
-			this.numberOfKnives = 10;
+			this.numberOfBananas = (int) sizeMap/2;
+			this.numberOfFlowers = (int) sizeMap/2;
+			this.numberOfHuts = (int) sizeMap/4;
+			this.numberOfKavurus = (int) sizeMap/2; 
+			this.numberOfKnives = (int) sizeMap/2;
 			this.initialEnergy = 500;
 			break;
-		case 1:
-			this.visibilitySize = 5;
+		case 2:
+			this.visibilitySize = sizeMap/2;
 			goal = new Goal(5, 5, 50, 50);
 			this.numberOfOpponents = 2; // 2 of each
 			this.numberOfBananas = 7;
@@ -41,7 +41,7 @@ public class Level {
 			this.numberOfKnives = 7;
 			this.initialEnergy = 400;
 			break;
-		case 2:
+		case 3:
 			this.visibilitySize = 1;
 			goal = new Goal(10, 10, 100, 100);
 			this.numberOfOpponents = 4; // 4 of each

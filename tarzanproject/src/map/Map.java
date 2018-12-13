@@ -31,10 +31,10 @@ import tilegame.Position2D;
 public class Map implements Drawable {
 	private final static int SIZE_MAP = 20;	
 	private final int PIXEL_SCALE = 10;
-	
-	double[][] landMap; // land type map // Size_map; set directly double[SIZE_MAP][SIZE_MAP]?
-	boolean[][] freePositions; // Size_map ; set directly double[SIZE_MAP][SIZE_MAP]
-	boolean[][] fieldOfViewMatrix; // true if in fov, false otherwise ; set directly double[SIZE_MAP][SIZE_MAP]
+	protected Level level;
+	protected double[][] landMap; // land type map // Size_map; set directly double[SIZE_MAP][SIZE_MAP]?
+	protected boolean[][] freePositions; // Size_map ; set directly double[SIZE_MAP][SIZE_MAP]
+	protected boolean[][] fieldOfViewMatrix; // true if in fov, false otherwise ; set directly double[SIZE_MAP][SIZE_MAP]
 	MapImage mapIm; 
 	Graphics2D g2d;
 
@@ -100,7 +100,33 @@ public class Map implements Drawable {
 		setTarzanFieldOfView(); 
 		setFieldOfViewMatrix();
 	}
-
+	
+	
+	public Map(int strength, int endurance, int lvl){ // need to be public because not in same package as Game, which is calling it
+		this.level = new Level(lvl, SIZE_MAP);
+		this.gameTimer = new Timer(); 
+		//this.task = new TimerTask();
+		SimplexNoiseGenerator mapGen = new SimplexNoiseGenerator(10, 0.7, 0.008);
+		this.landMap = mapGen.createMap(SIZE_MAP);
+		// Can we do this:
+		// this.landMap = SimplexNoiseGenerator(10, 0.7, 0.008).createMap(SIZE_MAP);
+		//this.mapIm = new MapImage();
+		BufferedImage bufferedImage = new BufferedImage(SIZE_MAP, SIZE_MAP, BufferedImage.TYPE_INT_RGB);
+		this.g2d = bufferedImage.createGraphics();
+		this.freePositions = new boolean[SIZE_MAP][SIZE_MAP];
+		this.fieldOfViewMatrix = new boolean[SIZE_MAP][SIZE_MAP];
+		java.util.Arrays.fill(this.freePositions[0], true); // or when rock put false
+		java.util.Arrays.fill(this.freePositions[1], true);
+		//mapIm.visualize(array, "generatedMap");
+		this.mapTarzan = new Tarzan(randomPosition(), this.level, strength, endurance);
+		createPositionables(this.level); 
+		setTarzanFieldOfView(); 
+		setFieldOfViewMatrix();
+	}
+	
+	public int getSize() {
+		return SIZE_MAP;
+	}
 
 	private void createPositionables(Level lvl) {
 		//int levelNumber = lvl.getLevelNumber();
@@ -158,7 +184,7 @@ public class Map implements Drawable {
 
 	private Position2D randomPosition(){ // return a random position which is free
 		Random rand = new Random();
-		int x = rand.nextInt(SIZE_MAP);
+		int x = rand.nextInt(SIZE_MAP); // print this out to check value
 		int y = rand.nextInt(SIZE_MAP);
 		Position2D pos = new Position2D(x,y);
 		if (isPositionFree(pos)) {
@@ -280,7 +306,12 @@ public class Map implements Drawable {
 		int size = radius*2 + 1; 
 		for (int x = 0; x < size; x++) { // or radius and do -radius to +radius in x and y directions
 			for (int y=0; y < size; y++) {
-				this.fieldOfViewMatrix[x + mapTarzan.getTarzanPosition().getX() - radius][y + mapTarzan.getTarzanPosition().getY() - radius] = true;
+				if (((x + mapTarzan.getTarzanPosition().getX() - radius) > 0) && ((y + mapTarzan.getTarzanPosition().getY() - radius) > 0)) {
+					this.fieldOfViewMatrix[x + mapTarzan.getTarzanPosition().getX() - radius][y + mapTarzan.getTarzanPosition().getY() - radius] = true;
+				}
+				if (((x + mapTarzan.getTarzanPosition().getX() + radius) < SIZE_MAP) && ((y + mapTarzan.getTarzanPosition().getY() + radius) < SIZE_MAP)) {
+					this.fieldOfViewMatrix[x + mapTarzan.getTarzanPosition().getX() + radius][y + mapTarzan.getTarzanPosition().getY() + radius] = true;
+				}
 			}
 		}
 	}
@@ -319,8 +350,13 @@ public class Map implements Drawable {
 		}
 	}
 
-	private void drawMap() {
+	public void drawMap() {
 		// new drawing each time the function is called
+		BufferedImage bufferedImage = new BufferedImage(SIZE_MAP, SIZE_MAP, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2d = bufferedImage.createGraphics();
+		g2d.setColor(Color.BLACK);
+		g2d.fillRect(0, 0, SIZE_MAP, SIZE_MAP);
+
 		for (int x = 0; x < SIZE_MAP; x++) {
 			for (int y = 0; y < SIZE_MAP; y++) {
 				if (this.fieldOfViewMatrix[x][y] == true) {
@@ -331,6 +367,28 @@ public class Map implements Drawable {
 				}
 			}
 		}		
+		g2d.dispose();
+	}
+	
+	public Graphics2D getMapDrawing() {
+		// new drawing each time the function is called
+		BufferedImage bufferedImage = new BufferedImage(SIZE_MAP, SIZE_MAP, BufferedImage.TYPE_INT_RGB);
+		Graphics2D g2d = bufferedImage.createGraphics();
+		g2d.setColor(Color.BLACK);
+		g2d.fillRect(0, 0, SIZE_MAP, SIZE_MAP);
+
+		for (int x = 0; x < SIZE_MAP; x++) {
+			for (int y = 0; y < SIZE_MAP; y++) {
+				if (this.fieldOfViewMatrix[x][y] == true) {
+					g2d.setColor(getColor(x, y));
+				} else {
+					g2d.setColor(Color.BLACK);
+					g2d.fillRect(y * PIXEL_SCALE, x * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
+				}
+			}
+		}		
+		g2d.dispose();
+		return g2d;
 	}
 
 	private void drawWorld() { // called in draw to draw animals and nonlivings in field of view

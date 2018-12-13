@@ -20,9 +20,13 @@ import javax.swing.SwingConstants;
 
 // Game display
 public class RulesPanel extends JPanel {
-
+	JLabel rules;
+	
 	public RulesPanel() {	
 		// just text with rules
+		String text = " THE RULES WILL COME HERE "; // get text from file
+		this.rules = new JLabel(text);
+		this.add(this.rules);
 	}
 }
 
