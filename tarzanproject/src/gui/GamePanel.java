@@ -20,8 +20,10 @@ import javax.swing.SwingConstants;
 
 // Game display
 public class GamePanel extends JPanel {
-
-	public GamePanel() {	
+	String player;
+	
+	public GamePanel(String name) {	
+		this.player = name;
 	}
 }
 

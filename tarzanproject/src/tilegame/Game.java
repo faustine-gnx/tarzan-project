@@ -19,6 +19,7 @@ public class Game implements Runnable { // does it need to implement runnable? a
 	private Map map; 
 	protected Level level;
 	protected final Settings setg;
+	protected final String playerName;
 	
 	//thread = run class separately from our program = more efficient
 	private Thread thread;
@@ -28,13 +29,13 @@ public class Game implements Runnable { // does it need to implement runnable? a
 
 	// Game constructor
 
-	public Game(int lvl, int strength, int endurance) {
+	public Game(int lvl, int strength, int endurance, String name) {
 		
 		keyManager = new KeyManager();
 		this.level = new Level(lvl);
 		this.setg = new Settings(strength, endurance, lvl);
 		this.map = new Map(this.level, this.setg);
-		
+		this.playerName = name;		
 	}
 
 	// update everything 

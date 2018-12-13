@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.CardLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -13,12 +14,20 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-public class GameApplication extends JFrame {
-	StartPanel start;
-	GamePanel game;
-	
+public class GameApplication extends JFrame implements ActionListener {
+	JPanel allPanels;
+	final static String GAME_PANEL = "Game";
+	final static String START_PANEL = "Start";
+	final static String SCORES_PANEL = "Scores";
+	final static String RULES_PANEL = "Rules";
+	public StartPanel start;
+	public GamePanel game;
+	public HighScoresPanel scores;
+	public RulesPanel rules;
+	public String player;
 
 	public GameApplication() {
 		initUI();
@@ -30,11 +39,17 @@ public class GameApplication extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//this.setLocationRelativeTo(null);
 		this.setResizable(false);
-		
 		this.start = new StartPanel();
+		this.rules = new RulesPanel();
+		this.scores = new HighScoresPanel();
+		// can we already create GamePanel?
 		this.pack();
-		this.setLayout(new FlowLayout()); // to change
-		this.add(start);
+		this.allPanels = new JPanel(new CardLayout());
+		this.allPanels.add(start, START_PANEL);
+		this.allPanels.add(scores, SCORES_PANEL);
+		this.allPanels.add(rules, RULES_PANEL);
+		//this.allPanels.add(game, GAME_PANEL); // ? Or can we add it later, once it is created?
+		this.add(allPanels);
 		setVisible(true);	
 		// Image must go in StartPanel --> no need for container then?
 	}
@@ -58,6 +73,11 @@ public class GameApplication extends JFrame {
 				   		// etc.
 			   }
 		});
+
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
 
 	}
 

@@ -20,9 +20,13 @@ import javax.swing.SwingConstants;
 
 // Game display
 public class HighScoresPanel extends JPanel {
-
+	JLabel highScores;
+	
 	public HighScoresPanel() {	
 		// read text from file
+		String text = " THE HIGH SCORES WILL COME HERE "; // get text from file
+		this.highScores = new JLabel(text);
+		this.add(this.highScores);
 	}
 }
 
