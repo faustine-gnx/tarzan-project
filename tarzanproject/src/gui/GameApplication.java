@@ -28,6 +28,9 @@ public class GameApplication extends JFrame implements ActionListener {
 	public HighScoresPanel scores;
 	public RulesPanel rules;
 	public String player;
+	private String START = "Start";
+	private String SCORES = "High Scores";
+	private String RULES = "Rules";
 
 	public GameApplication() {
 		initUI();
@@ -76,9 +79,23 @@ public class GameApplication extends JFrame implements ActionListener {
 
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-
+	@Override // not working yet
+	public void actionPerformed(ActionEvent e) {
+		String action = e.getActionCommand();
+		if (action.equals(START)) {
+			String storedName = this.start.getNameField().getText();
+			// --> new GamePanel
+			CardLayout cl = (CardLayout)(allPanels.getLayout());
+			cl.show(this.allPanels, "Game");
+		} else if (action.equals(SCORES)) {
+			// --> new HighScoresPanel
+			CardLayout cl = (CardLayout)(allPanels.getLayout());
+			cl.show(this.allPanels, "Scores");
+		} else if (action.equals(RULES)) {
+			// --> new RulesPanel
+			CardLayout cl = (CardLayout)(allPanels.getLayout());
+			cl.show(this.allPanels, "Rules");
+		}
 	}
 
 		

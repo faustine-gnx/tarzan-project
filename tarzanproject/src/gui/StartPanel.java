@@ -119,6 +119,10 @@ public class StartPanel extends JPanel implements ActionListener, ChangeListener
 
 		setVisible(true);	
 	}
+	
+	public JTextField getNameField() {
+		return this.nameField;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
