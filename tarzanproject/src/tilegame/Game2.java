@@ -13,56 +13,64 @@ public class Game2 implements Runnable {
 	private GameApplication gameApp;
 	private Thread gameThread;
 	private boolean gameRunning = false;
-	
+	private KeyManager keyManager;
 	private BufferStrategy gameBuffer;
 	private Graphics g;
 	private Map2 gameMap;
 		
 	public Game2() {
+		this.keyManager = new KeyManager();
 	}
 	
 	public synchronized void start() {
-		if(this.gameRunning) {
+		if(gameRunning) {
 			return;
 		}
-		this.gameRunning = true;
-		this.gameThread = new Thread(this);
-		this.gameThread.start();
+		gameRunning = true;
+		gameThread = new Thread(this);
+		gameThread.start();
 	}
 	
 	public synchronized void stop() {
-		if(!this.gameRunning) {
+		if(!gameRunning) {
 			return;
 		}
-		this.gameRunning = false;
+		gameRunning = false;
 		try {
-			this.gameThread.join();
+			gameThread.join();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	}
 	
 	private void init() {
-		this.gameApp = new GameApplication();
-		this.gameMap = new Map2(this.gameApp.getInitialStrength(), this.gameApp.getInitialEndurance(), this.gameApp.getLevel());
+		gameApp = new GameApplication();
+		gameMap = new Map2(gameApp.getInitialStrength(), gameApp.getInitialEndurance(), gameApp.getLevel(), this);
 		Assets.init();
+		//this.gameApp.getGamePanel().addKeyListener(this.keyManager);
+		//this.gameApp.getGamePanel().setGamePanelFocusable(); // not working
+		// would be better to add to gamePanel but I don't know how to do it
+		// for now this works fine
+		gameApp.addKeyListener(this.keyManager);
+		gameApp.setFocusable(true);
 	}
 	
 	private void tick() {
-		
+		keyManager.tick();
+		gameMap.mapTarzan.tick();
 	}
 	
 	private void render() {
-		this.gameBuffer = this.gameApp.getGamePanel().getGameCanvas().getBufferStrategy();
-		if(this.gameBuffer == null) {
-			this.gameApp.getGamePanel().getGameCanvas().createBufferStrategy(3);
+		gameBuffer = gameApp.getGamePanel().getGameCanvas().getBufferStrategy();
+		if(gameBuffer == null) {
+			gameApp.getGamePanel().getGameCanvas().createBufferStrategy(3);
 			return;
 		}
 		//draw
-		this.g = this.gameBuffer.getDrawGraphics();
-		this.gameMap.setMapDrawing(this.g);
-		this.gameBuffer.show();
-		this.g.dispose();
+		g = gameBuffer.getDrawGraphics();
+		gameMap.setMapDrawing(this.g);
+		gameBuffer.show();
+		g.dispose();
 	}
 
 	@Override
@@ -95,7 +103,9 @@ public class Game2 implements Runnable {
 		stop();
 	}
 	
-	
+	public KeyManager getKeyManager() {
+		return keyManager;
+	}
 	
 	
 }

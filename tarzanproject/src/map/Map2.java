@@ -28,6 +28,7 @@ import gui.Assets;
 import imageloader.ImageLoader;
 import interfaces.Drawable;
 import tarzan.Tarzan;
+import tilegame.Game2;
 import tilegame.Level;
 import tilegame.Settings;
 import tilegame.Position2D;
@@ -35,44 +36,40 @@ import tilegame.Position2D;
 // FOR NOW: NO FLOWER, NO HUT, ONLY "TIGER"=JAGUAR
 
 public class Map2 implements Drawable {
-	private final static int SIZE_MAP = 8;	
+	public final static int SIZE_MAP = 8;	
 	private final int PIXEL_SCALE = 500/SIZE_MAP;
-	protected Level level;
-	protected double[][] landMap; // land type map // Size_map; set directly double[SIZE_MAP][SIZE_MAP]?
+	private Level level;
+	private double[][] landMap; // land type map // Size_map; set directly double[SIZE_MAP][SIZE_MAP]?
 	// free = no tarzan, no animal, no notlivings, not water
-	protected boolean[][] freePositions; // set directly boolean[SIZE_MAP][SIZE_MAP]?
-	protected boolean[][] fieldOfViewMatrix; // true if in fov, false otherwise ; set directly double[SIZE_MAP][SIZE_MAP]
+	private boolean[][] freePositions; // set directly boolean[SIZE_MAP][SIZE_MAP]?
+	private boolean[][] fieldOfViewMatrix; // true if in fov, false otherwise ; set directly double[SIZE_MAP][SIZE_MAP]
 
-	List<Object> positionnableList = new ArrayList <Object>();
+	private List<Object> positionnableList = new ArrayList <Object>();
 
-	List<Animal> mapAnimals = new ArrayList<Animal>();
-	List<NotLivings> mapNotLivings = new ArrayList<NotLivings>();
-	List<Position2D> tarzanFieldOfView = new ArrayList<Position2D>();
-	Tarzan mapTarzan;	
+	private List<Animal> mapAnimals = new ArrayList<Animal>();
+	private List<NotLivings> mapNotLivings = new ArrayList<NotLivings>();
+	private List<Position2D> tarzanFieldOfView = new ArrayList<Position2D>();
+	public Tarzan mapTarzan;	
 	
-	public Map2(int strength, int endurance, int lvl){ // 
-		SimplexNoiseGenerator mapGen = new SimplexNoiseGenerator(2*lvl, 1, 1); //  2*lvl: increase number of water tiles with level
-		this.landMap = mapGen.createMap(SIZE_MAP);
-		this.level = new Level(lvl, SIZE_MAP);
-		this.freePositions = new boolean[SIZE_MAP][SIZE_MAP];
-		this.fieldOfViewMatrix = new boolean[SIZE_MAP][SIZE_MAP];
+	public Map2(int strength, int endurance, int level, Game2 game){ // 
+		SimplexNoiseGenerator mapGen = new SimplexNoiseGenerator(2*level, 1, 1); //  2*lvl: increase number of water tiles with level
+		landMap = mapGen.createMap(SIZE_MAP);
+		this.level = new Level(level, SIZE_MAP);
+		freePositions = new boolean[SIZE_MAP][SIZE_MAP];
+		fieldOfViewMatrix = new boolean[SIZE_MAP][SIZE_MAP];
 		for (int i=0; i < SIZE_MAP; i++) {
-			java.util.Arrays.fill(this.freePositions[i], true); // or when rock put false
-			//System.out.println(Arrays.toString(freePositions[0]));
+			java.util.Arrays.fill(freePositions[i], true); // or when rock put false
 		}
 		setWaterNotPositionFree();
 		
 		// create Tarzan here or in Game2?
-		this.mapTarzan = new Tarzan(new Position2D(0,0));//, this.level, strength, endurance);
+		mapTarzan = new Tarzan(new Position2D(0,0), game);//, this.level, strength, endurance);
 		freePositions[mapTarzan.getTarzanPosition().getY()][mapTarzan.getTarzanPosition().getX()] = false;
 
 		
 		createPositionables(this.level); 
 		//setTarzanFieldOfView(); 
 		//setFieldOfViewMatrix();
-		for (int i=0; i < SIZE_MAP; i++) {
-			System.out.println(Arrays.toString(freePositions[i]));
-		}
 	}
 	
 
@@ -81,9 +78,9 @@ public class Map2 implements Drawable {
 	}
 
 	public Color getColor(int x, int y) { // maybe MapImage is not necessary
-		if (this.landMap[x][y] <= 0.5) { // if value equals 0, fill with water
+		if (landMap[x][y] <= 0.5) { // if value equals 0, fill with water
 			return Color.GREEN;
-		} else if (this.landMap[x][y] > 0.5) { // if value equals 1, fill with forest
+		} else if (landMap[x][y] > 0.5) { // if value equals 1, fill with forest
 			return Color.BLUE; // put grass green and delete forest?
 		} else {
 			return Color.DARK_GRAY;
@@ -96,7 +93,7 @@ public class Map2 implements Drawable {
 
 		for (int x = 0; x < SIZE_MAP; x++) {
 			for (int y = 0; y < SIZE_MAP; y++) {
-				//if (this.fieldOfViewMatrix[x][y] == true) { // uncomment when tarzan is created
+				//if (fieldOfViewMatrix[x][y] == true) { // uncomment when tarzan is created
 					g.setColor(getColor(x, y));
 					g.fillRect(y*PIXEL_SCALE, x*PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
 				//} else {
@@ -114,19 +111,18 @@ public class Map2 implements Drawable {
 	}
 	
 	public void drawTarzan(Graphics g) {
-		g.drawImage(Assets.TARZAN_NORMAL, this.mapTarzan.getTarzanPosition().getX()*PIXEL_SCALE, this.mapTarzan.getTarzanPosition().getY()*PIXEL_SCALE, null);
+		g.drawImage(Assets.TARZAN_NORMAL, mapTarzan.getTarzanPosition().getX()*PIXEL_SCALE, mapTarzan.getTarzanPosition().getY()*PIXEL_SCALE, null);
 	}
 	
 	public void drawAnimals(Graphics g) {
-		for (int i=0; i<this.mapAnimals.size(); i++) {
-		g.drawImage(Assets.TIGER, this.mapAnimals.get(i).getAnimalPosition().getX()*PIXEL_SCALE, this.mapAnimals.get(i).getAnimalPosition().getY()*PIXEL_SCALE, null);
+		for (int i=0; i<mapAnimals.size(); i++) {
+		g.drawImage(Assets.TIGER, mapAnimals.get(i).getAnimalPosition().getX()*PIXEL_SCALE, mapAnimals.get(i).getAnimalPosition().getY()*PIXEL_SCALE, null);
 		}
 	}
 	
 	public void drawNotLivings(Graphics g) {
-		for (int i=0; i<this.mapNotLivings.size(); i++) {
-			//BufferedImage notLivingImg = Assets.getImageFromString(this.mapNotLivings.get(i).getName());
-			g.drawImage(Assets.getImageFromString(this.mapNotLivings.get(i).getName()), this.mapNotLivings.get(i).getNotLivingsPosition().getX()*PIXEL_SCALE, this.mapNotLivings.get(i).getNotLivingsPosition().getY()*PIXEL_SCALE, null);
+		for (int i=0; i<mapNotLivings.size(); i++) {
+			g.drawImage(Assets.getImageFromString(mapNotLivings.get(i).getName()), mapNotLivings.get(i).getNotLivingsPosition().getX()*PIXEL_SCALE, mapNotLivings.get(i).getNotLivingsPosition().getY()*PIXEL_SCALE, null);
 		}
 	}
 	
@@ -189,7 +185,7 @@ public class Map2 implements Drawable {
 		for (int x=0; x<SIZE_MAP; x++) {
 			for (int y=0; y<SIZE_MAP; y++) {
 				if (landMap[x][y] > 0.5) { // > 0.5 = water
-					this.freePositions[x][y] = false;
+					freePositions[x][y] = false;
 				}
 			}
 		}

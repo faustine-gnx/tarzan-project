@@ -9,7 +9,7 @@ import imageloader.ImageLoader;
 // TODO: CHANGE TO HAVE ONLY GIF IMAGES = NO BACKGROUND
 
 public class Assets { // to load img / sounds ...
-	private static final int WIDTH = 500/8; // 500/SIZE_MAP --> not static but final
+	private static final int WIDTH = 500/8; // 500/SIZE_MAP --> not static but final if we want to change size
 	private static final int HEIGHT = 500/8;
 			
 	public static BufferedImage TARZAN_FIGHT;
@@ -35,27 +35,12 @@ public class Assets { // to load img / sounds ...
 		
 		BufferedImage TARZAN_FOREST0 = ImageLoader.loadImage("/textures/tarzan_forest.gif");
 		TARZAN_FOREST = resize(TARZAN_FOREST0);
-
-		BufferedImage TARZAN_JANE0 = ImageLoader.loadImage("/textures/tarzan_jane.png");
-		TARZAN_JANE = resize(TARZAN_JANE0);
-		
-		BufferedImage TARZAN_WATER0 = ImageLoader.loadImage("/textures/tarzan_water.png");
-		TARZAN_WATER = resize(TARZAN_WATER0);
 		
 		BufferedImage ELEPHANT0 = ImageLoader.loadImage("/textures/elephant.gif");
 		ELEPHANT = resize(ELEPHANT0);
 		
 		BufferedImage TIGER0 = ImageLoader.loadImage("/textures/tiger.gif");
 		TIGER = resize(TIGER0);
-		
-		BufferedImage SNAKE0 = ImageLoader.loadImage("/textures/snake.png");
-		SNAKE = resize(SNAKE0);
-		
-		BufferedImage JANE0 = ImageLoader.loadImage("/textures/jane.png");
-		JANE = resize(JANE0);
-		
-		BufferedImage FLOWER0 = ImageLoader.loadImage("/textures/flower.png");
-		FLOWER = resize(FLOWER0);
 		
 		BufferedImage BANANA0 = ImageLoader.loadImage("/textures/banana.gif");
 		BANANA = resize(BANANA0);

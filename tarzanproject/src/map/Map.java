@@ -24,6 +24,7 @@ import animals.Snake;
 import animals.Tiger;
 import interfaces.Drawable;
 import tarzan.Tarzan;
+import tarzan.TarzanBackUp;
 import tilegame.Level;
 import tilegame.Settings;
 import tilegame.Position2D;
@@ -60,7 +61,7 @@ public class Map implements Drawable {
 	//List<Animal> animals = new ArrayList<Animal>();
 	//List<NonLiving> nonLivings = new ArrayList<NonLiving>();
 
-	Tarzan mapTarzan;
+	TarzanBackUp mapTarzan;
 
 
 	public Map(Level l, Settings s){ 
@@ -76,7 +77,7 @@ public class Map implements Drawable {
 		java.util.Arrays.fill(this.freePositions[0], true); // or when rock put false
 		java.util.Arrays.fill(this.freePositions[1], true);
 		//mapIm.visualize(array, "generatedMap");
-		this.mapTarzan = new Tarzan(randomPosition(), l, s);
+		this.mapTarzan = new TarzanBackUp(randomPosition(), l, s);
 		createPositionables(l); 
 		setTarzanFieldOfView(); 
 		setFieldOfViewMatrix();
@@ -95,7 +96,7 @@ public class Map implements Drawable {
 		java.util.Arrays.fill(this.freePositions[1], true);
 		freePositions[tarzanPosition.getX()][tarzanPosition.getY()] = false;
 		//mapIm.visualize(array, "generatedMap");
-		this.mapTarzan = new Tarzan(tarzanPosition, l, s);
+		this.mapTarzan = new TarzanBackUp(tarzanPosition, l, s);
 		createPositionables(l); 
 		setTarzanFieldOfView(); 
 		setFieldOfViewMatrix();
@@ -118,7 +119,7 @@ public class Map implements Drawable {
 		java.util.Arrays.fill(this.freePositions[0], true); // or when rock put false
 		java.util.Arrays.fill(this.freePositions[1], true);
 		//mapIm.visualize(array, "generatedMap");
-		this.mapTarzan = new Tarzan(randomPosition(), this.level, strength, endurance);
+		this.mapTarzan = new TarzanBackUp(randomPosition(), this.level, strength, endurance);
 		createPositionables(this.level); 
 		setTarzanFieldOfView(); 
 		setFieldOfViewMatrix();

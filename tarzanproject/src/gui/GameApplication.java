@@ -19,142 +19,148 @@ import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class GameApplication extends JFrame implements ActionListener {
-	JPanel allPanels;
-	final static String GAME_PANEL = "Game";
-	final static String START_PANEL = "Start";
-	final static String SCORES_PANEL = "Scores";
-	final static String RULES_PANEL = "Rules";
-	public StartPanel start;
-	public GamePanel game;
-	public HighScoresPanel scores;
-	public RulesPanel rules;
-	public String player;
+	private JPanel allPanels;
+	private final static String GAME_PANEL = "Game";
+	private final static String START_PANEL = "Start";
+	private final static String SCORES_PANEL = "Scores";
+	private final static String RULES_PANEL = "Rules";
+	private StartPanel start;
+	private GamePanel game;
+	private HighScoresPanel scores;
+	private RulesPanel rules;
+	private String player;
 	private String START = "Start";
 	private String SCORES = "High Scores";
 	private String RULES = "Rules";
 	private String BACK = "Back";
 	
-	protected JButton startButton;
-	protected JButton highScoresButton;
-	protected JButton rulesButton;
-	protected JButton backButton1;
-	protected JButton backButton2;
+	private JButton startButton;
+	private JButton highScoresButton;
+	private JButton rulesButton;
+	private JButton backButton1;
+	private JButton backButton2;
 	
 	// default values for safety
-	protected String storedName = "Anonymous";
-	protected int initialStrength = 50;
-	protected int initialEndurance = 50;
-	protected int level = 1;
-	protected int initialEnergy = 500; // Level 1
+	private final static int DEFAULT_LEVEL = 1;	
+	private final static int DEFAULT_INITIAL_STRENGTH = 50;	
+	private final static int DEFAULT_INITIAL_ENDURANCE = 50;	
+	private final static int DEFAULT_INITIAL_ENERGY = 500;	
+	private final static String DEFAULT_NAME = "Anonymous";	
+	private String storedName = DEFAULT_NAME;
+	private int initialStrength = DEFAULT_INITIAL_STRENGTH;
+	private int initialEndurance = DEFAULT_INITIAL_ENDURANCE;
+	private int level = DEFAULT_LEVEL;
+	private int initialEnergy = DEFAULT_INITIAL_ENERGY; 
 	
 	public GameApplication() {
 		initUI();
 	}   
 	
 	private void initUI() {
-		this.setTitle("Tarzan - The Lost Adventure");
-		this.setPreferredSize(new Dimension(500, 600));
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setTitle("Tarzan - The Lost Adventure");
+		setPreferredSize(new Dimension(500, 600));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//this.setLocationRelativeTo(null);
-		this.setResizable(false);
-		this.start = new StartPanel();
-		this.rules = new RulesPanel();
-		this.scores = new HighScoresPanel();
-		this.game = new GamePanel();
+		setResizable(false);
+		start = new StartPanel();
+		rules = new RulesPanel();
+		scores = new HighScoresPanel();
+		game = new GamePanel();
 		
-		this.highScoresButton = new JButton("High Scores");
-		this.highScoresButton.setActionCommand(SCORES);
-		this.highScoresButton.addActionListener(this);
+		highScoresButton = new JButton("High Scores");
+		highScoresButton.setActionCommand(SCORES);
+		highScoresButton.addActionListener(this);
 		
-		this.startButton = new JButton("Start");
-		this.startButton.setActionCommand(START);
-		this.startButton.addActionListener(this);
+		startButton = new JButton("Start");
+		startButton.setActionCommand(START);
+		startButton.addActionListener(this);
 		
-		this.rulesButton = new JButton("Game rules");
-		this.rulesButton.setActionCommand(RULES);
-		this.rulesButton.addActionListener(this);
+		rulesButton = new JButton("Game rules");
+		rulesButton.setActionCommand(RULES);
+		rulesButton.addActionListener(this);
 		
-		this.backButton1 = new JButton("Back");
-		this.backButton1.setActionCommand(BACK);
-		this.backButton1.addActionListener(this);
+		backButton1 = new JButton("Back");
+		backButton1.setActionCommand(BACK);
+		backButton1.addActionListener(this);
 		
-		this.backButton2 = new JButton("Back");
-		this.backButton2.setActionCommand(BACK);
-		this.backButton2.addActionListener(this);
+		backButton2 = new JButton("Back");
+		backButton2.setActionCommand(BACK);
+		backButton2.addActionListener(this);
 		
-		this.start.add(this.highScoresButton);
-		this.start.add(this.rulesButton);
-		this.rules.add(this.backButton1);
-		this.scores.add(this.backButton2);
-		this.start.add(this.startButton);
+		start.add(highScoresButton);
+		start.add(rulesButton);
+		rules.add(backButton1);
+		scores.add(backButton2);
+		start.add(startButton);
 
 		// can we already create GamePanel?
-		this.pack();
-		this.allPanels = new JPanel(new CardLayout());
-		this.allPanels.add(this.start, START_PANEL);
-		this.allPanels.add(this.scores, SCORES_PANEL);
-		this.allPanels.add(this.rules, RULES_PANEL);
-		this.allPanels.add(this.game, GAME_PANEL);
+		
+		allPanels = new JPanel(new CardLayout());
+		allPanels.add(start, START_PANEL);
+		allPanels.add(scores, SCORES_PANEL);
+		allPanels.add(rules, RULES_PANEL);
+		allPanels.add(game, GAME_PANEL);
 
 		//this.allPanels.add(game, GAME_PANEL); // ? Or can we add it later, once it is created?
 		//this.add(allPanels);
-		getContentPane().add(this.allPanels);
+		getContentPane().add(allPanels);
 		setVisible(true);	
 		// Image must go in StartPanel --> no need for container then?
+		this.pack();
 	}
 	
 	public GamePanel getGamePanel() {
-		return this.game;
+		return game;
 	}
 	
 	public String getStoredName() {
-		return this.storedName;
+		return storedName;
 	}
 	
 	public int getInitialStrength() {
-		return this.initialStrength;
+		return initialStrength;
 	}
 	
 	public int getInitialEndurance() {
-		return this.initialEndurance;
+		return initialEndurance;
 	}
 	
 	public int getInitialEnergy() {
-		return this.initialEnergy;
+		return initialEnergy;
 	}
 	
 	public int getLevel() {
-		return this.level;
+		return level;
 	}
 	
 	@Override 
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		if (action.equals(START)) {
-			String storedName = this.start.getNameField().getText();
-			this.initialStrength = this.start.strengthEnduranceSlider.getValue();
-			this.initialEndurance = 100 - initialStrength;
-			this.level = this.start.getLevelNumber();
-			this.initialEnergy = 500 - (this.level-1)*200; // Level 1 : 500; 2: 300; 3: 100
-			this.game.setGameSettings(storedName, initialStrength, initialEndurance, level, initialEnergy);
+			String storedName = start.getNameField().getText();
+			initialStrength = start.strengthEnduranceSlider.getValue();
+			initialEndurance = 100 - initialStrength;
+			level = this.start.getLevelNumber();
+			initialEnergy = 500 - (this.level-1)*200; // Level 1 : 500; 2: 300; 3: 100
+			game.setGameSettings(storedName, initialStrength, initialEndurance, level, initialEnergy);
 			//this.allPanels.add(this.game, GAME_PANEL);
 			// --> new GamePanel
-			CardLayout cl = (CardLayout)(this.allPanels.getLayout());
-			cl.show(this.allPanels, GAME_PANEL);
+			CardLayout cl = (CardLayout)(allPanels.getLayout());
+			cl.show(allPanels, GAME_PANEL);
 			//cl.next(this.allPanels);
 		} else if (action.equals(SCORES)) {
 			// --> new HighScoresPanel
-			CardLayout cl = (CardLayout)(this.allPanels.getLayout());
+			CardLayout cl = (CardLayout)(allPanels.getLayout());
 			//cl.show(this.allPanels, SCORES_PANEL);
-			cl.next(this.allPanels);
+			cl.next(allPanels);
 		} else if (action.equals(RULES)) {
 			// --> new RulesPanel
-			CardLayout cl = (CardLayout)(this.allPanels.getLayout());
-			cl.show(this.allPanels, RULES_PANEL);
+			CardLayout cl = (CardLayout)(allPanels.getLayout());
+			cl.show(allPanels, RULES_PANEL);
 		} else if (action.equals(BACK)) {
 			// --> back to startPanel
-			CardLayout cl = (CardLayout)(this.allPanels.getLayout());
-			cl.show(this.allPanels, START_PANEL);
+			CardLayout cl = (CardLayout)(allPanels.getLayout());
+			cl.show(allPanels, START_PANEL);
 		}
 	}
 			
