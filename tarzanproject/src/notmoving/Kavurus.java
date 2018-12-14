@@ -13,7 +13,7 @@ public class Kavurus extends NotLivings {
 	
 	// constructor
 	public Kavurus (Position2D position) {
-		super(position, "Kavurus magic pill"); 
+		super(position, "KAVURUS"); 
 	}
 	
 	public static int getEnergyGiven() {

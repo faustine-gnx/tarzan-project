@@ -17,40 +17,38 @@ public class Level {
 
 	public Level(int lvl, int sizeMap){
 		this.levelNumber = lvl;
-
+		this.initialEnergy = 500 - (lvl-1)*200; // Level 1 : 500; 2: 300; 3: 100
+		
 		switch(lvl) {
 		case 1:
 			this.visibilitySize = (int) sizeMap;
-			goal = new Goal(1, 1, 10, 10); // animalKilled, flowerPickedUp,	fightingStrength, mobilityEndurance
-			this.numberOfOpponents = 1; // 1 of each
+			goal = new Goal(1, 1, 50, 50); // animalKilled, flowerPickedUp,	fightingStrength, mobilityEndurance
+			this.numberOfOpponents = 4; // 1 to have of each; for now 5 tigers
 			this.numberOfBananas = (int) sizeMap/2;
 			this.numberOfFlowers = (int) sizeMap/2;
 			this.numberOfHuts = (int) sizeMap/4;
 			this.numberOfKavurus = (int) sizeMap/2; 
 			this.numberOfKnives = (int) sizeMap/2;
-			this.initialEnergy = 500;
 			break;
 		case 2:
 			this.visibilitySize = sizeMap/2;
-			goal = new Goal(5, 5, 50, 50);
-			this.numberOfOpponents = 2; // 2 of each
-			this.numberOfBananas = 7;
-			this.numberOfFlowers = 7;
-			this.numberOfHuts = 3;
-			this.numberOfKavurus = 7; 
-			this.numberOfKnives = 7;
-			this.initialEnergy = 400;
+			goal = new Goal(sizeMap/2, sizeMap/2, 100, 100);
+			this.numberOfOpponents = 8; // 1 to have of each; for now 5 tigers
+			this.numberOfBananas = (int) sizeMap/2;
+			this.numberOfFlowers = (int) sizeMap/2;
+			this.numberOfHuts = (int) sizeMap/8;
+			this.numberOfKavurus = (int) sizeMap/4; 
+			this.numberOfKnives = (int) sizeMap/2;
 			break;
 		case 3:
 			this.visibilitySize = 1;
-			goal = new Goal(10, 10, 100, 100);
-			this.numberOfOpponents = 4; // 4 of each
-			this.numberOfBananas = 5;
-			this.numberOfFlowers = 5;
-			this.numberOfHuts = 1;
-			this.numberOfKavurus = 5; 
-			this.numberOfKnives = 5;
-			this.initialEnergy = 300;
+			goal = new Goal(sizeMap, sizeMap, 150, 150);
+			this.numberOfOpponents = 16; // 1 to have of each; for now 5 tigers
+			this.numberOfBananas = (int) sizeMap/2;
+			this.numberOfFlowers = (int) sizeMap/2;
+			this.numberOfHuts = (int) sizeMap/8;
+			this.numberOfKavurus = (int) sizeMap/8; 
+			this.numberOfKnives = (int) sizeMap/2;
 			break;
 		default: 
 			throw new IllegalArgumentException("Unknown level");

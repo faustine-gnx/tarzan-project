@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL; 
 
-public class Tiger extends Animal  {
+public class Tiger extends Animal  { // ACTUALLY JAGUAR, NOT TIGER
 	// constructor
 	public Tiger(Position2D position) {
 		super(position, 10, "Tiger"); 

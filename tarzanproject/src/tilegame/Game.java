@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import display.DisplayOfGame;
-import imageloader.ImagesLoader;
+import imageloader.ImageLoader;
 import map.Map;
 import java.util.Timer; 
 

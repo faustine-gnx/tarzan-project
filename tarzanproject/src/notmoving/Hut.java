@@ -12,7 +12,7 @@ public class Hut extends NotLivings {
 
 	// constructor
 	public Hut (Position2D position) {
-		super(position, "Cosy hut"); 
+		super(position, "HUT"); 
 	}
 	
 	public int getNotLivingsType() {

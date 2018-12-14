@@ -21,7 +21,7 @@ public class Jane extends NotLivings {
 
 	// constructor
 	public Jane (Position2D position) {
-		super(position,  "Jane");
+		super(position,  "JANE");
 	}	
 	
 	public int getNotLivingsType() {

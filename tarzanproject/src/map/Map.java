@@ -63,7 +63,7 @@ public class Map implements Drawable {
 	Tarzan mapTarzan;
 
 
-	public Map(Level l, Settings s){ // need to be public because not in same package as Game, which is calling it
+	public Map(Level l, Settings s){ 
 		this.gameTimer = new Timer(); 
 		//this.task = new TimerTask();
 		SimplexNoiseGenerator mapGen = new SimplexNoiseGenerator(10, 0.7, 0.008);
@@ -102,7 +102,7 @@ public class Map implements Drawable {
 	}
 	
 	
-	public Map(int strength, int endurance, int lvl){ // need to be public because not in same package as Game, which is calling it
+	public Map(int strength, int endurance, int lvl){ 
 		this.level = new Level(lvl, SIZE_MAP);
 		this.gameTimer = new Timer(); 
 		//this.task = new TimerTask();
@@ -381,6 +381,7 @@ public class Map implements Drawable {
 			for (int y = 0; y < SIZE_MAP; y++) {
 				if (this.fieldOfViewMatrix[x][y] == true) {
 					g2d.setColor(getColor(x, y));
+					g2d.fillRect(y * PIXEL_SCALE, x * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
 				} else {
 					g2d.setColor(Color.BLACK);
 					g2d.fillRect(y * PIXEL_SCALE, x * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);

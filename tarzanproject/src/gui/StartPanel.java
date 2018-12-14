@@ -55,6 +55,7 @@ public class StartPanel extends JPanel implements ItemListener, ChangeListener {
 		this.chooseStrengthEndurance = new JLabel("Choose the strength-endurance distribution:");
 		
 		this.nameField = new JTextField("Anonymous");
+		//this.nameField.setPreferredSize(new Dimension(10,100)); // DOES NOT WORK
 		this.strengthEnduranceSlider = new JSlider(0,100,50);
 		Hashtable labelTable = new Hashtable();
 		labelTable.put(new Integer(0), new JLabel("Strength"));

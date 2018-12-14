@@ -7,12 +7,12 @@ import javax.imageio.ImageIO;
 import tilegame.Position2D;
 
 public class Knife extends NotLivings {
-	protected static final int STRENGTH_GIVEN = 10; // no idea how much
+	protected static final int STRENGTH_GIVEN = 25; // no idea how much
 	public Object getKnifePosition;
 	
 	// constructor
 	public Knife (Position2D position) {
-		super(position, "Harmful knife"); 
+		super(position, "KNIFE"); 
 	}
 	
 	public static int getStrengthGiven() {

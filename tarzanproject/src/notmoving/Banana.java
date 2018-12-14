@@ -11,12 +11,12 @@ import tilegame.Position2D;
 public class Banana extends NotLivings {
 
 	//private boolean isEaten; I don't thing we need this
-	protected static final int ENDURANCE_GIVEN = 10; // no idea how much
+	protected static final int ENDURANCE_GIVEN = 25; // no idea how much
 	public Object getBananaPosition;
 
 	// constructor
 	public Banana (Position2D position) {
-		super(position, "Banana"); 
+		super(position, "BANANA"); 
 		//this.isEaten = false;
 	}
 

@@ -40,19 +40,27 @@ public class GameApplication extends JFrame implements ActionListener {
 	protected JButton backButton1;
 	protected JButton backButton2;
 	
+	// default values for safety
+	protected String storedName = "Anonymous";
+	protected int initialStrength = 50;
+	protected int initialEndurance = 50;
+	protected int level = 1;
+	protected int initialEnergy = 500; // Level 1
+	
 	public GameApplication() {
 		initUI();
 	}   
 	
 	private void initUI() {
 		this.setTitle("Tarzan - The Lost Adventure");
-		this.setPreferredSize(new Dimension(1000, 1000));
+		this.setPreferredSize(new Dimension(500, 600));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.start = new StartPanel();
 		this.rules = new RulesPanel();
 		this.scores = new HighScoresPanel();
+		this.game = new GamePanel();
 		
 		this.highScoresButton = new JButton("High Scores");
 		this.highScoresButton.setActionCommand(SCORES);
@@ -86,6 +94,7 @@ public class GameApplication extends JFrame implements ActionListener {
 		this.allPanels.add(this.start, START_PANEL);
 		this.allPanels.add(this.scores, SCORES_PANEL);
 		this.allPanels.add(this.rules, RULES_PANEL);
+		this.allPanels.add(this.game, GAME_PANEL);
 
 		//this.allPanels.add(game, GAME_PANEL); // ? Or can we add it later, once it is created?
 		//this.add(allPanels);
@@ -94,17 +103,41 @@ public class GameApplication extends JFrame implements ActionListener {
 		// Image must go in StartPanel --> no need for container then?
 	}
 	
+	public GamePanel getGamePanel() {
+		return this.game;
+	}
 	
-	@Override // not working yet
+	public String getStoredName() {
+		return this.storedName;
+	}
+	
+	public int getInitialStrength() {
+		return this.initialStrength;
+	}
+	
+	public int getInitialEndurance() {
+		return this.initialEndurance;
+	}
+	
+	public int getInitialEnergy() {
+		return this.initialEnergy;
+	}
+	
+	public int getLevel() {
+		return this.level;
+	}
+	
+	@Override 
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		if (action.equals(START)) {
 			String storedName = this.start.getNameField().getText();
-			int initialStrength = this.start.strengthEnduranceSlider.getValue();
-			int initialEndurance = 100 - initialStrength;
-			int level = this.start.getLevelNumber();
-			this.game = new GamePanel(storedName, initialStrength, initialEndurance, level);
-			this.allPanels.add(this.game, GAME_PANEL);
+			this.initialStrength = this.start.strengthEnduranceSlider.getValue();
+			this.initialEndurance = 100 - initialStrength;
+			this.level = this.start.getLevelNumber();
+			this.initialEnergy = 500 - (this.level-1)*200; // Level 1 : 500; 2: 300; 3: 100
+			this.game.setGameSettings(storedName, initialStrength, initialEndurance, level, initialEnergy);
+			//this.allPanels.add(this.game, GAME_PANEL);
 			// --> new GamePanel
 			CardLayout cl = (CardLayout)(this.allPanels.getLayout());
 			cl.show(this.allPanels, GAME_PANEL);
@@ -124,31 +157,5 @@ public class GameApplication extends JFrame implements ActionListener {
 			cl.show(this.allPanels, START_PANEL);
 		}
 	}
-	
-	
-	public static void main(String[] args) {
-		
-		SwingUtilities.invokeLater(new Runnable() {
-			   public void run() {                 
-				   GameApplication newApp = new GameApplication();
-				   // call action & change listeners:
-				   		// read the name of player
-				   		// level
-				   		// strength & endurance
-				    // call changeListener?
-
-				   //int level = 
-				   // call action & change listeners:
-				   		// if start button pressed game start --> GamePanel
-				   		// if high score button pressed high scores  --> HighScoresPanel
-				   		// if rules button clicked game rules --> RulesPanel
-				   		// etc.
-			   }
-		});
-
-	}
-
-
-
-		
+			
 }

@@ -17,7 +17,7 @@ public class Flower extends NotLivings {
 	
 	// constructor
 	public Flower (Position2D position) {
-		super(position, "Exotic beautiful pink flower"); 
+		super(position, "FLOWER"); 
 		this.isPicked = false;
 	}
 	

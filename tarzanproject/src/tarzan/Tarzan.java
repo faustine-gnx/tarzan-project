@@ -66,6 +66,21 @@ public class Tarzan {
 		//this.level = setg.getLevel();		
 	}
 	
+	public Tarzan(Position2D pos){
+		this.name = "Tarzan";
+		this.tarzanPosition = pos;
+		this.INITIAL_ENERGY = 300;
+		this.energy = 300;
+		this.strength = 50;
+		this.endurance = 50;
+		this.isAlive = true;
+		this.numberOfOpponentsKilled = 0;
+		this.numberOfFlowersPicked = 0;
+		this.fieldOfViewRadius = 5;
+		//this.animalPosition = animalPosition;
+		//this.level = setg.getLevel();		
+	}
+	
 	public Tarzan(Position2D pos, Level lvl, int s, int e){
 		this.name = "Tarzan";
 		this.tarzanPosition = pos;
