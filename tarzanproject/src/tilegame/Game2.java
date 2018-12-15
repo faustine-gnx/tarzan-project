@@ -76,26 +76,40 @@ public class Game2 implements Runnable {
 	@Override
 	public void run() {
 		init();
-		
+		//Get the system time
+		long lastTime = System.nanoTime();
+		//Specify how many seconds there are in a minute as a double
+		//store as a double cause 60 sec in nanosec is big and store as final so it can't be changed
 		int fps = 60; // tick method called 60 times per second
+		//Set definition of how many ticks per 1000000000 ns or 1 sec
 		double timePerTick = 1000000000 /fps; // because nanoseconds
 		double delta = 0;
 		long now;
-		long lastTime = System.nanoTime();
-		//long timer = 0;
-		//long ticks = 0;
+		long timer = 0;
+		long ticks = 0;
 		
 		while(gameRunning) {
+			//Update the time
 			now = System.nanoTime();
+			//calculate change in time since last known time
 			delta += (now - lastTime) / timePerTick;
-			//timer += now - lastTime;
+			timer += now - lastTime;
+			//update last known time    
 			lastTime = now;
-			
+			 //continue while delta is less than or equal to 1
 			if (delta >= 1) {
+				//Go through one tick  
 				tick();
 				render();
-				//ticks++;
+				ticks++;
+				//decrement delta
 				delta--;
+			}
+			
+			if (timer >= 1000000000) {
+				System.out.println("Ticks and Frames" + ticks);
+				ticks = 0;
+				timer = 0;
 			}
 			
 		}
