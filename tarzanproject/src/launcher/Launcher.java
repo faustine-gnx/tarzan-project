@@ -3,14 +3,14 @@ package launcher;
 import javax.swing.SwingUtilities;
 
 import gui.GameApplication;
-import tilegame.Game2;
+import tilegame.Game;
 
 public class Launcher {
 public static void main(String[] args) {
 		
 		SwingUtilities.invokeLater(new Runnable() {
 			   public void run() {                 
-				   Game2 newGame = new Game2();
+				   Game newGame = new Game();
 				   newGame.start();
 			   }
 		});

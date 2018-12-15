@@ -20,8 +20,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 
-import map.Map;
-
 // Game display
 public class GamePanel extends JPanel {
 	private JLabel levelLabel; 

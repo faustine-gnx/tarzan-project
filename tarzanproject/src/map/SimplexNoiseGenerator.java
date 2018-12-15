@@ -15,8 +15,8 @@ public class SimplexNoiseGenerator implements MapGenerator {
 	}
 
 
-	private double[][] generateOctavedSimplexNoise(int size) {
-		double[][] totalNoise = new double[size][size];
+	private float[][] generateOctavedSimplexNoise(int size) {
+		float[][] totalNoise = new float[size][size];
 		double layerFrequency = SCALE;
 		double layerWeight = 1;
 		double weightSum = 0;
@@ -43,7 +43,7 @@ public class SimplexNoiseGenerator implements MapGenerator {
 	}
 
 	@Override
-	public double[][] createMap(int size) {
+	public float[][] createMap(int size) {
 		return generateOctavedSimplexNoise(size);
 	}
 }

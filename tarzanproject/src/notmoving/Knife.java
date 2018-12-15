@@ -6,7 +6,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import tilegame.Position2D;
 
-public class Knife extends NotLivings {
+public class Knife extends NotMovings {
 	protected static final int STRENGTH_GIVEN = 25; // no idea how much
 	public Object getKnifePosition;
 	
@@ -19,7 +19,7 @@ public class Knife extends NotLivings {
 		return STRENGTH_GIVEN;
 	}
 	
-	public int getNotLivingsType() {
+	public int getNotMovingsType() {
 		return 6;
 	}
 	

@@ -11,17 +11,11 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import tilegame.Position2D;
 
-//import com.sun.tools.javac.Main;
-import animals.Animal;
-import notmoving.Banana;
-import notmoving.Flower;
-import notmoving.Hut;
-import notmoving.Kavurus;
-import notmoving.Knife;
-import tilegame.Game2;
+import map.Map;
+import notmoving.*;
+import tilegame.Game;
 import tilegame.Goal;
 import tilegame.Level;
-import tilegame.Settings; 
 
 public class Tarzan { 
 	// I would set everything private? since there is no subclass - true 
@@ -41,7 +35,7 @@ public class Tarzan {
 	private Position2D tarzanPosition;
 	private int fieldOfViewRadius;
 	private String movingState; // walking or swimming
-	private Game2 game;
+	private Game game;
 	private int speed;
 	private int xMove;
 	private int yMove;
@@ -50,7 +44,7 @@ public class Tarzan {
 	// Constructor called in game:
 	// lvl and setg passed as arguments are attributes of game
 
-	public Tarzan(Position2D pos, Game2 game){
+	public Tarzan(Position2D pos, Game game){
 		name = "Tarzan";
 		this.game = game;
 		tarzanPosition = pos;
@@ -91,6 +85,22 @@ public class Tarzan {
 	}
 	
 	public void setTarzanPosition(int x, int y) {
+		if (x > Map.SIZE_MAP) {
+			x = Map.SIZE_MAP-1;
+		}
+		
+		if (x < 0) {
+			x = 0;
+		}
+		
+		if (y > Map.SIZE_MAP) {
+			y = Map.SIZE_MAP-1;
+		}
+		
+		if (y < 0) {
+			y = 0;
+		}
+		
 		tarzanPosition.set(x,y);
 	}
 
@@ -105,16 +115,16 @@ public class Tarzan {
 		return fieldOfViewRadius;
 	}
 
-	public void fight(Animal a) throws Throwable {
+	public void fight(Jaguar j) throws Throwable {
 		//this.energy -= a.getAnimalStrength();
-		takeDamage(a.getAnimalStrength());
+		takeDamage(j.getJaguarStrength());
 		// need to destroy animal ! (for optimization of memory)
 		// a finalize () can we do this? I think so. I completed then we can decide
 		Random rand = new Random();
 		int winningChance = strength*rand.nextInt(10);
 		if (winningChance > 100) {
 			animalsKilled += 1;
-			a.finalize();
+			j.finalize();
 		} else {
 			// what happens if Tarzan looses ?
 		}
@@ -213,11 +223,6 @@ public class Tarzan {
 		b.finalize(); // destroy banana
 	}
 
-	void pickFlower(Flower f) throws Throwable{
-		numberOfFlowersPicked += 1;
-		f.finalize(); // destroy flower
-	}
-
 	void pickKnife(Knife k) throws Throwable{
 		strength += Knife.getStrengthGiven();
 		k.finalize(); // destroy knife
@@ -227,12 +232,7 @@ public class Tarzan {
 		energy += Kavurus.getEnergyGiven(); // no idea how much
 		k.finalize(); // destroy pill
 	}
-
-	// Hut --> refill energy
-	void insideHut(Hut hut) {
-		energy = INITIAL_ENERGY; 
-	}
-
+	
 	// M: should we add a method also isJaneFound = end of the game in Tarzan class?
 	// I think that we could have a method findingJane that checks if the goals are met, and if they are, 
 	// it ends the game, if not, it reminds the player how much opponents he still has to kill / flowers 
@@ -331,55 +331,6 @@ public class Tarzan {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}*/
-	}
-
-	// move with keyboard  
-	public void logic(long delta) {
-		float dx = 0; // shouldn't it be this.
-		float dy = 0;
-		boolean left = false;
-		if (left) {
-			dx -= 1;
-		}
-		boolean right = false;
-		if (right) {
-			dx += 1;
-		}
-		boolean up = false;
-		if (up) {
-			dy -= 1;
-		}
-		boolean down = false;
-		if (down) {
-			dy += 1;
-		}
-
-		if ((dx != 0) || (dy != 0)) {
-			playerMove(dx * delta * 0.003f, dy * delta * 0.003f);
-		}
-	}
-
-	// listen to the player move and check if it is valid location on the map
-	// F: I think this should be done in Map
-	public boolean playerMove(float dx, float dy) {
-		float x = 0;
-		float nx = x + dx; 
-		float y = 0;
-		float ny = y + dy; 
-		if (validLocation(nx, ny)) { 
-			x = nx; y = ny; 
-			return true; 
-		} else { 
-			return false; 
-		}	
-	}
-
-	// i have a doubt with validLocation. did we say that rock are invalid location?
-	// should we check if it's valid location in this case? 
-	// should we create "blocked location"?
-	// F: I think it's sufficient to have freePositions / isPositionFree in Map
-	private boolean validLocation(float nx, float ny) {
-		return true;
 	}
 
 	public int getEnergy() {

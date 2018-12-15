@@ -6,7 +6,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import tilegame.Position2D;
 
-public class Kavurus extends NotLivings {
+public class Kavurus extends NotMovings {
 	protected static final int ENERGY_GIVEN = 50; // No idea how much
 	public Object getAnimalPosition;
 	public Kavurus getKavurusPosition;
@@ -20,7 +20,7 @@ public class Kavurus extends NotLivings {
 		return ENERGY_GIVEN;
 	}
 	
-	public int getNotLivingsType() {
+	public int getNotMovingsType() {
 		return 5;
 	}
 	

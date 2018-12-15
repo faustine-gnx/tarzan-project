@@ -1,137 +1,127 @@
 package tilegame;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.FontMetrics;
+
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
-import display.DisplayOfGame;
+
+import gui.Assets;
+import gui.GameApplication;
 import imageloader.ImageLoader;
 import map.Map;
-import java.util.Timer; 
 
-
-//main class of our game --> all methods here 
-
-public class Game implements Runnable { // does it need to implement runnable? already in GameApp
-
-	//display of our game
-	protected Map map; 
-	protected Level level;
-	protected final Settings setg;
-	protected final String playerName;
-	
-	//thread = run class separately from our program = more efficient
-	private Thread thread;
-	private boolean running; 
-
-	private KeyManager keyManager ;
-
-	// Game constructor
-
-	public Game(int lvl, int strength, int endurance, String name) {
+public class Game implements Runnable {
+	private GameApplication gameApp;
+	private Thread gameThread;
+	private boolean gameRunning = false;
+	private KeyManager keyManager;
+	private BufferStrategy gameBuffer;
+	private Graphics g;
+	private Map gameMap;
+	private Handler gameHandler;
 		
-		keyManager = new KeyManager();
-		this.level = new Level(lvl, this.map.getSize());
-		this.setg = new Settings(strength, endurance, lvl);
-		this.map = new Map(this.level, this.setg);
-		this.playerName = name;		
+	public Game() {
+		this.keyManager = new KeyManager();
 	}
-
-	// update everything 
-	private void tick () {
-		
 	
-	}
-
-
-	// new timer 
-
-	Timer timer = new Timer();
-
-
-	// run the timer task 
-
-	//run method 
-	public void run () {
-		
-		int fps = 60;
-		double timePerTick = 1000000000 / fps;
-		double delta = 0;
-		long now;
-		long lastTime = System.nanoTime();
-		long timer = 0;
-		int ticks = 0;
-
-		// game loop. 
-		//update all variables, positions of objects like animals tarzan etc and draw everything to the screen. 
-		// while running variable is true = run over and over again
-		while (running) {
-			now = System.nanoTime();
-			delta += (now - lastTime) / timePerTick;
-			timer += now - lastTime;
-			lastTime = now;
-			
-			if(delta >= 1){
-				tick();
-				render();
-				ticks++;
-				delta--;
-			}
-			
-			if(timer >= 1000000000){
-				System.out.println("Ticks and Frames: " + ticks);
-				ticks = 0;
-				timer = 0;
-			}
+	public synchronized void start() {
+		if(gameRunning) {
+			return;
 		}
-		
-		stop();
-		
+		gameRunning = true;
+		gameThread = new Thread(this);
+		gameThread.start();
+	}
+	
+	public synchronized void stop() {
+		if(!gameRunning) {
+			return;
+		}
+		gameRunning = false;
+		try {
+			gameThread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void init() {
+		gameApp = new GameApplication();
+		gameMap = new Map(gameApp.getInitialStrength(), gameApp.getInitialEndurance(), gameApp.getLevel(), this);
+		Assets.init();
+		//this.gameApp.getGamePanel().addKeyListener(this.keyManager);
+		//this.gameApp.getGamePanel().setGamePanelFocusable(); // not working
+		// would be better to add to gamePanel but I don't know how to do it
+		// for now this works fine
+		gameApp.addKeyListener(this.keyManager);
+		gameApp.setFocusable(true);
+		gameHandler = new Handler(this);
+	}
+	
+	private void tick() {
+		keyManager.tick();
+		gameMap.mapTarzan.tick();
 	}
 	
 	private void render() {
-		// TODO Auto-generated method stub
+		gameBuffer = gameApp.getGamePanel().getGameCanvas().getBufferStrategy();
+		if(gameBuffer == null) {
+			gameApp.getGamePanel().getGameCanvas().createBufferStrategy(3);
+			return;
+		}
+		//draw
+		g = gameBuffer.getDrawGraphics();
+		gameMap.render(this.g);
+		gameBuffer.show();
+		g.dispose();
+	}
+
+	@Override
+	public void run() {
+		init();
+		//Get the system time
+		long lastTime = System.nanoTime();
+		//Specify how many seconds there are in a minute as a double
+		//store as a double cause 60 sec in nanosec is big and store as final so it can't be changed
+		int fps = 6; // tick method called 60 times per second --> 6 for now
+		//Set definition of how many ticks per 1000000000 ns or 1 sec
+		double timePerTick = 1000000000 /fps; // because nanoseconds
+		double delta = 0;
+		long now;
+		long timer = 0;
+		long ticks = 0;
 		
-	}
-
-	// initialize methods for Thread : start Thread, stop Thread. 
-	public synchronized boolean start() { 
-		// if it's already running do not do anything
-		if(running){
-			// running true while loop and initialize thread
-			running = true; 
-			// initialize Thread
-			thread = new Thread (this) ; 
-			// start threat.Call run method 
-			thread.start();
+		while(gameRunning) {
+			//Update the time
+			now = System.nanoTime();
+			//calculate change in time since last known time
+			delta += (now - lastTime) / timePerTick;
+			timer += now - lastTime;
+			//update last known time    
+			lastTime = now;
+			 //continue while delta is less than or equal to 1
+			if (delta >= 1) {
+				//Go through one tick  
+				tick();
+				render();
+				ticks++;
+				//decrement delta
+				delta--;
+			}
+			
+			if (timer >= 1000000000) {
+				//System.out.println("Ticks and Frames" + ticks);
+				ticks = 0;
+				timer = 0;
+			}
+			
 		}
-		return running;
+		
+		stop();
 	}
-
-
-	// stop thread safely
-	public synchronized void stop() {
-		// if not running = equal to false. do not anything
-		if (!running) 
-			return; 
-		running = false; 
-		try {
-			thread.join();
-		}
-		catch (InterruptedException e) {
-			e.printStackTrace () ;
-		}
-
+	
+	public KeyManager getKeyManager() {
+		return keyManager;
 	}
-
-	// game ended 
-
-	void endGame() {
-		// Draw the message to the board
-		System.out.println("Game Ended");
-
-	}
-
+	
 	
 }

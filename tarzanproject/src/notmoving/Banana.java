@@ -8,7 +8,7 @@ import java.net.URL;
 import javax.imageio.ImageIO;
 import tilegame.Position2D;
 
-public class Banana extends NotLivings {
+public class Banana extends NotMovings {
 
 	//private boolean isEaten; I don't thing we need this
 	protected static final int ENDURANCE_GIVEN = 25; // no idea how much
@@ -25,7 +25,7 @@ public class Banana extends NotLivings {
 	}
 
 
-	public int getNotLivingsType() {
+	public int getNotMovingsType() {
 		return 1;
 	}
 

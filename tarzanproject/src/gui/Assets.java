@@ -17,16 +17,10 @@ public class Assets { // to load img / sounds ...
 	public static BufferedImage TARZAN_JANE;
 	public static BufferedImage TARZAN_NORMAL;
 	public static BufferedImage TARZAN_WATER;
-	public static BufferedImage ELEPHANT;
-	public static BufferedImage TIGER;
-	public static BufferedImage LION;
-	public static BufferedImage CROCODILE;
-	public static BufferedImage SNAKE;
-	public static BufferedImage HUT;
 	public static BufferedImage KAVURUS;
 	public static BufferedImage KNIFE;
 	public static BufferedImage BANANA;
-	public static BufferedImage FLOWER;
+	public static BufferedImage JAGUAR;
 	public static BufferedImage JANE;
 	
 	public static void init() {
@@ -36,11 +30,8 @@ public class Assets { // to load img / sounds ...
 		BufferedImage TARZAN_FOREST0 = ImageLoader.loadImage("/textures/tarzan_forest.gif");
 		TARZAN_FOREST = resize(TARZAN_FOREST0);
 		
-		BufferedImage ELEPHANT0 = ImageLoader.loadImage("/textures/elephant.gif");
-		ELEPHANT = resize(ELEPHANT0);
-		
-		BufferedImage TIGER0 = ImageLoader.loadImage("/textures/tiger.gif");
-		TIGER = resize(TIGER0);
+		BufferedImage JAGUAR0 = ImageLoader.loadImage("/textures/jaguar.gif");
+		JAGUAR = resize(JAGUAR0);
 		
 		BufferedImage BANANA0 = ImageLoader.loadImage("/textures/banana.gif");
 		BANANA = resize(BANANA0);
@@ -64,8 +55,8 @@ public class Assets { // to load img / sounds ...
 	
 	public static BufferedImage getImageFromString(String s) {
 		switch(s) {
-			case "TIGER": 
-				return Assets.TIGER;
+			case "JAGUAR": 
+				return Assets.JAGUAR;
 			case "KAVURUS": 
 				return Assets.KAVURUS;
 			case "BANANA": 

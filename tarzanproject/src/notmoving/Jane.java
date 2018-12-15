@@ -13,7 +13,7 @@ import tilegame.Position2D;
 
 
 
-public class Jane extends NotLivings {
+public class Jane extends NotMovings {
 	// int position [][] ; in superclass
 	//String name = "Jane"; in superclass
 
@@ -24,7 +24,7 @@ public class Jane extends NotLivings {
 		super(position,  "JANE");
 	}	
 	
-	public int getNotLivingsType() {
+	public int getNotMovingsType() {
 		return 4;
 	}
 }
