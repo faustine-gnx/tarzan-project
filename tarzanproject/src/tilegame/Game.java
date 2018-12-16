@@ -2,11 +2,8 @@ package tilegame;
 
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-
 import gui.Assets;
 import gui.GameApplication;
-import imageloader.ImageLoader;
 import map.Map;
 
 public class Game implements Runnable {

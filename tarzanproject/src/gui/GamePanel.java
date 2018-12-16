@@ -39,9 +39,9 @@ public class GamePanel extends JPanel {
 
 	public GamePanel() {	
 		gameCanvas = new Canvas();
-		gameCanvas.setPreferredSize(new Dimension(500,500));
-		gameCanvas.setMinimumSize(new Dimension(500,500));
-		gameCanvas.setMaximumSize(new Dimension(500,500));
+		gameCanvas.setPreferredSize(new Dimension(GameApplication.WIDTH,GameApplication.WIDTH));
+		gameCanvas.setMinimumSize(new Dimension(GameApplication.WIDTH,GameApplication.WIDTH));
+		gameCanvas.setMaximumSize(new Dimension(GameApplication.WIDTH,GameApplication.WIDTH));
 		gameCanvas.setFocusable(false);
 		this.add(gameCanvas);
 	}
@@ -55,7 +55,7 @@ public class GamePanel extends JPanel {
 		strengthLabel = new JLabel("Strength: " + String.valueOf(strength));
 		enduranceLabel = new JLabel("Endurance: " + String.valueOf(endurance));
 		playerLabel = new JLabel("Player: " + name);
-		animalLabel = new JLabel("Animals killed: " + String.valueOf(0));
+		animalLabel = new JLabel("Jaguars killed: " + String.valueOf(0));
 		energyLabel = new JLabel("Energy left: " + String.valueOf(energy));
 		player = name;
 		this.strength = strength;
@@ -71,11 +71,11 @@ public class GamePanel extends JPanel {
 		this.add(energyLabel);
 	}
 	
-	public void updateGameSettings(int newStrength, int newEndurance, int newEnergy, int animals) {
-		strengthLabel.setText("Strength: " + String.valueOf(newStrength));
-		enduranceLabel.setText("Endurance: " + String.valueOf(newEndurance));
-		animalLabel.setText("Animals killed: " + String.valueOf(animals));
+	public void updateGameSettings(int newStrength, int newEndurance, int newEnergy, int animals, int goalStrength, int goalEndurance, int goalJaguars) {
 		energyLabel.setText("Energy left: " + String.valueOf(newEnergy));
+		strengthLabel.setText("Strength: " + String.valueOf(newStrength) + "/" + String.valueOf(goalStrength));
+		enduranceLabel.setText("Endurance: " + String.valueOf(newEndurance) + "/" + String.valueOf(goalEndurance));
+		animalLabel.setText("Jaguars killed: " + String.valueOf(animals) + "/" + String.valueOf(goalJaguars));
 		strength = newStrength;
 		endurance = newEndurance;
 		animalsKilled = animals;

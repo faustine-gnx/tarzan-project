@@ -1,43 +1,31 @@
 package tarzan;
-import java.awt.CardLayout;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.Random;
-
-import gui.GameApplication;
-import tilegame.Position2D;
+import tilegame.*;
 
 import map.Map;
 import notmoving.*;
-import tilegame.Goal;
-import tilegame.Handler;
-import tilegame.Level;
 
 public class Tarzan implements KeyListener { 
 	// I would set everything private? since there is no subclass - true 
 	// + make getters
 	private final static int SPEED = 1;
 	private final static int ENERGY_LOSS = 1;
-	private final static int WATER_ENERGY_LOSS = 9; // + ENERGY_LOSS = 10
-	private String name; 
+	private final static int WATER_ENERGY_LOSS = 10;
 	private int energy;
 	private int endurance;
-	private int level; // M: i added the protected int level if not used we can delete it later 
 	private int strength;
 	private boolean isAlive ; 
-	// attribute or method depending on energy? M:--> true : but in order to make the game fails if tarzan is killed? 
-	// lol the question was: is it an attribute OR is it a method? ^^
-	private int animalsKilled;
+	private int jaguarsKilled;
 	private Position2D tarzanPosition;
+	//private Position2D previousPosition;
 	private int fieldOfViewRadius;
 	private Handler handler;
 	private int speed;
-	//protected int width;
-	//protected int height; 
-	
+
 	private boolean[] keys;
-	public boolean up; // w
+	private boolean up; // w
 	public boolean down; // s
 	public boolean left; // a
 	public boolean right; // d
@@ -45,99 +33,71 @@ public class Tarzan implements KeyListener {
 	public boolean aDown;
 	public boolean aLeft;
 	public boolean aRight;
-	
+
 	// rectangle to check for collision
 	protected Rectangle bounds; 
-	
-	// Constructors
-	// Constructor called in game:
-	// lvl and setg passed as arguments are attributes of game
 
+	// Constructor
 	public Tarzan(Position2D pos, Handler handler, Level level, int strength, int endurance){
-		name = "Tarzan";
 		this.handler = handler;
 		tarzanPosition = pos;
+		//previousPosition = pos;
 		energy = level.getInitialEnergy();
 		this.strength = strength;
 		this.endurance = endurance;
 		isAlive = true;
-		animalsKilled = 0;
+		jaguarsKilled = 0;
 		fieldOfViewRadius = 5;
 		speed = SPEED;
 		fieldOfViewRadius = level.getVisibilitySize();
-		keys = new boolean[256];
-		
-		//bounds of Tarzan for collision
-		//bounds.x = 16;
-		//bounds.y = 32; 
-		//bounds.width = 32; 
-		//bounds.height= 32; 
+		keys = new boolean[256]; 
 	}
-	// do we need specific collision for each not movings or just one for all of them?
-	// i think yes since if collision true --> then energy/strenght different in base of animals, banan
-	//check collision method rectangle Tarzan and notmovings
-		//public void checkCollisions() {
 
-		    //bounds = NotMovings.getBounds();
-
-		        //if (r3.intersects(r2)) {
-		            // not movings not visible any more
-		           //NotMovings.setVisible(false);
-		            // energy/strenght increased -->specific for each objects?
-		            
-		       // }
-		    //}
-		
 	public Position2D getTarzanPosition() {
 		return tarzanPosition;
 	}
 
-	public void setTarzanPosition(Position2D pos) {
-		tarzanPosition = pos;
+	public void setTarzanPosition(Position2D tarzanPosition) {
+		this.tarzanPosition = tarzanPosition;
 	}
-	
+
 	public void setTarzanPosition(int x, int y) {
 		if (x > Map.SIZE_MAP) {
 			x = Map.SIZE_MAP-1;
 		}
-		
+
 		if (x < 0) {
 			x = 0;
 		}
-		
+
 		if (y > Map.SIZE_MAP) {
 			y = Map.SIZE_MAP-1;
 		}
-		
+
 		if (y < 0) {
 			y = 0;
 		}
-		
+
 		tarzanPosition.set(x,y);
 	}
+
+
+	/*public Position2D getPreviousPosition() {
+		return previousPosition;
+	}
+
+	public void setPreviousPosition(Position2D previousPosition) {
+		this.previousPosition = previousPosition;
+	}
+
+	public void backToPreviousPosition() {
+		tarzanPosition = previousPosition;
+	}*/
 
 	public int getFieldOfViewRadius() {
 		return fieldOfViewRadius;
 	}
 
-			
-	public void fight(Jaguar j) throws Throwable {
-		
-		//this.energy -= a.getAnimalStrength();
-		takeDamage(j.getJaguarStrength());
-		// need to destroy animal ! (for optimization of memory)
-		// a finalize () can we do this? I think so. I completed then we can decide
-		Random rand = new Random();
-		int winningChance = strength*rand.nextInt(10);
-		if (winningChance > 100) {
-			animalsKilled += 1;
-			j.finalize();
-			handler.getHandlerWorld().getTile(j.getNotMovingsPosition().getX(), j.getNotMovingsPosition().getY()).setHasNotMovings(null);
-		} else {
-			// what happens if Tarzan looses ?
-		}
-	}	
-	
 	private boolean inTheWater() { 
 		return (handler.getHandlerWorld().getWorldTiles()[tarzanPosition.getY()][tarzanPosition.getX()] == 1);
 	}
@@ -152,59 +112,61 @@ public class Tarzan implements KeyListener {
 			energy -= damage;
 		}
 	}
-	
+
 	public void tick() {
-		//if(handler.getHandlerGame().getGameApp().isGamePlaying()) {
-			handler.getHandlerGame().getGameApp().getGamePanel().updateGameSettings(strength, endurance, energy, animalsKilled);
-		//}
+		handler.getHandlerGame().getGameApp().getGamePanel().updateGameSettings(strength, endurance, energy, jaguarsKilled,handler.getHandlerMap().getMapLevel().getGoalStrength(), handler.getHandlerMap().getMapLevel().getGoalEndurance(), handler.getHandlerMap().getMapLevel().getGoalJaguars());
 	}
 
-	void eatBanana(Banana b) throws Throwable{
+	public void eatBanana(){
 		endurance += Banana.getEnduranceGiven();
-		b.finalize(); // destroy banana
-		handler.getHandlerWorld().getTile(b.getNotMovingsPosition().getX(), b.getNotMovingsPosition().getY()).setHasNotMovings(null);
+		System.out.println("Endurance: " + endurance);
 	}
 
-	void pickKnife(Knife k) throws Throwable{
+	public void pickKnife() {
 		strength += Knife.getStrengthGiven();
-		k.finalize(); // destroy knife
-		handler.getHandlerWorld().getTile(k.getNotMovingsPosition().getX(), k.getNotMovingsPosition().getY()).setHasNotMovings(null);
 	}
 
-	void takePill(Kavurus k) throws Throwable {
+	public void takePill() {
 		energy += Kavurus.getEnergyGiven(); // no idea how much
-		k.finalize(); // destroy pill
-		handler.getHandlerWorld().getTile(k.getNotMovingsPosition().getX(), k.getNotMovingsPosition().getY()).setHasNotMovings(null);
-		
 	}
-	
-	// M: should we add a method also isJaneFound = end of the game in Tarzan class?
-	// I think that we could have a method findingJane that checks if the goals are met, and if they are, 
-	// it ends the game, if not, it reminds the player how much opponents he still has to kill / flowers 
-	// to pick / bananas to eat / knives to find
 
-	void fieldOfView() {} // M: what is this for ? 
-	// --> to know which animals / notlivings are in Tarzan's sight = to know whether to draw them or not
-	// But I think it should go in Map / Game
+	public void janeFound() {
+		if(areGoalsMet()) {
+			endOfGameWin();
+		} else {
+			System.out.println("Meet the goals and come find me later!");
+		}
+	}
 
-	boolean hasReachedGoal(Goal g) {
-		if ((animalsKilled >= g.getAnimalKilled()) 
-				&& (strength >= g.getFightingStrength())
-				&& (endurance)>= g.getMobilityEndurance() ) {
+	private boolean areGoalsMet() {
+		if (strength >= handler.getHandlerMap().getMapLevel().getGoalStrength() &&
+				endurance >= handler.getHandlerMap().getMapLevel().getGoalEndurance() &&
+				jaguarsKilled >= handler.getHandlerMap().getMapLevel().getGoalJaguars()) {
 			return true;
 		} else {
 			return false;
 		}
 	}
 
-	/*void update() { // DO THIS IN GAME: CHECK IF TARZANPOSITION == ANIMAL/NOTLIVINGSPOSITION
+	// M: should we add a method also isJaneFound = end of the game in Tarzan class?
+	// I think that we could have a method findingJane that checks if the goals are met, and if they are, 
+	// it ends the game, if not, it reminds the player how much opponents he still has to kill / flowers 
+	// to pick / bananas to eat / knives to find
+
+	void fieldOfView() {} // M: what is this for ? 
+	// --> to know which jaguars / notlivings are in Tarzan's sight = to know whether to draw them or not
+	// But I think it should go in Map / Game
+
+
+
+	/*void update() { // DO THIS IN GAME: CHECK IF TARZANPOSITION == jaguar/NOTLIVINGSPOSITION
 
 		// called at each time step --> M: what does it mean? 
 
 
-		// if position of animal or not living = position of tarzan
+		// if position of jaguar or not living = position of tarzan
 		// call fight 
-		if (animalPosition == tarzanPosition);
+		if (jaguarPosition == tarzanPosition);
 		{
 			try {
 				fight(null);
@@ -256,6 +218,10 @@ public class Tarzan implements KeyListener {
 	}
 	 */
 
+	public Handler getHandler() {
+		return handler;
+	}
+
 	public void run() {
 		/*	try {
 			Clip clip = AudioSystem.getClip();
@@ -300,12 +266,16 @@ public class Tarzan implements KeyListener {
 		this.isAlive = isAlive;
 	}
 
-	public int getAnimalsKilled() {
-		return animalsKilled;
+	public int getJaguarsKilled() {
+		return jaguarsKilled;
 	}
 
-	public void setAnimalsKilled(int animalsKilled) {
-		this.animalsKilled = animalsKilled;
+	public void setJaguarsKilled(int jaguarsKilled) {
+		this.jaguarsKilled = jaguarsKilled;
+	}
+
+	public void killsJaguar() {
+		jaguarsKilled += 1;
 	}
 
 	@Override
@@ -313,36 +283,48 @@ public class Tarzan implements KeyListener {
 		if(e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
 			return;
 		keys[e.getKeyCode()] = true;
-		
+
+		//setPreviousPosition(tarzanPosition);
+
 		if(keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]){
-	        tarzanPosition.setY(Math.max(0, tarzanPosition.getY()-speed));
-	        energy -= ENERGY_LOSS;
-	    }
-	    if(keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]){
-	        tarzanPosition.setY(Math.min(Map.SIZE_MAP-1, tarzanPosition.getY()+speed));
-	        energy -= ENERGY_LOSS;
-	    }
-	    if(keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT]){
-	        tarzanPosition.setX(Math.max(0, tarzanPosition.getX()-speed));
-	        energy -= ENERGY_LOSS;
-	    }
-	    if(keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]){
-	        tarzanPosition.setX(Math.min(Map.SIZE_MAP-1, tarzanPosition.getX()+speed));
-	        energy -= ENERGY_LOSS;
-	    }
-	    
-	    if(inTheWater()) {
-	    	energy -= WATER_ENERGY_LOSS;
-	    }
-	    
-	    if (energy <= 0) {
-	    	endOfGameLost();
-	    }
+			tarzanPosition.setY(Math.max(0, tarzanPosition.getY()-speed));
+			energy -= ENERGY_LOSS*(20-endurance/10);
+		}
+		if(keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]){
+			tarzanPosition.setY(Math.min(Map.SIZE_MAP-1, tarzanPosition.getY()+speed));
+			energy -= ENERGY_LOSS*(15-endurance/10);
+		}
+		if(keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT]){
+			tarzanPosition.setX(Math.max(0, tarzanPosition.getX()-speed));
+			energy -= ENERGY_LOSS*(15-endurance/10);
+		}
+		if(keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]){
+			tarzanPosition.setX(Math.min(Map.SIZE_MAP-1, tarzanPosition.getX()+speed));
+			energy -= ENERGY_LOSS*(15-endurance/10);
+		}
+
+		if(inTheWater()) {
+			energy -= WATER_ENERGY_LOSS;
+		}
+
+		if(energy <= 0) {
+			endOfGameLost();
+		}
+
+		if(handler.getHandlerWorld().getWorldNotMovings(tarzanPosition) != null) {
+			System.out.println("Non moving encountered");
+			handler.getHandlerWorld().getWorldNotMovings(tarzanPosition).interact(this);
+		}
 	}
-	
+
+
 	private void endOfGameLost() {
 		handler.getHandlerGame().getGameApp().newJOptionPane("Sorry, you lost :("); // add score
-		
+		handler.getHandlerGame().init(); // new Game --> back to start
+	}
+
+	private void endOfGameWin() {
+		handler.getHandlerGame().getGameApp().newJOptionPane("Congrats, you win :D"); // add score
 		handler.getHandlerGame().init(); // new Game --> back to start
 	}
 
@@ -354,10 +336,7 @@ public class Tarzan implements KeyListener {
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void keyTyped(KeyEvent e) {}
 
 
 }

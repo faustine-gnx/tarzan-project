@@ -1,8 +1,6 @@
 package launcher;
 
 import javax.swing.SwingUtilities;
-
-import gui.GameApplication;
 import tilegame.Game;
 
 public class Launcher {

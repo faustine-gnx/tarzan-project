@@ -1,11 +1,6 @@
-/gui/
-/highscores/
-/launcher/
-/tilegame/
-/map/
 /tarzan/
-/animals/
+/map/
 /notmoving/
-/display/
-/imageloader/
-/interfaces/
+/tilegame/
+/launcher/
+/gui/

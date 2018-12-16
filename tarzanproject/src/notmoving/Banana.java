@@ -5,7 +5,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Random;
+
 import javax.imageio.ImageIO;
+
+import tarzan.Tarzan;
 import tilegame.Position2D;
 
 public class Banana extends NotMovings {
@@ -29,50 +33,11 @@ public class Banana extends NotMovings {
 		return 1;
 	}
 
-
-	//overriding finalize method 
 	@Override
-	public void finalize () throws Throwable { 
-		System.out.println("Banana eaten. Congratulations! Your endurance increased!");
-	} 
-/*
-	{
-		//texture 
-		try {
-			URL imageUrl = new URL("https://www.kisspng.com/png-banana-powder-fruit-cavendish-banana-banana-90233/");
-			InputStream in = imageUrl.openStream();
-			BufferedImage image = ImageIO.read(in);
-			in.close();
-		}
-		catch (IOException ioe) {
-			//log the error
-		}
-
-
-		//enduranceProvided 
-		// the "if" clause: banana eaten
-		if ("Banana-isEaten" != null){
-			// the "then" clause: increase current energy 
-			System.out.println("+ 20 points of endurance");
-
-		}
+	public void interact(Tarzan t) {
+		t.eatBanana();
+		t.getHandler().getHandlerWorld().setWorldNotMovingsNull(notMovingsPosition);
+		System.out.println("Yummy yummy, banana eaten! Endurance increased");
 	}
-
-	public int getX() {
-		return 0;
-	}
-
-	public int getY() {
-		return 0;
-	}
-
-	public int getBanana() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-
-
-*/
 }
 

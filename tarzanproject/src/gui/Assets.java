@@ -5,12 +5,13 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 
 import imageloader.ImageLoader;
+import map.Map;
 
 // TODO: CHANGE TO HAVE ONLY GIF IMAGES = NO BACKGROUND
 
 public class Assets { // to load img / sounds ...
-	private static final int WIDTH = 500/8; // 500/SIZE_MAP --> not static but final if we want to change size
-	private static final int HEIGHT = 500/8;
+	private static final int WIDTH = 500/Map.SIZE_MAP;
+	private static final int HEIGHT = 500/Map.SIZE_MAP;
 			
 	public static BufferedImage TARZAN_FIGHT;
 	public static BufferedImage TARZAN_FOREST;

@@ -22,6 +22,8 @@ import javax.swing.SwingUtilities;
 import tilegame.Game;
 
 public class GameApplication extends JFrame implements ActionListener {
+	public final static int WIDTH = 500;
+	public final static int HEIGHT = 800;
 	private JPanel allPanels;
 	public final static String GAME_PANEL = "Game";
 	public final static String START_PANEL = "Start";
@@ -66,7 +68,7 @@ public class GameApplication extends JFrame implements ActionListener {
 	
 	private void initUI() {
 		setTitle("Tarzan - The Lost Adventure");
-		setPreferredSize(new Dimension(500, 600));
+		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//this.setLocationRelativeTo(null);
 		setResizable(false);
@@ -157,7 +159,7 @@ public class GameApplication extends JFrame implements ActionListener {
 			initialStrength = startPanel.strengthEnduranceSlider.getValue();
 			initialEndurance = 100 - initialStrength;
 			level = startPanel.getLevelNumber();
-			initialEnergy = 500 - (level-1)*200; // Level 1 : 500; 2: 300; 3: 100
+			initialEnergy = 500 - (level-1)*100; // Level 1 : 500; 2: 300; 3: 100
 			gamePanel.initGameSettings(storedName, initialStrength, initialEndurance, level, initialEnergy);
 			gamePlaying = true;
 			game.initGame();

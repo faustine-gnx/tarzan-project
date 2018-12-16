@@ -1,5 +1,7 @@
 package notmoving;
 
+import tarzan.Tarzan;
+
 //import java.awt.Rectangle;
 
 import tilegame.Position2D;
@@ -41,7 +43,9 @@ public abstract class NotMovings { // = non moving
 		// 4 for Jane
 		// 5 for Kavurus
 		// 6 for Knife
-
+	
+	public abstract void interact(Tarzan t);
+	
 	//public static void setVisible(boolean b) {
 		
 	//}

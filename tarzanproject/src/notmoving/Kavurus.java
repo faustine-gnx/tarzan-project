@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import javax.imageio.ImageIO;
+
+import tarzan.Tarzan;
 import tilegame.Position2D;
 
 public class Kavurus extends NotMovings {
@@ -25,33 +27,10 @@ public class Kavurus extends NotMovings {
 	}
 	
 	@Override
-	public void finalize () throws Throwable { 
-		System.out.println("Kavurus pill taken. Congratulations! Your energy increased!");
+	public void interact(Tarzan t) {
+		t.takePill();
+		t.getHandler().getHandlerWorld().setWorldNotMovingsNull(notMovingsPosition);
+		System.out.println("Yeeaah, feeling better! Energy increased");
+	
 	}
-		
-/*
-{
-			//texture 
-			try {
-			    URL imageUrl = new URL("https://www.kisspng.com/png-pill-png-61797/");
-			    InputStream in = imageUrl.openStream();
-			    BufferedImage image = ImageIO.read(in);
-			    in.close();
-			}
-			catch (IOException ioe) {
-			    //log the error
-			}
-			
-			//enduranceProvided 
-		    // the "if" clause: banana eaten
-		    if ("Kavurus-isFound" != null){
-		        // the "then" clause: increase current energy 
-		       System.out.println("Your energy increase 100 points");
-    
-		    }
-		}
-
-
-*/
-		
 }

@@ -3,6 +3,8 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+
+import tarzan.Tarzan;
 import tilegame.Position2D;
 
 //import com.sun.tools.javac.Main;
@@ -10,6 +12,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Random;
 import java.util.logging.Handler; 
 
 public class Jaguar extends NotMovings { // ACTUALLY JAGUAR, NOT TIGER
@@ -24,6 +27,22 @@ public class Jaguar extends NotMovings { // ACTUALLY JAGUAR, NOT TIGER
 		return jaguarStrength;
 	}
 	
+	@Override
+	public void interact(Tarzan t) {
+		t.takeDamage(jaguarStrength);
+		// need to destroy animal ! (for optimization of memory)
+		// a finalize () can we do this? I think so. I completed then we can decide
+		Random rand = new Random();
+		int winningChance = t.getStrength()*rand.nextInt(5);
+		if (winningChance > 100) {
+			t.killsJaguar();
+			finalize();
+			t.getHandler().getHandlerWorld().setWorldNotMovingsNull(notMovingsPosition);
+		} else {
+			//t.backToPreviousPosition();
+			System.out.println("Jaguar beat you, keep on moving, you might be luckier next time!");
+		}
+	}
 	
 	@Override
 	public int getNotMovingsType() {
@@ -31,7 +50,7 @@ public class Jaguar extends NotMovings { // ACTUALLY JAGUAR, NOT TIGER
 	}
 	
 	@Override
-	public void finalize () throws Throwable { //changed to public
+	public void finalize() { //changed to public
 		System.out.println("Jaguar succesfully killed!");
 	} 
 }
