@@ -9,7 +9,8 @@ import tilegame.Position2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL; 
+import java.net.URL;
+import java.util.logging.Handler; 
 
 public class Jaguar extends NotMovings { // ACTUALLY JAGUAR, NOT TIGER
 	private int jaguarStrength;
@@ -22,7 +23,8 @@ public class Jaguar extends NotMovings { // ACTUALLY JAGUAR, NOT TIGER
 	public int getJaguarStrength() {
 		return jaguarStrength;
 	}
-
+	
+	
 	@Override
 	public int getNotMovingsType() {
 		return 0;

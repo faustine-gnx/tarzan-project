@@ -1,5 +1,6 @@
 package tarzan;
 import java.awt.CardLayout;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Random;
@@ -32,6 +33,8 @@ public class Tarzan implements KeyListener {
 	private int fieldOfViewRadius;
 	private Handler handler;
 	private int speed;
+	//protected int width;
+	//protected int height; 
 	
 	private boolean[] keys;
 	public boolean up; // w
@@ -42,6 +45,9 @@ public class Tarzan implements KeyListener {
 	public boolean aDown;
 	public boolean aLeft;
 	public boolean aRight;
+	
+	// rectangle to check for collision
+	protected Rectangle bounds; 
 	
 	// Constructors
 	// Constructor called in game:
@@ -60,8 +66,28 @@ public class Tarzan implements KeyListener {
 		speed = SPEED;
 		fieldOfViewRadius = level.getVisibilitySize();
 		keys = new boolean[256];
+		
+		//bounds of Tarzan for collision
+		//bounds.x = 16;
+		//bounds.y = 32; 
+		//bounds.width = 32; 
+		//bounds.height= 32; 
 	}
+	// do we need specific collision for each not movings or just one for all of them?
+	// i think yes since if collision true --> then energy/strenght different in base of animals, banan
+	//check collision method rectangle Tarzan and notmovings
+		//public void checkCollisions() {
 
+		    //bounds = NotMovings.getBounds();
+
+		        //if (r3.intersects(r2)) {
+		            // not movings not visible any more
+		           //NotMovings.setVisible(false);
+		            // energy/strenght increased -->specific for each objects?
+		            
+		       // }
+		    //}
+		
 	public Position2D getTarzanPosition() {
 		return tarzanPosition;
 	}
@@ -94,7 +120,9 @@ public class Tarzan implements KeyListener {
 		return fieldOfViewRadius;
 	}
 
+			
 	public void fight(Jaguar j) throws Throwable {
+		
 		//this.energy -= a.getAnimalStrength();
 		takeDamage(j.getJaguarStrength());
 		// need to destroy animal ! (for optimization of memory)
