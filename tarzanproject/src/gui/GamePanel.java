@@ -50,7 +50,7 @@ public class GamePanel extends JPanel {
 		return gameCanvas;
 	}
 	
-	public void setGameSettings(String name, int strength, int endurance, int level, int energy) {
+	public void initGameSettings(String name, int strength, int endurance, int level, int energy) {
 		levelLabel = new JLabel("Level: " + String.valueOf(level));
 		strengthLabel = new JLabel("Strength: " + String.valueOf(strength));
 		enduranceLabel = new JLabel("Endurance: " + String.valueOf(endurance));

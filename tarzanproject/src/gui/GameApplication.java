@@ -15,25 +15,32 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import tilegame.Game;
+
 public class GameApplication extends JFrame implements ActionListener {
 	private JPanel allPanels;
-	private final static String GAME_PANEL = "Game";
-	private final static String START_PANEL = "Start";
-	private final static String SCORES_PANEL = "Scores";
-	private final static String RULES_PANEL = "Rules";
-	private StartPanel start;
-	private GamePanel game;
-	private HighScoresPanel scores;
-	private RulesPanel rules;
-	private String player;
+	public final static String GAME_PANEL = "Game";
+	public final static String START_PANEL = "Start";
+	public final static String SCORES_PANEL = "Scores";
+	public final static String RULES_PANEL = "Rules";
+	private Game game;
+	private StartPanel startPanel;
+	private GamePanel gamePanel;
+	private HighScoresPanel scoresPanel;
+	private RulesPanel rulesPanel;
 	private String START = "Start";
 	private String SCORES = "High Scores";
 	private String RULES = "Rules";
 	private String BACK = "Back";
-	
+	private boolean gamePlaying = false;
+	public JPanel getAllPanels() {
+		return allPanels;
+	}
+
 	private JButton startButton;
 	private JButton highScoresButton;
 	private JButton rulesButton;
@@ -52,8 +59,9 @@ public class GameApplication extends JFrame implements ActionListener {
 	private int level = DEFAULT_LEVEL;
 	private int initialEnergy = DEFAULT_INITIAL_ENERGY; 
 	
-	public GameApplication() {
+	public GameApplication(Game game) {
 		initUI();
+		this.game = game;
 	}   
 	
 	private void initUI() {
@@ -62,10 +70,10 @@ public class GameApplication extends JFrame implements ActionListener {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//this.setLocationRelativeTo(null);
 		setResizable(false);
-		start = new StartPanel();
-		rules = new RulesPanel();
-		scores = new HighScoresPanel();
-		game = new GamePanel();
+		startPanel = new StartPanel();
+		rulesPanel = new RulesPanel();
+		scoresPanel = new HighScoresPanel();
+		gamePanel = new GamePanel();
 		
 		highScoresButton = new JButton("High Scores");
 		highScoresButton.setActionCommand(SCORES);
@@ -87,19 +95,19 @@ public class GameApplication extends JFrame implements ActionListener {
 		backButton2.setActionCommand(BACK);
 		backButton2.addActionListener(this);
 		
-		start.add(highScoresButton);
-		start.add(rulesButton);
-		rules.add(backButton1);
-		scores.add(backButton2);
-		start.add(startButton);
+		startPanel.add(highScoresButton);
+		startPanel.add(rulesButton);
+		rulesPanel.add(backButton1);
+		scoresPanel.add(backButton2);
+		startPanel.add(startButton);
 
 		// can we already create GamePanel?
 		
 		allPanels = new JPanel(new CardLayout());
-		allPanels.add(start, START_PANEL);
-		allPanels.add(scores, SCORES_PANEL);
-		allPanels.add(rules, RULES_PANEL);
-		allPanels.add(game, GAME_PANEL);
+		allPanels.add(startPanel, START_PANEL);
+		allPanels.add(scoresPanel, SCORES_PANEL);
+		allPanels.add(rulesPanel, RULES_PANEL);
+		allPanels.add(gamePanel, GAME_PANEL);
 
 		//this.allPanels.add(game, GAME_PANEL); // ? Or can we add it later, once it is created?
 		//this.add(allPanels);
@@ -110,9 +118,9 @@ public class GameApplication extends JFrame implements ActionListener {
 	}
 	
 	public GamePanel getGamePanel() {
-		return game;
+		return gamePanel;
 	}
-	
+
 	public String getStoredName() {
 		return storedName;
 	}
@@ -133,16 +141,26 @@ public class GameApplication extends JFrame implements ActionListener {
 		return level;
 	}
 	
+	public boolean isGamePlaying() {
+		return gamePlaying;
+	}
+	
+	public void newJOptionPane(String text) {
+		JOptionPane.showMessageDialog(this, text, "Game over", JOptionPane.INFORMATION_MESSAGE);
+	}
+	
 	@Override 
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		if (action.equals(START)) {
-			String storedName = start.getNameField().getText();
-			initialStrength = start.strengthEnduranceSlider.getValue();
+			String storedName = startPanel.getNameField().getText();
+			initialStrength = startPanel.strengthEnduranceSlider.getValue();
 			initialEndurance = 100 - initialStrength;
-			level = this.start.getLevelNumber();
-			initialEnergy = 500 - (this.level-1)*200; // Level 1 : 500; 2: 300; 3: 100
-			game.setGameSettings(storedName, initialStrength, initialEndurance, level, initialEnergy);
+			level = startPanel.getLevelNumber();
+			initialEnergy = 500 - (level-1)*200; // Level 1 : 500; 2: 300; 3: 100
+			gamePanel.initGameSettings(storedName, initialStrength, initialEndurance, level, initialEnergy);
+			gamePlaying = true;
+			game.initGame();
 			//this.allPanels.add(this.game, GAME_PANEL);
 			// --> new GamePanel
 			CardLayout cl = (CardLayout)(allPanels.getLayout());
@@ -151,8 +169,7 @@ public class GameApplication extends JFrame implements ActionListener {
 		} else if (action.equals(SCORES)) {
 			// --> new HighScoresPanel
 			CardLayout cl = (CardLayout)(allPanels.getLayout());
-			//cl.show(this.allPanels, SCORES_PANEL);
-			cl.next(allPanels);
+			cl.show(allPanels, SCORES_PANEL);
 		} else if (action.equals(RULES)) {
 			// --> new RulesPanel
 			CardLayout cl = (CardLayout)(allPanels.getLayout());

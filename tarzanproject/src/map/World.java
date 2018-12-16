@@ -26,13 +26,19 @@ public class World {
 		return t;
 	}
 	
+
+	public int[][] getWorldTiles() {
+		return worldTiles;
+	}
+
+	
 	public void tick() {
 		
 	}
 	
 	public void render(Graphics g) {
-		for (int y = 0; y < Map.SIZE_MAP; y++) {
-			for (int x = 0; x < Map.SIZE_MAP; x++) {
+		for (int x = 0; x < Map.SIZE_MAP; x++) {
+			for (int y = 0; y < Map.SIZE_MAP; y++) {
 				//System.out.println(x + ", " + y);
 				getTile(x, y).render(g, x, y);
 			}

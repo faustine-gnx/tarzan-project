@@ -13,14 +13,12 @@ public class Game implements Runnable {
 	private GameApplication gameApp;
 	private Thread gameThread;
 	private boolean gameRunning = false;
-	private KeyManager keyManager;
 	private BufferStrategy gameBuffer;
 	private Graphics g;
 	private Map gameMap;
 	private Handler gameHandler;
 		
 	public Game() {
-		this.keyManager = new KeyManager();
 	}
 	
 	public synchronized void start() {
@@ -44,24 +42,47 @@ public class Game implements Runnable {
 		}
 	}
 	
-	private void init() {
-		gameApp = new GameApplication();
-		gameMap = new Map(gameApp.getInitialStrength(), gameApp.getInitialEndurance(), gameApp.getLevel(), this);
+	public void initGame() {
+		gameMap = new Map(gameApp.getInitialStrength(), gameApp.getInitialEndurance(), gameApp.getLevel(), gameHandler);
+		gameHandler.setHandlerMap(gameMap);
+		gameHandler.setHandlerWorld(gameMap.getMapWorld());
+		gameApp.addKeyListener(gameMap.getMapTarzan());
+		gameApp.setFocusable(true);
+	}
+	
+	public void init() {
+		gameApp = new GameApplication(this);
+		gameHandler = new Handler(this);
+		System.out.println("Level "+gameApp.getLevel());
+		//gameMap = new Map(gameApp.getInitialStrength(), gameApp.getInitialEndurance(), gameApp.getLevel(), gameHandler);
+		//gameHandler.setHandlerMap(gameMap);
+		//gameHandler.setHandlerWorld(gameMap.getMapWorld());
 		Assets.init();
 		//this.gameApp.getGamePanel().addKeyListener(this.keyManager);
 		//this.gameApp.getGamePanel().setGamePanelFocusable(); // not working
 		// would be better to add to gamePanel but I don't know how to do it
 		// for now this works fine
-		gameApp.addKeyListener(this.keyManager);
-		gameApp.setFocusable(true);
-		gameHandler = new Handler(this);
+		
+		//gameApp.addKeyListener(this.keyManager);
+		//gameApp.addKeyListener(gameMap.getMapTarzan());
+		//gameApp.setFocusable(true);
 	}
 	
+	public Map getGameMap() {
+		return gameMap;
+	}
+
 	private void tick() {
-		keyManager.tick();
-		gameMap.mapTarzan.tick();
+		if(gameApp.isGamePlaying() && gameMap != null) {
+			gameMap.mapTarzan.tick();
+		}
+		
 	}
 	
+	public GameApplication getGameApp() {
+		return gameApp;
+	}
+
 	private void render() {
 		gameBuffer = gameApp.getGamePanel().getGameCanvas().getBufferStrategy();
 		if(gameBuffer == null) {
@@ -70,7 +91,9 @@ public class Game implements Runnable {
 		}
 		//draw
 		g = gameBuffer.getDrawGraphics();
-		gameMap.render(this.g);
+		if (gameMap != null) {
+			gameMap.render(this.g);
+		}
 		gameBuffer.show();
 		g.dispose();
 	}
@@ -82,9 +105,9 @@ public class Game implements Runnable {
 		long lastTime = System.nanoTime();
 		//Specify how many seconds there are in a minute as a double
 		//store as a double cause 60 sec in nanosec is big and store as final so it can't be changed
-		int fps = 6; // tick method called 60 times per second --> 6 for now
+		int fps = 60; // tick method called 60 times per second --> 5 for now: player does not press key + than 5 times/s
 		//Set definition of how many ticks per 1000000000 ns or 1 sec
-		double timePerTick = 1000000000 /fps; // because nanoseconds
+		double timePerTick = 1000000000/fps; // because nanoseconds
 		double delta = 0;
 		long now;
 		long timer = 0;
@@ -118,10 +141,5 @@ public class Game implements Runnable {
 		
 		stop();
 	}
-	
-	public KeyManager getKeyManager() {
-		return keyManager;
-	}
-	
 	
 }

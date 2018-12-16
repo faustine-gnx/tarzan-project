@@ -18,6 +18,7 @@ import imageloader.ImageLoader;
 import interfaces.Drawable;
 import tarzan.Tarzan;
 import tilegame.Game;
+import tilegame.Handler;
 import tilegame.Level;
 import tilegame.Position2D;
 
@@ -27,8 +28,8 @@ public class Map implements Drawable {
 	public final static int SIZE_MAP = 8;	
 	public final static int PIXEL_SCALE = 500/SIZE_MAP;
 	private Level level;
-	private float[][] landMap; // land type map // Size_map; set directly double[SIZE_MAP][SIZE_MAP]?
-	// free = no tarzan, no animal, no notMovings, not water
+	private float[][] landMap;
+	// free position = no tarzan, no animal, no notMovings, not water
 	private boolean[][] freePositions; // set directly boolean[SIZE_MAP][SIZE_MAP]?
 	private boolean[][] fieldOfViewMatrix; // true if in fov, false otherwise ; set directly double[SIZE_MAP][SIZE_MAP]
 
@@ -39,13 +40,12 @@ public class Map implements Drawable {
 	private List<Position2D> tarzanFieldOfView = new ArrayList<Position2D>();
 	public Tarzan mapTarzan;	
 
-	public Map(int strength, int endurance, int level, Game game){ // Handler instead of Game?
-		SimplexNoiseGenerator mapGen = new SimplexNoiseGenerator(2*level, 1, 1); //  2*lvl: increase number of water tiles with level
+	public Map(int strength, int endurance, int level, Handler handler){ // Handler instead of Game?
+		SimplexNoiseGenerator mapGen = new SimplexNoiseGenerator(level, 1, 1); //  lvl: increase number of water tiles with level
 		landMap = mapGen.createMap(SIZE_MAP);
+		//System.out.println("Level "+level);
 		this.level = new Level(level, SIZE_MAP);
 		mapWorld = new World(landMap);
-		// if handler: handler.setWorld(mapWorld);
-		// handler instead of game in tarzan
 		freePositions = new boolean[SIZE_MAP][SIZE_MAP];
 		fieldOfViewMatrix = new boolean[SIZE_MAP][SIZE_MAP];
 		for (int i=0; i < SIZE_MAP; i++) {
@@ -53,8 +53,7 @@ public class Map implements Drawable {
 		}
 		setWaterNotPositionFree();
 
-		// create Tarzan here or in Game2?
-		mapTarzan = new Tarzan(new Position2D(0,0), game);//, this.level, strength, endurance);
+		mapTarzan = new Tarzan(new Position2D(0,0), handler, this.level, strength, endurance);
 		freePositions[mapTarzan.getTarzanPosition().getY()][mapTarzan.getTarzanPosition().getX()] = false;
 
 
@@ -63,6 +62,10 @@ public class Map implements Drawable {
 		//setFieldOfViewMatrix();
 	}
 
+
+	public Tarzan getMapTarzan() {
+		return mapTarzan;
+	}
 
 	public void draw() {
 
@@ -112,6 +115,10 @@ public class Map implements Drawable {
 	}
 
 
+	public World getMapWorld() {
+		return mapWorld;
+	}
+
 	private Position2D randomPosition(){ // return a random position which is free
 		Random rand = new Random();
 		int x = rand.nextInt(SIZE_MAP); // print this out to check value
@@ -132,7 +139,7 @@ public class Map implements Drawable {
 	private void setWaterNotPositionFree() { 
 		for (int x=0; x<SIZE_MAP; x++) {
 			for (int y=0; y<SIZE_MAP; y++) {
-				if (landMap[x][y] > 0.5) { // > 0.5 = water
+				if (Math.abs(Math.round(landMap[x][y])) >= 0.5) { // > 0.5 = water
 					freePositions[x][y] = false;
 				}
 			}
@@ -144,6 +151,7 @@ public class Map implements Drawable {
 		Jaguar j = new Jaguar(randomPosition());
 		mapNotMovings.add(j);
 		freePositions[j.getNotMovingsPosition().getY()][j.getNotMovingsPosition().getX()] = false;
+		mapWorld.getTile(j.getNotMovingsPosition().getX(), j.getNotMovingsPosition().getY()).setHasNotMovings(j);
 	}
 
 	private void createOneBanana() {
@@ -151,6 +159,7 @@ public class Map implements Drawable {
 		mapNotMovings.add(b);
 		positionnableList.add(b);
 		freePositions[b.getNotMovingsPosition().getY()][b.getNotMovingsPosition().getX()] = false;
+		mapWorld.getTile(b.getNotMovingsPosition().getX(), b.getNotMovingsPosition().getY()).setHasNotMovings(b);
 	}
 
 	private void createJane() {
@@ -158,6 +167,8 @@ public class Map implements Drawable {
 		mapNotMovings.add(j);
 		positionnableList.add(j);
 		freePositions[j.getNotMovingsPosition().getY()][j.getNotMovingsPosition().getX()] = false;
+		mapWorld.getTile(j.getNotMovingsPosition().getX(), j.getNotMovingsPosition().getY()).setHasNotMovings(j);
+		
 	}
 
 	private void createOneKavurus() {
@@ -165,6 +176,7 @@ public class Map implements Drawable {
 		mapNotMovings.add(k);
 		positionnableList.add(k);
 		freePositions[k.getNotMovingsPosition().getY()][k.getNotMovingsPosition().getX()] = false;
+		mapWorld.getTile(k.getNotMovingsPosition().getX(), k.getNotMovingsPosition().getY()).setHasNotMovings(k);
 	}
 
 	private void createOneKnife() {
@@ -172,6 +184,7 @@ public class Map implements Drawable {
 		mapNotMovings.add(k);
 		positionnableList.add(k);
 		freePositions[k.getNotMovingsPosition().getY()][k.getNotMovingsPosition().getX()] = false;
+		mapWorld.getTile(k.getNotMovingsPosition().getX(), k.getNotMovingsPosition().getY()).setHasNotMovings(k);
 	}
 
 	public void tick() { 

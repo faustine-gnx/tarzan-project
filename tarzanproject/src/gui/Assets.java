@@ -41,6 +41,9 @@ public class Assets { // to load img / sounds ...
 		
 		BufferedImage KNIFE0 = ImageLoader.loadImage("/textures/knife.gif");
 		KNIFE = resize(KNIFE0);
+		
+		BufferedImage JANE0 = ImageLoader.loadImage("/textures/jane.gif");
+		JANE = resize(JANE0);
 	
 	}
 	

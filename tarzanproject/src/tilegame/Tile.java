@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import map.Map;
+import notmoving.NotMovings;
 
 public abstract class Tile {
 	
@@ -17,11 +18,21 @@ public abstract class Tile {
 	
 	protected Color tileColor;
 	protected final int tileID;
+	protected NotMovings hasNotMovings;
 	
 	public Tile(Color color, int id) {
 		tileColor = color; // in our case color?
 		tileID = id;
 		tiles[id] = this;
+		hasNotMovings = null;
+	}
+
+	public NotMovings getHasNotMovings() {
+		return hasNotMovings;
+	}
+
+	public void setHasNotMovings(NotMovings notMovings) {
+		hasNotMovings = notMovings;
 	}
 
 	public int getId() {

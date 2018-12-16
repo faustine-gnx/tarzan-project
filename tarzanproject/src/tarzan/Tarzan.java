@@ -1,27 +1,24 @@
 package tarzan;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
+import java.awt.CardLayout;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import gui.GameApplication;
 import tilegame.Position2D;
 
 import map.Map;
 import notmoving.*;
-import tilegame.Game;
 import tilegame.Goal;
+import tilegame.Handler;
 import tilegame.Level;
 
-public class Tarzan { 
+public class Tarzan implements KeyListener { 
 	// I would set everything private? since there is no subclass - true 
 	// + make getters
 	private final static int SPEED = 1;
-	private final int INITIAL_ENERGY;
+	private final static int ENERGY_LOSS = 1;
+	private final static int WATER_ENERGY_LOSS = 9; // + ENERGY_LOSS = 10
 	private String name; 
 	private int energy;
 	private int endurance;
@@ -31,49 +28,38 @@ public class Tarzan {
 	// attribute or method depending on energy? M:--> true : but in order to make the game fails if tarzan is killed? 
 	// lol the question was: is it an attribute OR is it a method? ^^
 	private int animalsKilled;
-	private int numberOfFlowersPicked;
 	private Position2D tarzanPosition;
 	private int fieldOfViewRadius;
-	private String movingState; // walking or swimming
-	private Game game;
+	private Handler handler;
 	private int speed;
-	private int xMove;
-	private int yMove;
-
+	
+	private boolean[] keys;
+	public boolean up; // w
+	public boolean down; // s
+	public boolean left; // a
+	public boolean right; // d
+	public boolean aUp; // arrows
+	public boolean aDown;
+	public boolean aLeft;
+	public boolean aRight;
+	
 	// Constructors
 	// Constructor called in game:
 	// lvl and setg passed as arguments are attributes of game
 
-	public Tarzan(Position2D pos, Game game){
+	public Tarzan(Position2D pos, Handler handler, Level level, int strength, int endurance){
 		name = "Tarzan";
-		this.game = game;
+		this.handler = handler;
 		tarzanPosition = pos;
-		INITIAL_ENERGY = 300;
-		energy = 300;
-		strength = 50;
-		endurance = 50;
+		energy = level.getInitialEnergy();
+		this.strength = strength;
+		this.endurance = endurance;
 		isAlive = true;
 		animalsKilled = 0;
-		numberOfFlowersPicked = 0;
 		fieldOfViewRadius = 5;
 		speed = SPEED;
-		//animalPosition = animalPosition;
-		//level = setg.getLevel();		
-	}
-
-	public Tarzan(Position2D pos, Level lvl, int strength, int endurance){
-		name = "Tarzan";
-		tarzanPosition = pos;
-		INITIAL_ENERGY = lvl.getInitialEnergy();
-		energy = lvl.getInitialEnergy();
-		this.endurance = endurance;
-		this.strength = strength;
-		isAlive = true;
-		animalsKilled = 0;
-		numberOfFlowersPicked = 0;
-		fieldOfViewRadius = lvl.getVisibilitySize();
-		//animalPosition = animalPosition;
-		//level = setg.getLevel();		
+		fieldOfViewRadius = level.getVisibilitySize();
+		keys = new boolean[256];
 	}
 
 	public Position2D getTarzanPosition() {
@@ -104,13 +90,6 @@ public class Tarzan {
 		tarzanPosition.set(x,y);
 	}
 
-	// getters and setters for energy, strength, endurance, animalsKilled
-
-	/*public int[2] getTarzanPositionXY() { // not sure it will work
-		new int[2]={this.tarzanPosition.getX(), this.tarzanPosition.getY()};
-		return 
-	}*/
-
 	public int getFieldOfViewRadius() {
 		return fieldOfViewRadius;
 	}
@@ -125,17 +104,19 @@ public class Tarzan {
 		if (winningChance > 100) {
 			animalsKilled += 1;
 			j.finalize();
+			handler.getHandlerWorld().getTile(j.getNotMovingsPosition().getX(), j.getNotMovingsPosition().getY()).setHasNotMovings(null);
 		} else {
 			// what happens if Tarzan looses ?
 		}
 	}	
-
-	// I added a method dead and a method to check conditions
-	// if it's dead or alive
+	
+	private boolean inTheWater() { 
+		return (handler.getHandlerWorld().getWorldTiles()[tarzanPosition.getY()][tarzanPosition.getX()] == 1);
+	}
 
 	public void takeDamage(int damage) {
 		//manipulate the amount of damage taken
-		if(damage >= energy) { // F: THIS SHOULD BE ENERGY AND NOT ENDURANCE?
+		if(damage >= energy) { 
 			energy = 0;
 			isAlive = false;
 			System.out.println("This is the end of the game!");
@@ -144,93 +125,29 @@ public class Tarzan {
 		}
 	}
 	
-	public void move() {
-		setTarzanPosition(tarzanPosition.getX() + xMove, tarzanPosition.getY() + yMove);
-		//xMove = 0;
-		//yMove = 0;
-	}
-	
-	private void getMoves() { //call with this in Game2
-		xMove = 0;
-		yMove = 0;
-		if (game.getKeyManager().up) {
-			yMove = -speed;
-		}
-		if (game.getKeyManager().down) {
-			yMove = speed;
-			System.out.println("move down");
-			System.out.println(tarzanPosition.getY());
-		}
-		if (game.getKeyManager().left) {
-			xMove = -speed;
-		}
-		if (game.getKeyManager().right) {
-			xMove = speed;
-		}
-	}
-	
 	public void tick() {
-		getMoves();
-		move();
+		//if(handler.getHandlerGame().getGameApp().isGamePlaying()) {
+			handler.getHandlerGame().getGameApp().getGamePanel().updateGameSettings(strength, endurance, energy, animalsKilled);
+		//}
 	}
-	// is showAbility for swim? if it is we can deleted --> create void move for swim  
-	// I have no idea what this is either... I deleted it
-
-	// i create a void method for swim in the pond anyway we should find a way 
-	// to link with the keyboard or not? 
-	// I think it does not change anything, we still move with the arrows of the keyboard, just the energy
-	// decrease is larger than when walking
-	// I think our map is too small to also have a forest and that we should just have water and grass,
-	// no forest. We can have rock too if we implement that we cannot walk/swim on it; if it's taking too
-	// much time I think we shouldn't do it right now
-	// is tarzan able just to swim and get outside of the pond by itself?
-	// yes? like I wrote above, swim only changes the energy lost at each time step?
-	// also we should link the pond that I put in this method to the random one
-	// generated in the map 
-	// I don't think we need a special method for swim :( we cannot have a proper pond; just some tiles are
-	// grass, and some are water. Some method in map (or game?) should determine whether Tarzan is on grass
-	// or water, and this will influence the energy decrease per time step
-	// --> We cannot have a round pond because our tiles are squared
-
-	/*void moveSwim() {
-		// If he swims at this angle, this is where he'll end up
-		double newX = x + Math.cos(angle) * speed;
-		double newY = y + Math.sin(angle) * speed;
-
-		if (isInPond(newX, newY)) {
-			// That's still in the pond, go there
-			x = newX;
-			y = newY;
-		} else {
-			// That's outside the pond, change direction
-			angle = Math.random() * 2 * Math.PI;
-		}
-		// i added this method but i am not sure it is necessary for the pond
-		// so i put it as a comment 
-		// if it doesn't work, try to add it 
-		//public String toString() {
-		//return String.format(
-		// "Position: %.0f,%.0f. Angle: %.0f degrees.",
-		// x, y, angle * 180/Math.PI);
-	}
-	// Check whether some coordinates are within a circular pond with radius 100
-	private boolean isInPond(double newX, double newY) {
-		return Math.sqrt(x*x+y*y) < 100;
-	}*/
 
 	void eatBanana(Banana b) throws Throwable{
 		endurance += Banana.getEnduranceGiven();
 		b.finalize(); // destroy banana
+		handler.getHandlerWorld().getTile(b.getNotMovingsPosition().getX(), b.getNotMovingsPosition().getY()).setHasNotMovings(null);
 	}
 
 	void pickKnife(Knife k) throws Throwable{
 		strength += Knife.getStrengthGiven();
 		k.finalize(); // destroy knife
+		handler.getHandlerWorld().getTile(k.getNotMovingsPosition().getX(), k.getNotMovingsPosition().getY()).setHasNotMovings(null);
 	}
 
 	void takePill(Kavurus k) throws Throwable {
 		energy += Kavurus.getEnergyGiven(); // no idea how much
 		k.finalize(); // destroy pill
+		handler.getHandlerWorld().getTile(k.getNotMovingsPosition().getX(), k.getNotMovingsPosition().getY()).setHasNotMovings(null);
+		
 	}
 	
 	// M: should we add a method also isJaneFound = end of the game in Tarzan class?
@@ -244,7 +161,6 @@ public class Tarzan {
 
 	boolean hasReachedGoal(Goal g) {
 		if ((animalsKilled >= g.getAnimalKilled()) 
-				//&& (this.numberOfFlowersPicked >= g.getFlowerPickedUp())
 				&& (strength >= g.getFightingStrength())
 				&& (endurance)>= g.getMobilityEndurance() ) {
 			return true;
@@ -281,15 +197,6 @@ public class Tarzan {
 				e.printStackTrace();
 			}
 
-
-		Position flowerPosition = null ;
-		if (flowerPosition == tarzanPosition)
-			try {
-				pickFlower (null);
-			} catch (Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 
 		Position bananaPosition = null ;
 		if (bananaPosition == tarzanPosition)
@@ -373,28 +280,55 @@ public class Tarzan {
 		this.animalsKilled = animalsKilled;
 	}
 
-	public String getMovingState() {
-		return movingState;
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if(e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
+			return;
+		keys[e.getKeyCode()] = true;
+		
+		if(keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]){
+	        tarzanPosition.setY(Math.max(0, tarzanPosition.getY()-speed));
+	        energy -= ENERGY_LOSS;
+	    }
+	    if(keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]){
+	        tarzanPosition.setY(Math.min(Map.SIZE_MAP-1, tarzanPosition.getY()+speed));
+	        energy -= ENERGY_LOSS;
+	    }
+	    if(keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT]){
+	        tarzanPosition.setX(Math.max(0, tarzanPosition.getX()-speed));
+	        energy -= ENERGY_LOSS;
+	    }
+	    if(keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]){
+	        tarzanPosition.setX(Math.min(Map.SIZE_MAP-1, tarzanPosition.getX()+speed));
+	        energy -= ENERGY_LOSS;
+	    }
+	    
+	    if(inTheWater()) {
+	    	energy -= WATER_ENERGY_LOSS;
+	    }
+	    
+	    if (energy <= 0) {
+	    	endOfGameLost();
+	    }
+	}
+	
+	private void endOfGameLost() {
+		handler.getHandlerGame().getGameApp().newJOptionPane("Sorry, you lost :("); // add score
+		
+		handler.getHandlerGame().init(); // new Game --> back to start
 	}
 
-	public void setMovingState(String movingState) {
-		this.movingState = movingState;
+	@Override
+	public void keyReleased(KeyEvent e) {
+		if(e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
+			return;
+		keys[e.getKeyCode()] = false;
 	}
 
-	public int getxMove() {
-		return xMove;
-	}
-
-	public void setxMove(int xMove) {
-		this.xMove = xMove;
-	}
-
-	public int getyMove() {
-		return yMove;
-	}
-
-	public void setyMove(int yMove) {
-		this.yMove = yMove;
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 
