@@ -5,18 +5,17 @@ import java.util.Random;
 /**
  * Generates a map using a simplex noise algorithm for 2D.
  *
- * This code was placed in the public domain by its original author,
- * Stefan Gustavson and adapted by Peter Eastman. 
+ * This code was placed in the public domain by its original author, Stefan
+ * Gustavson and adapted by Peter Eastman.
  * 
- * Simpified by Faustine & Martina.
- * Called in Map.
+ * Simpified by Faustine & Martina. Called in Map.
  *
  */
 
 public class SimplexNoiseGenerator implements MapGenerator {
 	int OCTAVES;
 	double ROUGHNESS;
-	double SCALE; 
+	double SCALE;
 
 	public SimplexNoiseGenerator(int octaves, double roughness, double scale) {
 		this.OCTAVES = octaves; // Number of Layers combined together to get a natural looking surface
@@ -24,7 +23,6 @@ public class SimplexNoiseGenerator implements MapGenerator {
 		// rough terrain
 		this.SCALE = scale; // Overall scaling of the terrain
 	}
-
 
 	private float[][] generateOctavedSimplexNoise(int size) {
 		float[][] totalNoise = new float[size][size];

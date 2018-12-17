@@ -8,18 +8,19 @@ import javax.imageio.ImageIO;
 /**
  * @author Faustine & Martina
  * 
- * The ImageLoader class is used to load images from folders.
+ *         The ImageLoader class is used to load images from folders.
  * 
  */
 
 public class ImageLoader {
-	
+
 	/**
-	 * Loads an image from a given path. 
+	 * Loads an image from a given path.
+	 * 
 	 * @param path
 	 * @return BufferedImage
 	 */
-	public static BufferedImage loadImage (String path) {
+	public static BufferedImage loadImage(String path) {
 		try {
 			// return image loaded
 			return ImageIO.read(ImageLoader.class.getResource(path));
@@ -29,5 +30,5 @@ public class ImageLoader {
 			System.exit(1);
 		}
 		return null;
-	} 
+	}
 }

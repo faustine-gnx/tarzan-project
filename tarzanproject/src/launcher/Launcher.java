@@ -6,19 +6,21 @@ import tilegame.Game;
 /**
  * @author Faustine & Martina
  * 
- * The Launcher class only contains the main to launch and start the game.
+ *         The Launcher class only contains the main to launch and start the
+ *         game.
  * 
  */
 
-public class Launcher {	
+public class Launcher {
 
 	/**
 	 * Main. Launches the game.
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {                 
+			public void run() {
 				Game newGame = new Game();
 				newGame.start();
 			}

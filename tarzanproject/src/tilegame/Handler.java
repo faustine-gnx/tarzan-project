@@ -6,7 +6,7 @@ import map.World;
 /**
  * @author Faustine & Martina
  * 
- * The Handler class is used to handle the game from the Tarzan class.
+ *         The Handler class is used to handle the game from the Tarzan class.
  * 
  */
 
@@ -14,9 +14,10 @@ public class Handler {
 	private Game handlerGame;
 	private Map handlerMap;
 	private World handlerWorld;
-	
+
 	/**
 	 * Constructor.
+	 * 
 	 * @param game
 	 */
 	public Handler(Game game) {
@@ -25,6 +26,7 @@ public class Handler {
 
 	/**
 	 * Getter.
+	 * 
 	 * @return handlerGame
 	 */
 	public Game getHandlerGame() {
@@ -33,14 +35,16 @@ public class Handler {
 
 	/**
 	 * Setter.
+	 * 
 	 * @param handlergame
 	 */
 	public void setHandlerGame(Game handlerGame) {
 		this.handlerGame = handlerGame;
 	}
-	
+
 	/**
 	 * Getter.
+	 * 
 	 * @return handlerMap
 	 */
 	public Map getHandlerMap() {
@@ -49,6 +53,7 @@ public class Handler {
 
 	/**
 	 * Setter.
+	 * 
 	 * @param handlerMap
 	 */
 	public void setHandlerMap(Map handlerMap) {
@@ -57,6 +62,7 @@ public class Handler {
 
 	/**
 	 * Getter.
+	 * 
 	 * @return handlerWorld
 	 */
 	public World getHandlerWorld() {
@@ -65,6 +71,7 @@ public class Handler {
 
 	/**
 	 * Setter.
+	 * 
 	 * @param handlerWorld
 	 */
 	public void setHandlerWorld(World handlerWorld) {

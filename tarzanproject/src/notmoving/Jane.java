@@ -1,25 +1,28 @@
 package notmoving;
+
 import tarzan.Tarzan;
 import tilegame.Position2D;
 
 /**
  * @author Faustine & Martina
  * 
- * Jane must be found by Tarzan to win the game.
+ *         Jane must be found by Tarzan to win the game.
  * 
  */
 public class Jane extends NotMovings {
 
 	/**
-	 * Constructor.   
+	 * Constructor.
+	 * 
 	 * @param position
 	 */
-	public Jane (Position2D position) {
-		super(position,  "JANE");
-	}	
+	public Jane(Position2D position) {
+		super(position, "JANE");
+	}
 
 	/**
-	 * Interaction with Tarzan. May end the game.  
+	 * Interaction with Tarzan. May end the game.
+	 * 
 	 * @param t
 	 */
 	@Override

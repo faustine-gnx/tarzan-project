@@ -1,4 +1,5 @@
 package gui;
+
 import java.awt.Canvas;
 import java.awt.Dimension;
 import javax.swing.JLabel;
@@ -9,43 +10,46 @@ import tarzan.Tarzan;
 /**
  * @author Faustine & Martina
  * 
- * The GamePanel class handles the display of the game when the player is playing.
- * It has a canvas to show the Map/World and labels to show attributes values.
+ *         The GamePanel class handles the display of the game when the player
+ *         is playing. It has a canvas to show the Map/World and labels to show
+ *         attributes values.
  * 
  */
 
 public class GamePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JLabel levelLabel; 
-	private JLabel strengthLabel; 
-	private JLabel enduranceLabel; 
-	private JLabel playerLabel; 
-	private Canvas gameCanvas;
-	private JLabel energyLabel;
-	private JLabel animalLabel;
-	
+	private JLabel levelLabel; // variable for the label of level
+	private JLabel strengthLabel; // variable for the label of strength
+	private JLabel enduranceLabel; // variable for the label of endurance
+	private JLabel playerLabel; // variable for the label of player
+	private Canvas gameCanvas; // variable for the canvas of game
+	private JLabel energyLabel; // variable for the label of energy
+	private JLabel animalLabel; // variable for the label of animal
+
 	/**
 	 * Constructor. Add a canvas to the GamePanel.
 	 */
-	public GamePanel() {	
+	public GamePanel() {
 		gameCanvas = new Canvas();
-		gameCanvas.setPreferredSize(new Dimension(GameApplication.WIDTH,GameApplication.WIDTH));
-		gameCanvas.setMinimumSize(new Dimension(GameApplication.WIDTH,GameApplication.WIDTH));
-		gameCanvas.setMaximumSize(new Dimension(GameApplication.WIDTH,GameApplication.WIDTH));
+		gameCanvas.setPreferredSize(new Dimension(GameApplication.WIDTH, GameApplication.WIDTH));
+		gameCanvas.setMinimumSize(new Dimension(GameApplication.WIDTH, GameApplication.WIDTH));
+		gameCanvas.setMaximumSize(new Dimension(GameApplication.WIDTH, GameApplication.WIDTH));
 		gameCanvas.setFocusable(false);
 		this.add(gameCanvas);
 	}
-	
+
 	/**
 	 * Getter.
+	 * 
 	 * @return gameCanvas
 	 */
 	public Canvas getGameCanvas() {
 		return gameCanvas;
 	}
-	
+
 	/**
-	 * Create and initialize the labels displayed under the canvas with the initial parameters.
+	 * Create and initialize the labels displayed under the canvas with the initial
+	 * parameters.
 	 */
 	public void initGameSettings(String name, int strength, int endurance, int level) {
 		levelLabel = new JLabel("Level: " + String.valueOf(level));
@@ -61,15 +65,16 @@ public class GamePanel extends JPanel {
 		this.add(animalLabel);
 		this.add(energyLabel);
 	}
-	
+
 	/**
-	 * Update the labels displayed under the canvas with the current game parameters.
+	 * Update the labels displayed under the canvas with the current game
+	 * parameters.
 	 */
-	public void updateGameSettings(int newStrength, int newEndurance, int newEnergy, int animals, int goalStrength, int goalEndurance, int goalJaguars) {
+	public void updateGameSettings(int newStrength, int newEndurance, int newEnergy, int animals, int goalStrength,
+			int goalEndurance, int goalJaguars) {
 		energyLabel.setText("Energy left: " + String.valueOf(newEnergy));
 		strengthLabel.setText("Strength: " + String.valueOf(newStrength) + "/" + String.valueOf(goalStrength));
 		enduranceLabel.setText("Endurance: " + String.valueOf(newEndurance) + "/" + String.valueOf(goalEndurance));
 		animalLabel.setText("Jaguars killed: " + String.valueOf(animals) + "/" + String.valueOf(goalJaguars));
 	}
 }
-

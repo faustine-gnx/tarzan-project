@@ -6,28 +6,28 @@ import tilegame.Position2D;
 /**
  * @author Faustine & Martina
  * 
- * Bananas can be eaten by Tarzan to increase his endurance.
+ *         Bananas can be eaten by Tarzan to increase his endurance.
  * 
  */
 
 public class Banana extends NotMovings {
 
-	//private boolean isEaten; I don't thing we need this
-	public static final int ENDURANCE_GIVEN = 25; // no idea how much
-	public Object getBananaPosition;
+	public static final int ENDURANCE_GIVEN = 25; // variable to set the endurance given to Tarzan by eating the banana
+	public Object getBananaPosition; // object to get banana position
 
 	/**
-	 * Constructor.   
+	 * Constructor.
+	 * 
 	 * @param position
 	 */
-	public Banana (Position2D position) {
-		super(position, "BANANA"); 
+	public Banana(Position2D position) {
+		super(position, "BANANA");
 	}
-	
+
 	/**
-	 * Interaction with Tarzan. 
-	 * Tarzan's endurance is increased.
-	 * Banana disappears from the world.   
+	 * Interaction with Tarzan. Tarzan's endurance is increased. Banana disappears
+	 * from the world.
+	 * 
 	 * @param t
 	 */
 	@Override
@@ -37,4 +37,3 @@ public class Banana extends NotMovings {
 		System.out.println("Yummy yummy, banana eaten! Endurance increased");
 	}
 }
-
