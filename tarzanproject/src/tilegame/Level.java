@@ -20,10 +20,14 @@ public class Level {
 	public final int numberOfKavurus;
 	public final int numberOfKnives;
 
-	public Level(int lvl){
-		levelNumber = lvl;
+	/**
+	 * Constructor. 
+	 * @param level
+	 */
+	public Level(int level){
+		levelNumber = level;
 		
-		switch(lvl) {
+		switch(level) {
 		case 1:
 			goalJaguars = 1;
 			goalStrength = 75;
@@ -54,37 +58,68 @@ public class Level {
 		default: 
 			throw new IllegalArgumentException("Unknown level");
 		}
-
 	}
 
+	/**
+	 * Getter.
+	 * @return goalStrength
+	 */
 	public int getGoalStrength() {
 		return goalStrength;
 	}
 
+	/**
+	 * Getter.
+	 * @return goalEndurance
+	 */
 	public int getGoalEndurance() {
 		return goalEndurance;
 	}
 
+	/**
+	 * Getter.
+	 * @return goalJaguars
+	 */
 	public int getGoalJaguars() {
 		return goalJaguars;
 	}
 
+	/**
+	 * Getter.
+	 * @return levelNumber
+	 */
 	public int getLevelNumber() {
 		return levelNumber;
 	}
 
+	/**
+	 * Getter.
+	 * @return numberOfJaguars
+	 */
 	public int getNumberOfJaguars() {
 		return numberOfJaguars;
 	}
 
+	/**
+	 * Getter.
+	 * @return numberOfBananas
+	 */
 	public int getNumberOfBananas() {
 		return numberOfBananas;
 	}
 
+	/**
+	 * Getter.
+	 * @return numberOfKavurus
+	 */
 	public int getNumberOfKavurus() {
 		return numberOfKavurus;
 	}
 
+	/**
+	 * Getter.
+	 * @return numberOfKnives
+	 */
 	public int getNumberOfKnives() {
 		return numberOfKnives;
 	}

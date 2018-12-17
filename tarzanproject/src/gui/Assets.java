@@ -31,6 +31,9 @@ public class Assets { // to load img / sounds ...
 	public static BufferedImage JAGUAR;
 	public static BufferedImage JANE;
 	
+	/**
+	 * Load images from files.
+	 */
 	public static void init() {
 		BufferedImage TARZAN_NORMAL0 = ImageLoader.loadImage("/textures/tarzan_normal.gif");
 		TARZAN_NORMAL = resize(TARZAN_NORMAL0);
@@ -52,9 +55,12 @@ public class Assets { // to load img / sounds ...
 		
 		BufferedImage JANE0 = ImageLoader.loadImage("/textures/jane.gif");
 		JANE = resize(JANE0);
-	
 	}
 	
+	/**
+	 * Resize images to the size of a tile.
+	 * @return BufferedImage
+	 */
 	private static BufferedImage resize(BufferedImage img) { 
 	    Image tmp = img.getScaledInstance(WIDTH, HEIGHT, Image.SCALE_SMOOTH);
 	    BufferedImage dimg = new BufferedImage(WIDTH, WIDTH, BufferedImage.TYPE_INT_ARGB);
@@ -64,6 +70,10 @@ public class Assets { // to load img / sounds ...
 	    return dimg;
 	}  
 	
+	/**
+	 * Called in render in World to get the image corresponding to the desired NotMovings.
+	 * @return BufferedImage
+	 */
 	public static BufferedImage getImageFromString(String s) {
 		switch(s) {
 			case "JAGUAR": 

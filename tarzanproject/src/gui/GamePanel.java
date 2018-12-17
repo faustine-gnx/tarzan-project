@@ -15,9 +15,6 @@ import tarzan.Tarzan;
  */
 
 public class GamePanel extends JPanel {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JLabel levelLabel; 
 	private JLabel strengthLabel; 
@@ -26,7 +23,10 @@ public class GamePanel extends JPanel {
 	private Canvas gameCanvas;
 	private JLabel energyLabel;
 	private JLabel animalLabel;
-
+	
+	/**
+	 * Constructor. Add a canvas to the GamePanel.
+	 */
 	public GamePanel() {	
 		gameCanvas = new Canvas();
 		gameCanvas.setPreferredSize(new Dimension(GameApplication.WIDTH,GameApplication.WIDTH));
@@ -36,10 +36,17 @@ public class GamePanel extends JPanel {
 		this.add(gameCanvas);
 	}
 	
+	/**
+	 * Getter.
+	 * @return gameCanvas
+	 */
 	public Canvas getGameCanvas() {
 		return gameCanvas;
 	}
 	
+	/**
+	 * Create and initialize the labels displayed under the canvas with the initial parameters.
+	 */
 	public void initGameSettings(String name, int strength, int endurance, int level) {
 		levelLabel = new JLabel("Level: " + String.valueOf(level));
 		strengthLabel = new JLabel("Strength: " + String.valueOf(strength));
@@ -55,6 +62,9 @@ public class GamePanel extends JPanel {
 		this.add(energyLabel);
 	}
 	
+	/**
+	 * Update the labels displayed under the canvas with the current game parameters.
+	 */
 	public void updateGameSettings(int newStrength, int newEndurance, int newEnergy, int animals, int goalStrength, int goalEndurance, int goalJaguars) {
 		energyLabel.setText("Energy left: " + String.valueOf(newEnergy));
 		strengthLabel.setText("Strength: " + String.valueOf(newStrength) + "/" + String.valueOf(goalStrength));

@@ -29,65 +29,84 @@ public class StartPanel extends JPanel implements ItemListener, ChangeListener {
 	private static final long serialVersionUID = 1L;
 	private JLabel welcomeLabel; 
 	private JTextField nameField;
-	private JSlider strengthEnduranceSlider;
+	private JSlider skillsSlider;
 	private JComboBox<Integer> levelComboBox;
 	private JLabel enterName;
 	private JLabel chooseLevel;
 	private JLabel chooseStrengthEndurance;
 	private int levelNumber = 1; // default level = 1
 	
-	// Start panel
+	/**
+	 * Constructor. Create the labels, text field, slider, combo box of the start menu.
+	 */
 	public StartPanel() {	
-		this.welcomeLabel = new JLabel("Welcome to our game: Tarzan - The Lost Adventure!", SwingConstants.CENTER);
-		this.enterName = new JLabel("Enter your name:");
-		this.chooseLevel = new JLabel("Choose a level:");
-		this.chooseStrengthEndurance = new JLabel("Choose the strength-endurance distribution:");
-		this.nameField = new JTextField("Anonymous");
-		this.nameField.setPreferredSize(new Dimension(10,100)); // DOES NOT WORK
-		this.strengthEnduranceSlider = new JSlider(0,100,50);
+		welcomeLabel = new JLabel("Welcome to our game: Tarzan - The Lost Adventure!", SwingConstants.CENTER);
+		enterName = new JLabel("Enter your name:");
+		chooseLevel = new JLabel("Choose a level:");
+		chooseStrengthEndurance = new JLabel("Choose the strength-endurance distribution:");
+		nameField = new JTextField("Anonymous");
+		nameField.setPreferredSize(new Dimension(10,100)); // DOES NOT WORK
+		skillsSlider = new JSlider(0,100,50);
 		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
 		labelTable.put(new Integer(0), new JLabel("Strength"));
 		labelTable.put(new Integer(100), new JLabel("Endurance"));
-		this.strengthEnduranceSlider.setLabelTable(labelTable);
-		this.strengthEnduranceSlider.setPaintLabels(true);
-		this.levelComboBox = new JComboBox<Integer>(new Integer[]{1, 2, 3});
+		skillsSlider.setLabelTable(labelTable);
+		skillsSlider.setPaintLabels(true);
+		levelComboBox = new JComboBox<Integer>(new Integer[]{1, 2, 3});
 
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));		
-		this.strengthEnduranceSlider.addChangeListener(this);
-		this.levelComboBox.addItemListener(this);
+		skillsSlider.addChangeListener(this);
+		levelComboBox.addItemListener(this);
 				
-		this.add(this.welcomeLabel);
-		this.add(this.enterName);
-		this.add(this.nameField);
+		this.add(welcomeLabel);
+		this.add(enterName);
+		this.add(nameField);
 		
-		this.add(this.chooseStrengthEndurance);
-		this.add(this.strengthEnduranceSlider);
-		this.add(this.chooseLevel);
-		this.add(this.levelComboBox);
+		this.add(chooseStrengthEndurance);
+		this.add(skillsSlider);
+		this.add(chooseLevel);
+		this.add(levelComboBox);
 		
 		setVisible(true);	
 	}
 	
+	/**
+	 * Getter.
+	 * @return nameField
+	 */
 	public JTextField getNameField() {
 		return this.nameField;
 	}
 	
+	/**
+	 * Getter.
+	 * @return levelNumber
+	 */
 	public int getLevelNumber() {
 		return this.levelNumber;
 	}
-
-	public JSlider getStrengthEnduranceSlider() {
-		return strengthEnduranceSlider;
+	
+	/**
+	 * Getter.
+	 * @return skillsSlider
+	 */
+	public JSlider getSkillsSlider() {
+		return skillsSlider;
 	}
-
+	
+	/**
+	 * Called when a state is changed (slider).
+	 * @param arg0
+	 */
 	@Override
-	public void stateChanged(ChangeEvent arg0) {
-		
-	}
-
+	public void stateChanged(ChangeEvent arg0) {}
+	
+	/**
+	 * Called when an item state is changed (level).
+	 */
 	@Override
 	public void itemStateChanged(ItemEvent arg0) {
-		this.levelNumber = (Integer) this.levelComboBox.getSelectedItem();
+		levelNumber = (Integer) levelComboBox.getSelectedItem();
 	}
 
 }

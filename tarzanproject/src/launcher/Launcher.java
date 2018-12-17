@@ -12,12 +12,16 @@ import tilegame.Game;
 
 public class Launcher {	
 
-public static void main(String[] args) {
+	/**
+	 * Main. Launches the game.
+	 * @param args
+	 */
+	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
-			   public void run() {                 
-				   Game newGame = new Game();
-				   newGame.start();
-			   }
+			public void run() {                 
+				Game newGame = new Game();
+				newGame.start();
+			}
 		});
 	}
 }

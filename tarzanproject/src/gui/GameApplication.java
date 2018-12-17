@@ -56,12 +56,19 @@ public class GameApplication extends JFrame implements ActionListener {
 	private JButton rulesButton;
 	private JButton backButton1;
 	private JButton backButton2;
-
+	
+	/**
+	 * Constructor. Initialize the GUI.
+	 * @param game
+	 */
 	public GameApplication(Game game) {
 		initUI();
 		this.game = game;
 	}   
-
+	
+	/**
+	 * Initialize the frame of the game.
+	 */
 	private void initUI() {
 		setTitle("Tarzan - The Lost Adventure");
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -109,45 +116,80 @@ public class GameApplication extends JFrame implements ActionListener {
 		setVisible(true);	
 		this.pack();
 	}
-
+	
+	/**
+	 * Getter.
+	 * @return gamePanel
+	 */
 	public GamePanel getGamePanel() {
 		return gamePanel;
 	}
-
+	
+	/**
+	 * Getter.
+	 * @return storedName
+	 */
 	public String getStoredName() {
 		return storedName;
 	}
-
+	
+	/**
+	 * Getter.
+	 * @return initialStrength
+	 */
 	public int getInitialStrength() {
 		return initialStrength;
 	}
-
+	
+	/**
+	 * Getter.
+	 * @return initialEndurance
+	 */
 	public int getInitialEndurance() {
 		return initialEndurance;
 	}
-
+	
+	/**
+	 * Getter.
+	 * @return level
+	 */
 	public int getLevel() {
 		return level;
 	}
-
+	
+	/**
+	 * Getter.
+	 * @return allPanels
+	 */
 	public JPanel getAllPanels() {
 		return allPanels;
 	}
-
+	
+	/**
+	 * Returns true if the game has started (GamePanel accessed). 
+	 * @return gamePlaying
+	 */
 	public boolean isGamePlaying() {
 		return gamePlaying;
 	}
 
+	/**
+	 * Shows a message dialog. Called when the game is ended.
+	 */
 	public void newJOptionPane(String text) {
 		JOptionPane.showMessageDialog(this, text, "Game over", JOptionPane.INFORMATION_MESSAGE);
 	}
-
+	
+	/**
+	 * Performs the actions when a button is clicked.
+	 * @param e
+	 */
 	@Override 
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		if (action.equals(START)) {
 			String storedName = startPanel.getNameField().getText();
-			initialStrength = startPanel.getStrengthEnduranceSlider().getValue();
+			initialStrength = startPanel.getSkillsSlider().getValue();
 			initialEndurance = 100 - initialStrength;
 			level = startPanel.getLevelNumber();
 			gamePanel.initGameSettings(storedName, initialStrength, initialEndurance, level);

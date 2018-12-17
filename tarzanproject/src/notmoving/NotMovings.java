@@ -6,6 +6,12 @@ import tarzan.Tarzan;
 
 import tilegame.Position2D;
 
+/**
+ * @author Faustine & Martina
+ * 
+ * The NotMovings class is an abstract class for all entities with a position and that don't move.
+ * 
+ */
 public abstract class NotMovings { // = non moving
 	protected final Position2D notMovingsPosition; 
 	protected final String notMovingsName;
@@ -13,42 +19,37 @@ public abstract class NotMovings { // = non moving
 	static int width;
 	static protected int x;
 	static protected int y;
- 
 	
-	/*NotMovings (int[][] position) { 
-		notLivingPosition2D = position;  
-	}*/
-	
+	/**
+	 * Constructor. 
+	 * @param position, name
+	 */
 	NotMovings (Position2D position, String name) {
 		notMovingsName = name;  
 		notMovingsPosition = position;  
 	}
 	
+	/**
+	 * Getter.
+	 * @return notMovingsPosition
+	 */
 	public Position2D getNotMovingsPosition() {
-		return this.notMovingsPosition;
+		return notMovingsPosition;
 	}
 	
+	/**
+	 * Getter.
+	 * @return notMovingsName
+	 */
 	public String getName() {
-		return this.notMovingsName;
+		return notMovingsName;
 	}
 	
-	// every not movings have a rectangle to check for collision
-	//public static Rectangle getBounds() {
-		//return new Rectangle(x, y, width, height);
-	//}
-	
-	public abstract int getNotMovingsType();
-		// 0 for Jaguar
-		// 1 for Banana
-		// 4 for Jane
-		// 5 for Kavurus
-		// 6 for Knife
-	
+	/**
+	 * Abstract method for interaction with Tarzan. Defined in subclasses.   
+	 * @param t
+	 */
 	public abstract void interact(Tarzan t);
-	
-	//public static void setVisible(boolean b) {
-		
-	//}
 
 }
 	 

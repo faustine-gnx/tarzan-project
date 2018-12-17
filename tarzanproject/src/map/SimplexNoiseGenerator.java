@@ -2,6 +2,17 @@ package map;
 
 import java.util.Random;
 
+/**
+ * Generates a map using a simplex noise algorithm for 2D.
+ *
+ * This code was placed in the public domain by its original author,
+ * Stefan Gustavson and adapted by Peter Eastman. 
+ * 
+ * Simpified by Faustine & Martina.
+ * Called in Map.
+ *
+ */
+
 public class SimplexNoiseGenerator implements MapGenerator {
 	int OCTAVES;
 	double ROUGHNESS;

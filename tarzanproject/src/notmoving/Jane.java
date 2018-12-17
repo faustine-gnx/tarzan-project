@@ -2,29 +2,28 @@ package notmoving;
 import tarzan.Tarzan;
 import tilegame.Position2D;
 
-//import com.sun.tools.javac.Main;
-
-
-
+/**
+ * @author Faustine & Martina
+ * 
+ * Jane must be found by Tarzan to win the game.
+ * 
+ */
 public class Jane extends NotMovings {
-	// int position [][] ; in superclass
-	//String name = "Jane"; in superclass
 
-	public Object getJanePosition;
-
-	// constructor
+	/**
+	 * Constructor.   
+	 * @param position
+	 */
 	public Jane (Position2D position) {
 		super(position,  "JANE");
 	}	
-	
-	public int getNotMovingsType() {
-		return 4;
-	}
-	
+
+	/**
+	 * Interaction with Tarzan. May end the game.  
+	 * @param t
+	 */
 	@Override
 	public void interact(Tarzan t) {
 		t.janeFound();
-		//t.getHandler().getHandlerWorld().setWorldNotMovingsNull(notMovingsPosition);
-		//System.out.println("New weapon! Strength increased");
 	}
 }

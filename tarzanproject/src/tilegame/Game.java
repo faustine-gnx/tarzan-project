@@ -34,9 +34,9 @@ public class Game implements Runnable {
 	private long now;
 	private long timer;
 	
-	public Game() {
-	}
-	
+	/**
+	 * Start new game (new thread).
+	 * */
 	public synchronized void start() {
 		if(gameRunning) {
 			return;
@@ -46,6 +46,9 @@ public class Game implements Runnable {
 		gameThread.start();
 	}
 	
+	/**
+	 * Stops the game.	 
+	 * */
 	public synchronized void stop() {
 		if(!gameRunning) {
 			return;
@@ -58,6 +61,9 @@ public class Game implements Runnable {
 		}
 	}
 	
+	/**
+	 * Initialize game: new map and initialization of game application. 
+	 * */
 	public void initGame() {
 		gameMap = new Map(gameApp.getInitialStrength(), gameApp.getInitialEndurance(), gameApp.getLevel(), gameHandler);
 		gameHandler.setHandlerMap(gameMap);
@@ -66,26 +72,43 @@ public class Game implements Runnable {
 		gameApp.setFocusable(true);
 	}
 	
+	/**
+	 * Initialize: new game application and initialization of assets.
+	 * */
 	public void init() {
 		gameApp = new GameApplication(this);
 		gameHandler = new Handler(this);
 		Assets.init();
 	}
 	
+	/**
+	 * Getter.
+	 * @return gameMap
+	 */
 	public Map getGameMap() {
 		return gameMap;
 	}
 
+	/**
+	 * Getter.
+	 * @return gameApp
+	 */
+	public GameApplication getGameApp() {
+		return gameApp;
+	}
+
+	/**
+	 * Update.
+	 */
 	private void tick() {
 		if(gameApp.isGamePlaying() && gameMap != null) {
 			gameMap.mapTarzan.tick();
 		}
 	}
 	
-	public GameApplication getGameApp() {
-		return gameApp;
-	}
-
+	/**
+	 * Update graphics.
+	 */
 	private void render() {
 		gameBuffer = gameApp.getGamePanel().getGameCanvas().getBufferStrategy();
 		if(gameBuffer == null) {
@@ -101,18 +124,18 @@ public class Game implements Runnable {
 		g.dispose();
 	}
 
+	/**
+	 * Run the game. Tick and render are called 60 times per second.
+	 */
 	@Override
 	public void run() {
 		init();
 		//Get the system time
-		lastTime = System.nanoTime();
-		//Specify how many seconds there are in a minute as a double
-		//store as a double cause 60 sec in nanosec is big and store as final so it can't be changed
-		fps = 60; // tick method called 60 times per second --> 5 for now: player does not press key + than 5 times/s
+		lastTime = System.nanoTime(); 
+		fps = 60; // tick method called 60 times per second 
 		//Set definition of how many ticks per 1000000000 ns or 1 sec
 		timePerTick = 1000000000/fps; // because nanoseconds
 		delta = 0;
-		
 		timer = 0;
 		
 		while(gameRunning) {
@@ -131,7 +154,6 @@ public class Game implements Runnable {
 				//decrement delta
 				delta--;
 			}
-			
 			if (timer >= 1000000000) {
 				timer = 0;
 			}

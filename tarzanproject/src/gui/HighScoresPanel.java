@@ -14,11 +14,14 @@ public class HighScoresPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JLabel highScores;
 	
+	/**
+	 * Constructor. TODO: read text from file.
+	 */
 	public HighScoresPanel() {	
 		// read text from file
 		String text = " THE HIGH SCORES WILL COME HERE "; // get text from file
-		this.highScores = new JLabel(text);
-		this.add(this.highScores);
+		highScores = new JLabel(text);
+		this.add(highScores);
 	}
 }
 

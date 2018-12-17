@@ -47,7 +47,10 @@ public class Tarzan implements KeyListener {
 
 	private boolean[] keys;
 
-	// Constructor
+	/**
+	 * Constructor. 
+	 * @param pos, handler, level, strength, endurance
+	 */
 	public Tarzan(Position2D pos, Handler handler, Level level, int strength, int endurance){
 		this.handler = handler;
 		tarzanPosition = pos;
@@ -58,66 +61,89 @@ public class Tarzan implements KeyListener {
 		speed = SPEED;
 		keys = new boolean[256]; 
 	}
-
+	
+	/**
+	 * Getter.
+	 * @return tarzanPosition
+	 */
 	public Position2D getTarzanPosition() {
 		return tarzanPosition;
 	}
-
+	
+	/**
+	 * Setter.
+	 * @param tarzanPosition
+	 */
 	public void setTarzanPosition(Position2D tarzanPosition) {
 		this.tarzanPosition = tarzanPosition;
 	}
 
+	/**
+	 * Setter.
+	 * @param x, y
+	 */
 	public void setTarzanPosition(int x, int y) {
 		if (x > Map.SIZE_MAP) {
 			x = Map.SIZE_MAP-1;
 		}
-
 		if (x < 0) {
 			x = 0;
 		}
-
 		if (y > Map.SIZE_MAP) {
 			y = Map.SIZE_MAP-1;
 		}
-
 		if (y < 0) {
 			y = 0;
 		}
-
 		tarzanPosition.set(x,y);
 	}
-
+	
+	/**
+	 * Returns true if Tarzan is on a WaterTile.
+	 * @return boolean
+	 */
 	private boolean inTheWater() { 
 		return (handler.getHandlerWorld().getWorldTiles()[tarzanPosition.getY()][tarzanPosition.getX()] == 1);
 	}
-
-	public void takeDamage(int damage) {
+	
+	/**
+	 * Interaction with Jaguar: loss of energy. Tarzan might die.
+	 */
+	public void takeDamage() {
 		//manipulate the amount of damage taken
-		if(damage >= energy) { 
+		if(Jaguar.JAGUAR_STRENGTH >= energy) { 
 			energy = 0;
 			System.out.println("This is the end of the game!");
 		} else {
-			energy -= damage;
+			energy -= Jaguar.JAGUAR_STRENGTH;
 		}
 	}
-
-	public void tick() {
-		handler.getHandlerGame().getGameApp().getGamePanel().updateGameSettings(strength, endurance, energy, jaguarsKilled,handler.getHandlerMap().getMapLevel().getGoalStrength(), handler.getHandlerMap().getMapLevel().getGoalEndurance(), handler.getHandlerMap().getMapLevel().getGoalJaguars());
-	}
-
+	
+	/**
+	 * Interaction with Banana: endurance increased.
+	 */
 	public void eatBanana(){
-		endurance += Banana.getEnduranceGiven();
+		endurance += Banana.ENDURANCE_GIVEN;
 		System.out.println("Endurance: " + endurance);
 	}
-
+	
+	/**
+	 * Interaction with Knife: strength increased.
+	 */
 	public void pickKnife() {
-		strength += Knife.getStrengthGiven();
+		strength += Knife.STRENGTH_GIVEN;
 	}
-
+	
+	/**
+	 * Interaction with Kavurus: energy increased.
+	 */
 	public void takePill() {
-		energy += Kavurus.getEnergyGiven(); // no idea how much
+		energy += Kavurus.ENERGY_GIVEN; // no idea how much
 	}
-
+	
+	/**
+	 * Interaction with Jane: if goals are met, game won.
+	 */
 	public void janeFound() {
 		if(areGoalsMet()) {
 			endOfGameWin();
@@ -125,7 +151,11 @@ public class Tarzan implements KeyListener {
 			System.out.println("Meet the goals and come find me later!");
 		}
 	}
-
+	
+	/**
+	 * Returns true if goals are met.
+	 * @return boolean
+	 */
 	private boolean areGoalsMet() {
 		if (strength >= handler.getHandlerMap().getMapLevel().getGoalStrength() &&
 				endurance >= handler.getHandlerMap().getMapLevel().getGoalEndurance() &&
@@ -135,67 +165,75 @@ public class Tarzan implements KeyListener {
 			return false;
 		}
 	}
-
+	
+	/**
+	 * Getter.
+	 * @return handler	 
+	 * */
 	public Handler getHandler() {
 		return handler;
 	}
-
-	public void run() {
-		/*	try {
-			Clip clip = AudioSystem.getClip();
-			AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-					Main.class.getResourceAsStream("/path/to/sounds/" + new URL ("https://www.youtube.com/watch?v=6O0lLgV6KpQ") ));
-			clip.open(inputStream);
-			clip.start(); 
-		} catch (Exception e) {
-			System.err.println(e.getMessage());
-		}*/
-	}
-
+	
+	/**
+	 * Getter.
+	 * @return energy	 
+	 * */
 	public int getEnergy() {
 		return energy;
 	}
-
-	public void setEnergy(int energy) {
-		this.energy = energy;
-	}
-
+	
+	/**
+	 * Getter.
+	 * @return endurance	 
+	 * */
 	public int getEndurance() {
 		return endurance;
 	}
 
-	public void setEndurance(int endurance) {
-		this.endurance = endurance;
-	}
-
+	/**
+	 * Getter.
+	 * @return strength	 
+	 * */
 	public int getStrength() {
 		return strength;
 	}
 
-	public void setStrength(int strength) {
-		this.strength = strength;
-	}
-
+	/**
+	 * Getter.
+	 * @return jaguarsKilled	 
+	 * */
 	public int getJaguarsKilled() {
 		return jaguarsKilled;
 	}
 
-	public void setJaguarsKilled(int jaguarsKilled) {
-		this.jaguarsKilled = jaguarsKilled;
-	}
-
+	/**
+	 * Increment jaguarsKilled by 1.	 
+	 * */
 	public void killsJaguar() {
 		jaguarsKilled += 1;
 	}
 
+	/**
+	 * End of game - player lost. New game application. 
+	 * */
 	private void endOfGameLost() {
 		handler.getHandlerGame().getGameApp().newJOptionPane("Sorry, you lost :("); // add score
 		handler.getHandlerGame().init(); // new Game --> back to start
 	}
 
+	/**
+	 * End of game - player won. New game application.	 
+	 * */
 	private void endOfGameWin() {
 		handler.getHandlerGame().getGameApp().newJOptionPane("Congrats, you win :D"); // add score
 		handler.getHandlerGame().init(); // new Game --> back to start
+	}
+	
+	/**
+	 * Update.
+	 */
+	public void tick() {
+		handler.getHandlerGame().getGameApp().getGamePanel().updateGameSettings(strength, endurance, energy, jaguarsKilled,handler.getHandlerMap().getMapLevel().getGoalStrength(), handler.getHandlerMap().getMapLevel().getGoalEndurance(), handler.getHandlerMap().getMapLevel().getGoalJaguars());
 	}
 
 	@Override
@@ -244,8 +282,7 @@ public class Tarzan implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {}
-
-
+	
 }
 
 
