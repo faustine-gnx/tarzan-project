@@ -1,14 +1,5 @@
 package notmoving;
 
-import java.awt.image.BufferedImage;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Random;
-
-import javax.imageio.ImageIO;
-
 import tarzan.Tarzan;
 import tilegame.Position2D;
 

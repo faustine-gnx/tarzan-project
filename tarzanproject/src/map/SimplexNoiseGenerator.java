@@ -19,7 +19,6 @@ public class SimplexNoiseGenerator implements MapGenerator {
 		float[][] totalNoise = new float[size][size];
 		double layerFrequency = SCALE;
 		double layerWeight = 1;
-		double weightSum = 0;
 
 		Random r = new Random();
 
@@ -35,7 +34,6 @@ public class SimplexNoiseGenerator implements MapGenerator {
 
 			// Increase variables with each incrementing octave
 			layerFrequency *= 2;
-			weightSum += layerWeight;
 			layerWeight *= ROUGHNESS;
 
 		}

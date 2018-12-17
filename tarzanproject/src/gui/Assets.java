@@ -10,8 +10,8 @@ import map.Map;
 // TODO: CHANGE TO HAVE ONLY GIF IMAGES = NO BACKGROUND
 
 public class Assets { // to load img / sounds ...
-	private static final int WIDTH = 500/Map.SIZE_MAP;
-	private static final int HEIGHT = 500/Map.SIZE_MAP;
+	private static final int WIDTH = GameApplication.WIDTH/Map.SIZE_MAP;
+	private static final int HEIGHT = GameApplication.WIDTH/Map.SIZE_MAP;
 			
 	public static BufferedImage TARZAN_FIGHT;
 	public static BufferedImage TARZAN_FOREST;

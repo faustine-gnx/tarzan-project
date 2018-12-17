@@ -12,12 +12,12 @@ public class HighScoreManager {
 	// The name of the file where the highscores will be saved
 	private static final String HIGHSCORE_FILE = "scores.dat";
 
-	//Initialising an in and outputStream for working with the file
+	//Initializing an in and outputStream for working with the file
 	ObjectOutputStream outputStream = null;
 	ObjectInputStream inputStream = null;
 
 	public HighScoreManager() {
-		//initialising the scores-arraylist
+		//initializing the scores-arraylist
 		scores = new ArrayList<Score>();
 	}
 

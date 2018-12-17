@@ -2,8 +2,6 @@ package tilegame;
 
 import java.awt.Color;
 
-import gui.Assets;
-
 public class GrassTile extends Tile {
 	
 	public GrassTile(int id) {

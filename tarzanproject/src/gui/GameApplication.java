@@ -1,29 +1,23 @@
 package gui;
 
 import java.awt.CardLayout;
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import tilegame.Game;
 
 public class GameApplication extends JFrame implements ActionListener {
-	public final static int WIDTH = 500;
-	public final static int HEIGHT = 800;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L; // added because class is serializable (because of button?)
+	public final static int WIDTH = 800;
+	public final static int HEIGHT = 1000;
 	private JPanel allPanels;
 	public final static String GAME_PANEL = "Game";
 	public final static String START_PANEL = "Start";
@@ -156,7 +150,7 @@ public class GameApplication extends JFrame implements ActionListener {
 		String action = e.getActionCommand();
 		if (action.equals(START)) {
 			String storedName = startPanel.getNameField().getText();
-			initialStrength = startPanel.strengthEnduranceSlider.getValue();
+			initialStrength = startPanel.getStrengthEnduranceSlider().getValue();
 			initialEndurance = 100 - initialStrength;
 			level = startPanel.getLevelNumber();
 			initialEnergy = 500 - (level-1)*100; // Level 1 : 500; 2: 300; 3: 100

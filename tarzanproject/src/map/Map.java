@@ -13,42 +13,31 @@ import tilegame.*;
 // FOR NOW: NO FLOWER, NO HUT, ONLY "TIGER"=JAGUAR
 
 public class Map {
-	public final static int SIZE_MAP = 10;	
+	public final static int SIZE_MAP = 16;	
 	public final static int PIXEL_SCALE = GameApplication.WIDTH/SIZE_MAP;
 	private final Level mapLevel;
 	private float[][] landMap;
 	// free position = no tarzan, no animal, no notMovings, not water
 	private boolean[][] freePositions; // set directly boolean[SIZE_MAP][SIZE_MAP]?
-	private boolean[][] fieldOfViewMatrix; // true if in fov, false otherwise ; set directly double[SIZE_MAP][SIZE_MAP]
-
 	private final World mapWorld;
 	private List<Object> positionnableList = new ArrayList <Object>();
 	private List<NotMovings> mapNotMovings = new ArrayList<NotMovings>();
-	private List<Position2D> tarzanFieldOfView = new ArrayList<Position2D>();
 	public Tarzan mapTarzan;	
 
 	public Map(int strength, int endurance, int level, Handler handler){ // Handler instead of Game?
 		SimplexNoiseGenerator mapGen = new SimplexNoiseGenerator(level, 1, 1); //  lvl: increase number of water tiles with level
 		landMap = mapGen.createMap(SIZE_MAP);
-		//System.out.println("Level "+level);
 		mapLevel = new Level(level);
 		mapWorld = new World(landMap);
 		freePositions = new boolean[SIZE_MAP][SIZE_MAP];
-		fieldOfViewMatrix = new boolean[SIZE_MAP][SIZE_MAP];
 		for (int i=0; i < SIZE_MAP; i++) {
 			java.util.Arrays.fill(freePositions[i], true); // or when rock put false
 		}
 		setWaterNotPositionFree();
-
 		mapTarzan = new Tarzan(new Position2D(0,0), handler, mapLevel, strength, endurance);
 		freePositions[mapTarzan.getTarzanPosition().getY()][mapTarzan.getTarzanPosition().getX()] = false;
-
-
 		createPositionables(mapLevel); 
-		//setTarzanFieldOfView(); 
-		//setFieldOfViewMatrix();
 	}
-
 
 	public Tarzan getMapTarzan() {
 		return mapTarzan;
@@ -68,16 +57,28 @@ public class Map {
 		}
 	}
 
-
-	private void drawMap(Graphics g) {
-		mapWorld.render(g);
+	private void drawWorld(Graphics g) {
+		mapWorld.renderGrayTiles(g);
+		mapWorld.renderOneTile(g, mapTarzan.getTarzanPosition().getX(), mapTarzan.getTarzanPosition().getY());
+		for (int x=1; x<= Tarzan.FIELD_OF_VIEW_RADIUS; x++) {
+			for (int y=1; y<= Tarzan.FIELD_OF_VIEW_RADIUS; y++) {
+				mapWorld.renderOneTile(g, mapTarzan.getTarzanPosition().getX()+x, mapTarzan.getTarzanPosition().getY());
+				mapWorld.renderOneTile(g, mapTarzan.getTarzanPosition().getX()-x, mapTarzan.getTarzanPosition().getY());
+				mapWorld.renderOneTile(g, mapTarzan.getTarzanPosition().getX(), mapTarzan.getTarzanPosition().getY()+y);
+				mapWorld.renderOneTile(g, mapTarzan.getTarzanPosition().getX(), mapTarzan.getTarzanPosition().getY()-y);
+				mapWorld.renderOneTile(g, mapTarzan.getTarzanPosition().getX()+x-1, mapTarzan.getTarzanPosition().getY()+y-1);
+				mapWorld.renderOneTile(g, mapTarzan.getTarzanPosition().getX()-x+1, mapTarzan.getTarzanPosition().getY()-y+1);
+				mapWorld.renderOneTile(g, mapTarzan.getTarzanPosition().getX()+x-1, mapTarzan.getTarzanPosition().getY()-y+1);
+				mapWorld.renderOneTile(g, mapTarzan.getTarzanPosition().getX()-x+1, mapTarzan.getTarzanPosition().getY()+y-1);
+			}
+		}
 	}
 
 	private void drawTarzan(Graphics g) {
 		g.drawImage(Assets.TARZAN_NORMAL, mapTarzan.getTarzanPosition().getX()*PIXEL_SCALE, mapTarzan.getTarzanPosition().getY()*PIXEL_SCALE, null);
 	}
 
-	private void drawNotMovings(Graphics g) {
+	/*private void drawNotMovings(Graphics g) {
 		for (int x=0; x<SIZE_MAP; x++) {
 			for (int y=0; y<SIZE_MAP; y++) {
 					if(mapWorld.getWorldNotMovings(new Position2D(x,y)) != null) {
@@ -86,7 +87,7 @@ public class Map {
 					}
 			}
 		}
-	}
+	}*/ // Now done in draw world
 
 	private void createPositionables(Level lvl) {
 		for (int i = 0; i < lvl.getNumberOfJaguars(); i++) {
@@ -117,7 +118,7 @@ public class Map {
 			freePositions[pos.getY()][pos.getX()] = false;
 			return pos; 
 		} else {
-			return randomPosition(); // find other position - not sure if it will work
+			return randomPosition(); // Recursive way to find other position if previous position is not free
 		}
 	}
 
@@ -136,7 +137,7 @@ public class Map {
 	}
 
 	private void createOneJaguar() {
-		// create Tiger
+		// create Jaguar
 		Jaguar j = new Jaguar(randomPosition());
 		mapNotMovings.add(j);
 		freePositions[j.getNotMovingsPosition().getY()][j.getNotMovingsPosition().getX()] = false;
@@ -182,8 +183,7 @@ public class Map {
 	}
 
 	public void render(Graphics g) { 
-		drawMap(g); // TODO: draw only visible tiles
-		drawNotMovings(g);
+		drawWorld(g);
 		drawTarzan(g);
 
 	}

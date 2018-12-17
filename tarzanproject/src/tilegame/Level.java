@@ -4,7 +4,6 @@ import map.Map;
 
 public class Level {
 	public final int levelNumber;
-	public final int visibilitySize;
 	public final int numberOfJaguars;
 	public final int goalStrength;
 	public final int goalEndurance;
@@ -13,42 +12,37 @@ public class Level {
 	public final int numberOfBananas;
 	public final int numberOfKavurus;
 	public final int numberOfKnives;
-	// public final int mapSize;
-
 
 	public Level(int lvl){
 		levelNumber = lvl;
-		initialEnergy = 500 - (lvl-1)*100; // Level 1 : 500; 2: 400; 3: 300
+		initialEnergy = 500; // Level 1 : 500; 2: 400; 3: 300
 		
 		switch(lvl) {
 		case 1:
-			visibilitySize = Map.SIZE_MAP;
 			goalJaguars = 1;
 			goalStrength = 75;
 			goalEndurance = 75;
-			numberOfJaguars = 4; // 1 to have of each; for now 5 tigers
+			numberOfJaguars = (int) Map.SIZE_MAP/4;
 			numberOfBananas = (int) Map.SIZE_MAP/2;
 			numberOfKavurus = (int) Map.SIZE_MAP/2; 
 			numberOfKnives = (int) Map.SIZE_MAP/2;
 			break;
 		case 2:
-			visibilitySize = Map.SIZE_MAP/2;
-			goalJaguars = Map.SIZE_MAP/2;
+			goalJaguars = (int) Map.SIZE_MAP/8;
 			goalStrength = 100;
 			goalEndurance = 100;
-			numberOfJaguars = 8; // 1 to have of each; for now 5 tigers
+			numberOfJaguars = (int) Map.SIZE_MAP/2;
 			numberOfBananas = (int) Map.SIZE_MAP/2;
-			numberOfKavurus = (int) Map.SIZE_MAP/4; 
+			numberOfKavurus = (int) Map.SIZE_MAP/2; 
 			numberOfKnives = (int) Map.SIZE_MAP/2;
 			break;
 		case 3:
-			visibilitySize = 1;
-			goalJaguars = Map.SIZE_MAP;
+			goalJaguars = (int) Map.SIZE_MAP/4;
 			goalStrength = 150;
 			goalEndurance = 150;
-			numberOfJaguars = 16; // 1 to have of each; for now 5 tigers
+			numberOfJaguars = (int) Map.SIZE_MAP; 
 			numberOfBananas = (int) Map.SIZE_MAP/2;
-			numberOfKavurus = (int) Map.SIZE_MAP/8; 
+			numberOfKavurus = (int) Map.SIZE_MAP/4; 
 			numberOfKnives = (int) Map.SIZE_MAP/2;
 			break;
 		default: 
@@ -71,10 +65,6 @@ public class Level {
 
 	public int getLevelNumber() {
 		return levelNumber;
-	}
-
-	public int getVisibilitySize()  {
-		return visibilitySize;
 	}
 
 	public int getNumberOfJaguars() {

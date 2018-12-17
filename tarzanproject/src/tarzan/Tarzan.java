@@ -1,5 +1,5 @@
 package tarzan;
-import java.awt.Rectangle;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import tilegame.*;
@@ -13,6 +13,7 @@ public class Tarzan implements KeyListener {
 	private final static int SPEED = 1;
 	private final static int ENERGY_LOSS = 1;
 	private final static int WATER_ENERGY_LOSS = 10;
+	public final static int FIELD_OF_VIEW_RADIUS = 2;
 	private int energy;
 	private int endurance;
 	private int strength;
@@ -20,22 +21,10 @@ public class Tarzan implements KeyListener {
 	private int jaguarsKilled;
 	private Position2D tarzanPosition;
 	//private Position2D previousPosition;
-	private int fieldOfViewRadius;
 	private Handler handler;
 	private int speed;
 
 	private boolean[] keys;
-	private boolean up; // w
-	public boolean down; // s
-	public boolean left; // a
-	public boolean right; // d
-	public boolean aUp; // arrows
-	public boolean aDown;
-	public boolean aLeft;
-	public boolean aRight;
-
-	// rectangle to check for collision
-	protected Rectangle bounds; 
 
 	// Constructor
 	public Tarzan(Position2D pos, Handler handler, Level level, int strength, int endurance){
@@ -47,9 +36,7 @@ public class Tarzan implements KeyListener {
 		this.endurance = endurance;
 		isAlive = true;
 		jaguarsKilled = 0;
-		fieldOfViewRadius = 5;
 		speed = SPEED;
-		fieldOfViewRadius = level.getVisibilitySize();
 		keys = new boolean[256]; 
 	}
 
@@ -93,10 +80,6 @@ public class Tarzan implements KeyListener {
 	public void backToPreviousPosition() {
 		tarzanPosition = previousPosition;
 	}*/
-
-	public int getFieldOfViewRadius() {
-		return fieldOfViewRadius;
-	}
 
 	private boolean inTheWater() { 
 		return (handler.getHandlerWorld().getWorldTiles()[tarzanPosition.getY()][tarzanPosition.getX()] == 1);
@@ -156,67 +139,6 @@ public class Tarzan implements KeyListener {
 	void fieldOfView() {} // M: what is this for ? 
 	// --> to know which jaguars / notlivings are in Tarzan's sight = to know whether to draw them or not
 	// But I think it should go in Map / Game
-
-
-
-	/*void update() { // DO THIS IN GAME: CHECK IF TARZANPOSITION == jaguar/NOTLIVINGSPOSITION
-
-		// called at each time step --> M: what does it mean? 
-
-
-		// if position of jaguar or not living = position of tarzan
-		// call fight 
-		if (jaguarPosition == tarzanPosition);
-		{
-			try {
-				fight(null);
-			} catch (Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}			
-		}	
-
-		// several methods to check the position of not livings == tarzan then method associated 
-
-		Position kavarusPosition = null ; // why ???
-		if (kavarusPosition == tarzanPosition)
-			try {
-				takePill (null);
-			} catch (Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-
-		Position bananaPosition = null ;
-		if (bananaPosition == tarzanPosition)
-			try {
-				eatBanana (null);
-			} catch (Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		Position knifePosition = null ;
-		if (knifePosition == tarzanPosition)
-			try {
-				pickKnife (null);
-			} catch (Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-		// if goals are reached
-		// --> message stating goals are reached
-		if (hasReachedGoal(null)== true) {
-			System.out.println("The goals are reached ! Congratulations");
-		}
-
-		// decrease energy by value
-		// --> value depends on mode: wailing, swimming, swinging
-		// M: should we add a class mode or just made the methods inside Tarzan class? 
-	}
-	 */
 
 	public Handler getHandler() {
 		return handler;
@@ -278,6 +200,16 @@ public class Tarzan implements KeyListener {
 		jaguarsKilled += 1;
 	}
 
+	private void endOfGameLost() {
+		handler.getHandlerGame().getGameApp().newJOptionPane("Sorry, you lost :("); // add score
+		handler.getHandlerGame().init(); // new Game --> back to start
+	}
+
+	private void endOfGameWin() {
+		handler.getHandlerGame().getGameApp().newJOptionPane("Congrats, you win :D"); // add score
+		handler.getHandlerGame().init(); // new Game --> back to start
+	}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if(e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
@@ -315,17 +247,6 @@ public class Tarzan implements KeyListener {
 			System.out.println("Non moving encountered");
 			handler.getHandlerWorld().getWorldNotMovings(tarzanPosition).interact(this);
 		}
-	}
-
-
-	private void endOfGameLost() {
-		handler.getHandlerGame().getGameApp().newJOptionPane("Sorry, you lost :("); // add score
-		handler.getHandlerGame().init(); // new Game --> back to start
-	}
-
-	private void endOfGameWin() {
-		handler.getHandlerGame().getGameApp().newJOptionPane("Congrats, you win :D"); // add score
-		handler.getHandlerGame().init(); // new Game --> back to start
 	}
 
 	@Override

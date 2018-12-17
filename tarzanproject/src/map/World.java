@@ -1,6 +1,8 @@
 package map;
 
 import java.awt.Graphics;
+
+import gui.Assets;
 import notmoving.NotMovings;
 import tilegame.Position2D;
 import tilegame.Tile;
@@ -8,7 +10,7 @@ import tilegame.Tile;
 public class World {
 
 	private int[][] worldTiles;
-	protected NotMovings[][] worldNotMovings = new NotMovings[Map.SIZE_MAP][Map.SIZE_MAP];
+	private NotMovings[][] worldNotMovings = new NotMovings[Map.SIZE_MAP][Map.SIZE_MAP];
 	
 	public World(float[][] landMap) { // pass Map2 as argument and create tiles based on landMap
 		worldTiles = new int[Map.SIZE_MAP][Map.SIZE_MAP];
@@ -67,5 +69,26 @@ public class World {
 				getTile(x, y).render(g, x, y);
 			}
 		}
+	}
+	
+	public void renderGrayTiles(Graphics g) {
+		for (int x = 0; x < Map.SIZE_MAP; x++) {
+			for (int y = 0; y < Map.SIZE_MAP; y++) {
+				getTile(x, y).renderGrayTile(g, y, x);
+			}
+		}
+	}
+
+	public void renderOneTile(Graphics g, int x, int y) {
+		if (0 <= x && x < Map.SIZE_MAP && 0 <= y && y < Map.SIZE_MAP) {
+			getTile(x, y).render(g, y, x);
+			if (worldNotMovings[x][y] != null) {
+				g.drawImage(Assets.getImageFromString(worldNotMovings[x][y].getName()), x*Map.PIXEL_SCALE, y*Map.PIXEL_SCALE, null);
+			}
+		}
+	}
+	
+	public void renderOneGrayTile(Graphics g, int x, int y) {
+		getTile(x, y).renderGrayTile(g, y, x);
 	}
 }

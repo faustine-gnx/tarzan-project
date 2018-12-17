@@ -38,4 +38,9 @@ public abstract class Tile {
 		g.setColor(tileColor);
 		g.fillRect(y*Map.PIXEL_SCALE, x*Map.PIXEL_SCALE, Map.PIXEL_SCALE, Map.PIXEL_SCALE);
 	}
+	
+	public void renderGrayTile(Graphics g, int x, int y) {
+		g.setColor(Color.DARK_GRAY);
+		g.fillRect(y*Map.PIXEL_SCALE, x*Map.PIXEL_SCALE, Map.PIXEL_SCALE, Map.PIXEL_SCALE);
+	}
 }

@@ -1,41 +1,22 @@
 package gui;
-import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Graphics2D;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
 
 // Game display
 public class GamePanel extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JLabel levelLabel; 
 	private JLabel strengthLabel; 
 	private JLabel enduranceLabel; 
 	private JLabel playerLabel; 
 	private Canvas gameCanvas;
 	private JLabel energyLabel;
-	
 	private JLabel animalLabel;
-	private String player;
-	private int strength;
-	private int endurance;
-	private int energy;
-	private int animalsKilled;
-	private int level;
 
 	public GamePanel() {	
 		gameCanvas = new Canvas();
@@ -57,12 +38,6 @@ public class GamePanel extends JPanel {
 		playerLabel = new JLabel("Player: " + name);
 		animalLabel = new JLabel("Jaguars killed: " + String.valueOf(0));
 		energyLabel = new JLabel("Energy left: " + String.valueOf(energy));
-		player = name;
-		this.strength = strength;
-		this.endurance = endurance;
-		this.energy = energy;
-		this.animalsKilled = 0;
-		this.level = level;
 		this.add(playerLabel);
 		this.add(levelLabel);
 		this.add(strengthLabel);
@@ -76,67 +51,6 @@ public class GamePanel extends JPanel {
 		strengthLabel.setText("Strength: " + String.valueOf(newStrength) + "/" + String.valueOf(goalStrength));
 		enduranceLabel.setText("Endurance: " + String.valueOf(newEndurance) + "/" + String.valueOf(goalEndurance));
 		animalLabel.setText("Jaguars killed: " + String.valueOf(animals) + "/" + String.valueOf(goalJaguars));
-		strength = newStrength;
-		endurance = newEndurance;
-		animalsKilled = animals;
-		energy = newEnergy;
-		
-		/*this.add(this.strengthLabel);
-		this.add(this.enduranceLabel);
-		this.add(this.animalLabel);
-		this.add(this.energyLabel);*/ // I don't think need to be called again?
-	}
-	
-	public void updateStrengthLabel(int newStrength) {
-		strengthLabel.setText("Strength: " + String.valueOf(newStrength));
-		strength = newStrength;
-		//this.add(this.strengthLabel); // I don't think need to be called again?
-	}
-	
-	public void updateEnduranceLabel(int newEndurance) {
-		strengthLabel.setText("Endurance: " + String.valueOf(newEndurance));
-		strength = newEndurance;
-		//this.add(this.enduranceLabel); // I don't think need to be called again?
-	}
-
-	public void updateAnimalLabel(int animals) {
-		animalLabel.setText("Animals killed: " + String.valueOf(animals));
-		animalsKilled = animals;
-		//this.add(this.animalLabel); // I don't think need to be called again?
-	}
-	
-	public void updateEnergyLabel(int newEnergy) {
-		energyLabel.setText("Initial strength: " + String.valueOf(newEnergy));
-		energy = newEnergy;
-		//this.add(this.energyLabel); // I don't think need to be called again?
-	}
-	
-	public void setGamePanelFocusable() { // not working as i want
-		this.setFocusable(true);
-	}
-	
-	public int getStrength() {
-		return strength;
-	}
-
-	public void setStrength(int strength) {
-		this.strength = strength;
-	}
-
-	public int getEndurance() {
-		return endurance;
-	}
-
-	public void setEndurance(int endurance) {
-		this.endurance = endurance;
-	}
-
-	public int getEnergy() {
-		return energy;
-	}
-
-	public void setEnergy(int energy) {
-		this.energy = energy;
 	}
 }
 

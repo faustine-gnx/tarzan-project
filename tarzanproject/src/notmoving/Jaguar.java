@@ -1,19 +1,8 @@
 package notmoving;
-import javax.imageio.ImageIO;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 
+import java.util.Random;
 import tarzan.Tarzan;
 import tilegame.Position2D;
-
-//import com.sun.tools.javac.Main;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Random;
-import java.util.logging.Handler; 
 
 public class Jaguar extends NotMovings { // ACTUALLY JAGUAR, NOT TIGER
 	private int jaguarStrength;
