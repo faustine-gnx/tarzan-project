@@ -5,6 +5,13 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * @author Faustine & Martina
+ * 
+ * The ImageLoader class is used to load images from folders.
+ * 
+ */
+
 public class ImageLoader {
 
 	public static BufferedImage loadImage (String path) {

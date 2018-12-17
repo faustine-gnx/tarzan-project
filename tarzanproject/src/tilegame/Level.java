@@ -2,20 +2,26 @@ package tilegame;
 
 import map.Map;
 
+/**
+ * @author Faustine & Martina
+ * 
+ * The Level class determines the number of Jaguars, Bananas, Kavurus and Knives in the Map.
+ * It also determines the goal: number of Jaguars to be killed and skills to have.
+ * 
+ */
+
 public class Level {
 	public final int levelNumber;
 	public final int numberOfJaguars;
 	public final int goalStrength;
 	public final int goalEndurance;
 	public final int goalJaguars;
-	public final int initialEnergy;
 	public final int numberOfBananas;
 	public final int numberOfKavurus;
 	public final int numberOfKnives;
 
 	public Level(int lvl){
 		levelNumber = lvl;
-		initialEnergy = 500; // Level 1 : 500; 2: 400; 3: 300
 		
 		switch(lvl) {
 		case 1:
@@ -81,9 +87,5 @@ public class Level {
 
 	public int getNumberOfKnives() {
 		return numberOfKnives;
-	}
-	
-	public int getInitialEnergy() {
-		return initialEnergy;
 	}
 }

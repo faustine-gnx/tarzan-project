@@ -7,18 +7,25 @@ import notmoving.NotMovings;
 import tilegame.Position2D;
 import tilegame.Tile;
 
+/**
+ * @author Faustine & Martina
+ * 
+ * The World class is the terrain of the world. 
+ * It is composed of Tiles (grass or water) which might have NotMovings on it.
+ * The render methods draw the tiles and their NotLivings if any.
+ * 
+ */
+
 public class World {
 
 	private int[][] worldTiles;
 	private NotMovings[][] worldNotMovings = new NotMovings[Map.SIZE_MAP][Map.SIZE_MAP];
 	
-	public World(float[][] landMap) { // pass Map2 as argument and create tiles based on landMap
+	public World(float[][] landMap) {
 		worldTiles = new int[Map.SIZE_MAP][Map.SIZE_MAP];
 		for (int x = 0; x < Map.SIZE_MAP; x++) {
 			for (int y = 0; y < Map.SIZE_MAP; y++) {
-				//System.out.println(Math.abs(Math.round(landMap[x][y])));
 				worldTiles[x][y] = Math.abs(Math.round(landMap[x][y]));
-				//worldNotMovings[x][y] = null;
 			}
 		}		
 	}
@@ -38,7 +45,6 @@ public class World {
 		}
 		return t;
 	}
-	
 
 	public int[][] getWorldTiles() {
 		return worldTiles;
@@ -56,10 +62,6 @@ public class World {
 	
 	public void setWorldNotMovingsNull(Position2D pos) {
 		worldNotMovings[pos.getX()][pos.getY()] = null;
-	}
-	
-	public void tick() {
-		
 	}
 	
 	public void render(Graphics g) {

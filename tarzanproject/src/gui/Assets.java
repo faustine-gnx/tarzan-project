@@ -7,7 +7,14 @@ import java.awt.image.BufferedImage;
 import imageloader.ImageLoader;
 import map.Map;
 
-// TODO: CHANGE TO HAVE ONLY GIF IMAGES = NO BACKGROUND
+/**
+ * @author Faustine & Martina
+ * 
+ * The Assets class is used to load the images just once and not for each new NotMovings created.
+ * Make sure to do Project > Properties > Java build path > Libraries > Add class folder and tick "resources".
+ * Also press F5 to refresh the textures folder if needed.
+ * 
+ */
 
 public class Assets { // to load img / sounds ...
 	private static final int WIDTH = GameApplication.WIDTH/Map.SIZE_MAP;
@@ -48,7 +55,7 @@ public class Assets { // to load img / sounds ...
 	
 	}
 	
-	public static BufferedImage resize(BufferedImage img) { 
+	private static BufferedImage resize(BufferedImage img) { 
 	    Image tmp = img.getScaledInstance(WIDTH, HEIGHT, Image.SCALE_SMOOTH);
 	    BufferedImage dimg = new BufferedImage(WIDTH, WIDTH, BufferedImage.TYPE_INT_ARGB);
 	    Graphics2D g2d = dimg.createGraphics();

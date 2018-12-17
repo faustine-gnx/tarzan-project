@@ -10,7 +10,16 @@ import gui.GameApplication;
 import tarzan.Tarzan;
 import tilegame.*;
 
-// FOR NOW: NO FLOWER, NO HUT, ONLY "TIGER"=JAGUAR
+/**
+ * @author Faustine & Martina
+ * 
+ * The Map class is used to run the game. 
+ * It has a World (the terrain), a list of "NotMovings" (all the entities of the game except Tarzan), and Tarzan.
+ * The Map depends on the level chosen.
+ * The Map is used to generate the random attribution of tiles and create NotMovings and Tarzan.
+ * It is used to update the graphics of the game (render method), calling the render methods from World and Tarzan.
+ * 
+ */
 
 public class Map {
 	public final static int SIZE_MAP = 16;	
@@ -20,7 +29,6 @@ public class Map {
 	// free position = no tarzan, no animal, no notMovings, not water
 	private boolean[][] freePositions; // set directly boolean[SIZE_MAP][SIZE_MAP]?
 	private final World mapWorld;
-	private List<Object> positionnableList = new ArrayList <Object>();
 	private List<NotMovings> mapNotMovings = new ArrayList<NotMovings>();
 	public Tarzan mapTarzan;	
 
@@ -36,7 +44,7 @@ public class Map {
 		setWaterNotPositionFree();
 		mapTarzan = new Tarzan(new Position2D(0,0), handler, mapLevel, strength, endurance);
 		freePositions[mapTarzan.getTarzanPosition().getY()][mapTarzan.getTarzanPosition().getX()] = false;
-		createPositionables(mapLevel); 
+		createNotMovings(mapLevel); 
 	}
 
 	public Tarzan getMapTarzan() {
@@ -89,7 +97,7 @@ public class Map {
 		}
 	}*/ // Now done in draw world
 
-	private void createPositionables(Level lvl) {
+	private void createNotMovings(Level lvl) {
 		for (int i = 0; i < lvl.getNumberOfJaguars(); i++) {
 			createOneJaguar();
 		}
@@ -147,7 +155,6 @@ public class Map {
 	private void createOneBanana() {
 		Banana b = new Banana(randomPosition());
 		mapNotMovings.add(b);
-		positionnableList.add(b);
 		freePositions[b.getNotMovingsPosition().getY()][b.getNotMovingsPosition().getX()] = false;
 		mapWorld.setWorldNotMovings(b);
 	}
@@ -155,7 +162,6 @@ public class Map {
 	private void createJane() {
 		Jane j = new Jane(randomPosition());
 		mapNotMovings.add(j);
-		positionnableList.add(j);
 		freePositions[j.getNotMovingsPosition().getY()][j.getNotMovingsPosition().getX()] = false;
 		mapWorld.setWorldNotMovings(j);
 		
@@ -164,7 +170,6 @@ public class Map {
 	private void createOneKavurus() {
 		Kavurus k = new Kavurus(randomPosition());
 		mapNotMovings.add(k);
-		positionnableList.add(k);
 		freePositions[k.getNotMovingsPosition().getY()][k.getNotMovingsPosition().getX()] = false;
 		mapWorld.setWorldNotMovings(k);
 	}
@@ -172,14 +177,8 @@ public class Map {
 	private void createOneKnife() {
 		Knife k = new Knife(randomPosition());
 		mapNotMovings.add(k);
-		positionnableList.add(k);
 		freePositions[k.getNotMovingsPosition().getY()][k.getNotMovingsPosition().getX()] = false;
 		mapWorld.setWorldNotMovings(k);
-	}
-
-	public void tick() { 
-		mapTarzan.tick();
-		mapWorld.tick();
 	}
 
 	public void render(Graphics g) { 

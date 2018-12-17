@@ -13,11 +13,19 @@ import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-// start our game
+/**
+ * @author Faustine & Martina
+ * 
+ * The StartPanel class handles the menu of the game.
+ * When the application is launched, this is the first panel that the player sees.
+ * The player must enter his/her name, choose the game settings (level & skills distribution).
+ * He can then start the game.
+ * The high scores and rules can also be accessed.
+ * 
+ */
+
 public class StartPanel extends JPanel implements ItemListener, ChangeListener {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private JLabel welcomeLabel; 
 	private JTextField nameField;

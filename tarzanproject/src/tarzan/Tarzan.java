@@ -7,20 +7,41 @@ import tilegame.*;
 import map.Map;
 import notmoving.*;
 
+/**
+ * @author Faustine & Martina
+ * 
+ * The Tarzan class represents the player. It implements KeyListener in order to move him around.
+ * Tarzan has skills (endurance and strength), energy, and the number of jaguars (opponents) he has killed.
+ * He can move around the board to interact with NotLivings.
+ * Moving cost energy, and going on a WaterTile decreases his energy even more (swimming is exhausting!)
+ * The game updates (change in position, skills, energy...) are handled here.
+ * The the end of the game (victory or defeat) is managed here.
+ * He can find knives to increase his strength, eat bananas for endurance, and take Kavuru's pills for energy.
+ * To win the game, Tarzan must be strong and endurant enough + have killed enough jaguars (to impress Jane).
+ * If Jane is found and the goals are met, the game is won and a new game can be started from the StartPanel.
+ * If Tarzan runs out of energy, the game is lost and a new game can be started from the Start panel.
+ * 
+ * Since a lot of the game is handled here, Tarzan has an Handler attribute to make it easier to access Game, Map,
+ * and World attributes/methods for updates. 
+ * 
+ * Most updates and interactions are handled in the keyPressed method, as when no keys are pressed, nothing should
+ * be happening (no need to call the methods at each time step if no movement was detected). 
+ * 
+ */
+
+//TODO: implement scores for high scores
+
 public class Tarzan implements KeyListener { 
-	// I would set everything private? since there is no subclass - true 
-	// + make getters
 	private final static int SPEED = 1;
 	private final static int ENERGY_LOSS = 1;
 	private final static int WATER_ENERGY_LOSS = 10;
 	public final static int FIELD_OF_VIEW_RADIUS = 2;
+	public final static int INITIAL_ENERGY = 500; 
 	private int energy;
 	private int endurance;
 	private int strength;
-	private boolean isAlive ; 
 	private int jaguarsKilled;
 	private Position2D tarzanPosition;
-	//private Position2D previousPosition;
 	private Handler handler;
 	private int speed;
 
@@ -30,11 +51,9 @@ public class Tarzan implements KeyListener {
 	public Tarzan(Position2D pos, Handler handler, Level level, int strength, int endurance){
 		this.handler = handler;
 		tarzanPosition = pos;
-		//previousPosition = pos;
-		energy = level.getInitialEnergy();
+		energy = INITIAL_ENERGY;
 		this.strength = strength;
 		this.endurance = endurance;
-		isAlive = true;
 		jaguarsKilled = 0;
 		speed = SPEED;
 		keys = new boolean[256]; 
@@ -68,19 +87,6 @@ public class Tarzan implements KeyListener {
 		tarzanPosition.set(x,y);
 	}
 
-
-	/*public Position2D getPreviousPosition() {
-		return previousPosition;
-	}
-
-	public void setPreviousPosition(Position2D previousPosition) {
-		this.previousPosition = previousPosition;
-	}
-
-	public void backToPreviousPosition() {
-		tarzanPosition = previousPosition;
-	}*/
-
 	private boolean inTheWater() { 
 		return (handler.getHandlerWorld().getWorldTiles()[tarzanPosition.getY()][tarzanPosition.getX()] == 1);
 	}
@@ -89,7 +95,6 @@ public class Tarzan implements KeyListener {
 		//manipulate the amount of damage taken
 		if(damage >= energy) { 
 			energy = 0;
-			isAlive = false;
 			System.out.println("This is the end of the game!");
 		} else {
 			energy -= damage;
@@ -131,15 +136,6 @@ public class Tarzan implements KeyListener {
 		}
 	}
 
-	// M: should we add a method also isJaneFound = end of the game in Tarzan class?
-	// I think that we could have a method findingJane that checks if the goals are met, and if they are, 
-	// it ends the game, if not, it reminds the player how much opponents he still has to kill / flowers 
-	// to pick / bananas to eat / knives to find
-
-	void fieldOfView() {} // M: what is this for ? 
-	// --> to know which jaguars / notlivings are in Tarzan's sight = to know whether to draw them or not
-	// But I think it should go in Map / Game
-
 	public Handler getHandler() {
 		return handler;
 	}
@@ -180,14 +176,6 @@ public class Tarzan implements KeyListener {
 		this.strength = strength;
 	}
 
-	public boolean isAlive() {
-		return isAlive;
-	}
-
-	public void setAlive(boolean isAlive) {
-		this.isAlive = isAlive;
-	}
-
 	public int getJaguarsKilled() {
 		return jaguarsKilled;
 	}
@@ -215,8 +203,6 @@ public class Tarzan implements KeyListener {
 		if(e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
 			return;
 		keys[e.getKeyCode()] = true;
-
-		//setPreviousPosition(tarzanPosition);
 
 		if(keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]){
 			tarzanPosition.setY(Math.max(0, tarzanPosition.getY()-speed));

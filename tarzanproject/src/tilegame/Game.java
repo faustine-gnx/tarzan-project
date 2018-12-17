@@ -6,7 +6,17 @@ import gui.Assets;
 import gui.GameApplication;
 import map.Map;
 
+/**
+ * @author Faustine & Martina
+ * 
+ * The Game class is where the game and the gui are centralized. 
+ * It is the Runnable of our project.
+ * It contains a GameApplication for the gui and a map to play the game.
+ * 
+ */
+
 public class Game implements Runnable {
+	
 	private GameApplication gameApp;
 	private Thread gameThread;
 	private boolean gameRunning = false;
@@ -14,7 +24,6 @@ public class Game implements Runnable {
 	private Graphics g;
 	private Map gameMap;
 	private Handler gameHandler;
-		
 	private long lastTime;
 	//Specify how many seconds there are in a minute as a double
 	//store as a double cause 60 sec in nanosec is big and store as final so it can't be changed
