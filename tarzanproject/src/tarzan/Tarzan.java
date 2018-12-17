@@ -20,6 +20,8 @@ import notmoving.*;
  * To win the game, Tarzan must be strong and endurant enough + have killed enough jaguars (to impress Jane).
  * If Jane is found and the goals are met, the game is won and a new game can be started from the StartPanel.
  * If Tarzan runs out of energy, the game is lost and a new game can be started from the Start panel.
+ * The final score depends on the number of bananas eaten, the number of knives found, the number of jaguars killed and
+ * the energy remaining at the end of the game.
  * 
  * Since a lot of the game is handled here, Tarzan has an Handler attribute to make it easier to access Game, Map,
  * and World attributes/methods for updates. 
@@ -44,6 +46,7 @@ public class Tarzan implements KeyListener {
 	private Position2D tarzanPosition;
 	private Handler handler;
 	private int speed;
+	private int score;
 
 	private boolean[] keys;
 
@@ -60,6 +63,7 @@ public class Tarzan implements KeyListener {
 		jaguarsKilled = 0;
 		speed = SPEED;
 		keys = new boolean[256]; 
+		score = 0;
 	}
 	
 	/**
@@ -120,18 +124,19 @@ public class Tarzan implements KeyListener {
 	}
 	
 	/**
-	 * Interaction with Banana: endurance increased.
+	 * Interaction with Banana: score and endurance increased.
 	 */
 	public void eatBanana(){
 		endurance += Banana.ENDURANCE_GIVEN;
-		System.out.println("Endurance: " + endurance);
+		score += Banana.ENDURANCE_GIVEN;
 	}
 	
 	/**
-	 * Interaction with Knife: strength increased.
+	 * Interaction with Knife: score and strength increased.
 	 */
 	public void pickKnife() {
 		strength += Knife.STRENGTH_GIVEN;
+		score += Knife.STRENGTH_GIVEN;
 	}
 	
 	/**
@@ -146,6 +151,7 @@ public class Tarzan implements KeyListener {
 	 */
 	public void janeFound() {
 		if(areGoalsMet()) {
+			score += energy;
 			endOfGameWin();
 		} else {
 			System.out.println("Meet the goals and come find me later!");
@@ -172,6 +178,14 @@ public class Tarzan implements KeyListener {
 	 * */
 	public Handler getHandler() {
 		return handler;
+	}
+	
+	/**
+	 * Getter.
+	 * @return score	 
+	 * */
+	public int getScore() {
+		return score;
 	}
 	
 	/**
