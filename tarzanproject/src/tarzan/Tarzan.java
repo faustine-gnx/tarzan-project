@@ -26,7 +26,7 @@ import notmoving.*;
  *         new game can be started from the Start panel. The final score depends
  *         on the number of bananas eaten, the number of knives found, the
  *         number of jaguars killed and the energy remaining at the end of the
- *         game.
+ *         game, all multiplied by a factor level.
  * 
  *         Since a lot of the game is handled here, Tarzan has an Handler
  *         attribute to make it easier to access Game, Map, and World
@@ -35,7 +35,6 @@ import notmoving.*;
  *         Most updates and interactions are handled in the keyPressed method,
  *         as when no keys are pressed, nothing should be happening (no need to
  *         call the methods at each time step if no movement was detected).
- * 
  */
 
 //TODO: implement scores for high scores
@@ -46,6 +45,7 @@ public class Tarzan implements KeyListener {
 	private final static int WATER_ENERGY_LOSS = 10; // variable for setting the energy water when he need to swim
 	public final static int FIELD_OF_VIEW_RADIUS = 2; // variable for setting the field of view of Tarzan
 	public final static int INITIAL_ENERGY = 500; // variable for setting his initial energy
+	public final static int WINNING_BONUS = 500;
 	private int energy; // variable energy declared
 	private int endurance; // variable endurance declared
 	private int strength; // variable strength declared
@@ -53,13 +53,11 @@ public class Tarzan implements KeyListener {
 	private Position2D tarzanPosition; // variable Tarzan position
 	private Handler handler; // handler declared
 	private int speed; // variable speed of Tarzan
-	private int score; // variable score of Tarzan
-
+	//private int score; // variable score of Tarzan
 	private boolean[] keys;
 
 	/**
 	 * Constructor.
-	 * 
 	 * @param pos, handler, level, strength, endurance
 	 */
 	public Tarzan(Position2D pos, Handler handler, Level level, int strength, int endurance) {
@@ -71,7 +69,6 @@ public class Tarzan implements KeyListener {
 		jaguarsKilled = 0;
 		speed = SPEED;
 		keys = new boolean[256];
-		score = 0;
 	}
 
 	/**
@@ -140,7 +137,7 @@ public class Tarzan implements KeyListener {
 	 */
 	public void eatBanana() {
 		endurance += Banana.ENDURANCE_GIVEN;
-		score += Banana.ENDURANCE_GIVEN;
+		handler.getHandlerGame().addGameScore(Banana.ENDURANCE_GIVEN*handler.getHandlerMap().getMapLevel().getLevelNumber());
 	}
 
 	/**
@@ -148,14 +145,14 @@ public class Tarzan implements KeyListener {
 	 */
 	public void pickKnife() {
 		strength += Knife.STRENGTH_GIVEN;
-		score += Knife.STRENGTH_GIVEN;
+		handler.getHandlerGame().addGameScore(Knife.STRENGTH_GIVEN*handler.getHandlerMap().getMapLevel().getLevelNumber());
 	}
 
 	/**
 	 * Interaction with Kavurus: energy increased.
 	 */
 	public void takePill() {
-		energy += Kavurus.ENERGY_GIVEN; // no idea how much
+		handler.getHandlerGame().addGameScore(Kavurus.ENERGY_GIVEN*handler.getHandlerMap().getMapLevel().getLevelNumber()); // no idea how much
 	}
 
 	/**
@@ -163,7 +160,7 @@ public class Tarzan implements KeyListener {
 	 */
 	public void janeFound() {
 		if (areGoalsMet()) {
-			score += energy;
+			handler.getHandlerGame().addGameScore(energy*handler.getHandlerMap().getMapLevel().getLevelNumber());
 			endOfGameWin();
 		} else {
 			System.out.println("Meet the goals and come find me later!");
@@ -187,7 +184,6 @@ public class Tarzan implements KeyListener {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return handler
 	 */
 	public Handler getHandler() {
@@ -196,16 +192,6 @@ public class Tarzan implements KeyListener {
 
 	/**
 	 * Getter.
-	 * 
-	 * @return score
-	 */
-	public int getScore() {
-		return score;
-	}
-
-	/**
-	 * Getter.
-	 * 
 	 * @return energy
 	 */
 	public int getEnergy() {
@@ -214,7 +200,6 @@ public class Tarzan implements KeyListener {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return endurance
 	 */
 	public int getEndurance() {
@@ -223,7 +208,6 @@ public class Tarzan implements KeyListener {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return strength
 	 */
 	public int getStrength() {
@@ -232,7 +216,6 @@ public class Tarzan implements KeyListener {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return jaguarsKilled
 	 */
 	public int getJaguarsKilled() {
@@ -250,15 +233,16 @@ public class Tarzan implements KeyListener {
 	 * End of game - player lost. New game application.
 	 */
 	private void endOfGameLost() {
-		handler.getHandlerGame().getGameApp().newJOptionPane("Sorry, you lost :("); // add score
+		handler.getHandlerGame().getGameApp().newJOptionPane("Sorry, you lost :( \n Score: " + String.valueOf(handler.getHandlerGame().getGameScore().getScore())); // add score
 		handler.getHandlerGame().init(); // new Game --> back to start
 	}
 
 	/**
-	 * End of game - player won. New game application.
+	 * End of game - player won (bonus for score). New game application.
 	 */
 	private void endOfGameWin() {
-		handler.getHandlerGame().getGameApp().newJOptionPane("Congrats, you win :D"); // add score
+		handler.getHandlerGame().addGameScore(WINNING_BONUS);
+		handler.getHandlerGame().getGameApp().newJOptionPane("Congrats, you win :D \n Score: " + String.valueOf(handler.getHandlerGame().getGameScore().getScore())); // add score
 		handler.getHandlerGame().init(); // new Game --> back to start
 	}
 
@@ -269,7 +253,7 @@ public class Tarzan implements KeyListener {
 		handler.getHandlerGame().getGameApp().getGamePanel().updateGameSettings(strength, endurance, energy,
 				jaguarsKilled, handler.getHandlerMap().getMapLevel().getGoalStrength(),
 				handler.getHandlerMap().getMapLevel().getGoalEndurance(),
-				handler.getHandlerMap().getMapLevel().getGoalJaguars());
+				handler.getHandlerMap().getMapLevel().getGoalJaguars(), handler.getHandlerGame().getGameScore().getScore());
 	}
 
 	@Override
@@ -280,7 +264,7 @@ public class Tarzan implements KeyListener {
 
 		if (keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]) {
 			tarzanPosition.setY(Math.max(0, tarzanPosition.getY() - speed));
-			energy -= ENERGY_LOSS * (20 - endurance / 10);
+			energy -= ENERGY_LOSS * (15 - endurance / 10);
 		}
 		if (keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]) {
 			tarzanPosition.setY(Math.min(Map.SIZE_MAP - 1, tarzanPosition.getY() + speed));

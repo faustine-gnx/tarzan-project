@@ -74,7 +74,6 @@ public class StartPanel extends JPanel implements ItemListener, ChangeListener {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return nameField
 	 */
 	public JTextField getNameField() {
@@ -92,7 +91,6 @@ public class StartPanel extends JPanel implements ItemListener, ChangeListener {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return skillsSlider
 	 */
 	public JSlider getSkillsSlider() {
@@ -101,7 +99,6 @@ public class StartPanel extends JPanel implements ItemListener, ChangeListener {
 
 	/**
 	 * Called when a state is changed (slider).
-	 * 
 	 * @param arg0
 	 */
 	@Override

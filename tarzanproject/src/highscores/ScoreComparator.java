@@ -3,10 +3,20 @@ package highscores;
 import java.util.Comparator;
 
 /**
- * @author Faustine & Martina This class tells Java to compare two objects
+ * @author Faustine & Martina 
+ * 
+ * 			The ScoreComparator class is used to compare two Scores.
+ * 
  */
 
+
 public class ScoreComparator implements Comparator<Score> {
+	
+	/**
+	 * Compare the values of two Scores.
+	 * @param score1, score2
+	 * @return int 
+	 */
 	public int compare(Score score1, Score score2) {
 
 		int sc1 = score1.getScore(); // variable with getters to get one score

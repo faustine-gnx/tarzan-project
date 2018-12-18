@@ -36,7 +36,7 @@ public class GameApplication extends JFrame implements ActionListener {
 	private final static int DEFAULT_INITIAL_STRENGTH = 50; // variable default initial strength with value
 	private final static int DEFAULT_INITIAL_ENDURANCE = 50; // variable default initial endurance with value
 	private final static String DEFAULT_NAME = "Anonymous"; // variable default player's name with value
-	private String storedName = DEFAULT_NAME; // variable default player's name
+	private String playerName = DEFAULT_NAME; // variable default player's name
 	private int initialStrength = DEFAULT_INITIAL_STRENGTH; // declare variable default initial strength
 	private int initialEndurance = DEFAULT_INITIAL_ENDURANCE;// declare variable default initial endurance
 	private int level = DEFAULT_LEVEL;// declare variable default initial level
@@ -62,7 +62,6 @@ public class GameApplication extends JFrame implements ActionListener {
 
 	/**
 	 * Constructor. Initialize the GUI.
-	 * 
 	 * @param game
 	 */
 	public GameApplication(Game game) {
@@ -78,7 +77,7 @@ public class GameApplication extends JFrame implements ActionListener {
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// this.setLocationRelativeTo(null);
-		setResizable(true);
+		setResizable(false);
 		startPanel = new StartPanel();
 		rulesPanel = new RulesPanel();
 		scoresPanel = new HighScoresPanel();
@@ -123,7 +122,6 @@ public class GameApplication extends JFrame implements ActionListener {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return gamePanel
 	 */
 	public GamePanel getGamePanel() {
@@ -132,16 +130,14 @@ public class GameApplication extends JFrame implements ActionListener {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return storedName
 	 */
-	public String getStoredName() {
-		return storedName;
+	public String getPlayerName() {
+		return playerName;
 	}
 
 	/**
 	 * Getter.
-	 * 
 	 * @return initialStrength
 	 */
 	public int getInitialStrength() {
@@ -150,7 +146,6 @@ public class GameApplication extends JFrame implements ActionListener {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return initialEndurance
 	 */
 	public int getInitialEndurance() {
@@ -159,7 +154,6 @@ public class GameApplication extends JFrame implements ActionListener {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return level
 	 */
 	public int getLevel() {
@@ -168,7 +162,6 @@ public class GameApplication extends JFrame implements ActionListener {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return allPanels
 	 */
 	public JPanel getAllPanels() {
@@ -177,8 +170,7 @@ public class GameApplication extends JFrame implements ActionListener {
 
 	/**
 	 * Returns true if the game has started (GamePanel accessed).
-	 * 
-	 * @return gamePlaying
+	 *  @return gamePlaying
 	 */
 	public boolean isGamePlaying() {
 		return gamePlaying;
@@ -193,18 +185,17 @@ public class GameApplication extends JFrame implements ActionListener {
 
 	/**
 	 * Performs the actions when a button is clicked.
-	 * 
 	 * @param e
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		if (action.equals(START)) {
-			String storedName = startPanel.getNameField().getText();
+			playerName = startPanel.getNameField().getText();
 			initialStrength = startPanel.getSkillsSlider().getValue();
 			initialEndurance = 100 - initialStrength;
 			level = startPanel.getLevelNumber();
-			gamePanel.initGameSettings(storedName, initialStrength, initialEndurance, level);
+			gamePanel.initGameSettings(playerName, initialStrength, initialEndurance, level);
 			gamePlaying = true;
 			game.initGame();
 			// --> new GamePanel

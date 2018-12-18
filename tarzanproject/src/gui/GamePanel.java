@@ -25,6 +25,7 @@ public class GamePanel extends JPanel {
 	private Canvas gameCanvas; // variable for the canvas of game
 	private JLabel energyLabel; // variable for the label of energy
 	private JLabel animalLabel; // variable for the label of animal
+	private JLabel scoreLabel;
 
 	/**
 	 * Constructor. Add a canvas to the GamePanel.
@@ -40,7 +41,6 @@ public class GamePanel extends JPanel {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return gameCanvas
 	 */
 	public Canvas getGameCanvas() {
@@ -50,6 +50,7 @@ public class GamePanel extends JPanel {
 	/**
 	 * Create and initialize the labels displayed under the canvas with the initial
 	 * parameters.
+	 * @param name, strength, endurance, level
 	 */
 	public void initGameSettings(String name, int strength, int endurance, int level) {
 		levelLabel = new JLabel("Level: " + String.valueOf(level));
@@ -58,23 +59,27 @@ public class GamePanel extends JPanel {
 		playerLabel = new JLabel("Player: " + name);
 		animalLabel = new JLabel("Jaguars killed: " + String.valueOf(0));
 		energyLabel = new JLabel("Energy left: " + String.valueOf(Tarzan.INITIAL_ENERGY));
+		scoreLabel = new JLabel("Score: 0");
 		this.add(playerLabel);
 		this.add(levelLabel);
 		this.add(strengthLabel);
 		this.add(enduranceLabel);
 		this.add(animalLabel);
 		this.add(energyLabel);
+		this.add(scoreLabel);
 	}
 
 	/**
 	 * Update the labels displayed under the canvas with the current game
 	 * parameters.
+	 * @param newStrength, newEndurance, newEnergy, animals, goalStrength, goalEndurance, goalJaguars, score
 	 */
 	public void updateGameSettings(int newStrength, int newEndurance, int newEnergy, int animals, int goalStrength,
-			int goalEndurance, int goalJaguars) {
+			int goalEndurance, int goalJaguars, int score) {
 		energyLabel.setText("Energy left: " + String.valueOf(newEnergy));
 		strengthLabel.setText("Strength: " + String.valueOf(newStrength) + "/" + String.valueOf(goalStrength));
 		enduranceLabel.setText("Endurance: " + String.valueOf(newEndurance) + "/" + String.valueOf(goalEndurance));
 		animalLabel.setText("Jaguars killed: " + String.valueOf(animals) + "/" + String.valueOf(goalJaguars));
+		scoreLabel.setText("Score: " + String.valueOf(score));
 	}
 }

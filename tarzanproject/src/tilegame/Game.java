@@ -4,6 +4,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import gui.Assets;
 import gui.GameApplication;
+import highscores.HighScoreManager;
+import highscores.Score;
 import map.Map;
 
 /**
@@ -35,6 +37,8 @@ public class Game implements Runnable {
 	private double delta; // variable for create delta (= change in time)
 	private long now; // variable for the time of the system
 	private long timer; // variable to set the timer
+	private HighScoreManager highScoreManager;
+	private Score gameScore;
 
 	/**
 	 * Start new game (new thread).
@@ -68,6 +72,7 @@ public class Game implements Runnable {
 	 */
 	public void initGame() {
 		gameMap = new Map(gameApp.getInitialStrength(), gameApp.getInitialEndurance(), gameApp.getLevel(), gameHandler);
+		gameScore = new Score(gameApp.getPlayerName(), 0);
 		gameHandler.setHandlerMap(gameMap);
 		gameHandler.setHandlerWorld(gameMap.getMapWorld());
 		gameApp.addKeyListener(gameMap.getMapTarzan());
@@ -85,7 +90,6 @@ public class Game implements Runnable {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return gameMap
 	 */
 	public Map getGameMap() {
@@ -94,13 +98,36 @@ public class Game implements Runnable {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return gameApp
 	 */
 	public GameApplication getGameApp() {
 		return gameApp;
 	}
-
+	
+	/**
+	 * Getter.
+	 * @return gameScore
+	 */
+	public Score getGameScore() {
+		return gameScore;
+	}
+	
+	/**
+	 * Setter.
+	 * @param score
+	 */
+	public void setScoreGameScore(int score) {
+		gameScore.setScore(score);
+	}
+	
+	/**
+	 * Setter.
+	 * @param score
+	 */
+	public void addGameScore(int score) {
+		gameScore.setScore(gameScore.getScore()+score);
+	}
+	
 	/**
 	 * Update.
 	 */

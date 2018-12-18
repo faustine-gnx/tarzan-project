@@ -132,7 +132,6 @@ public class Map {
 
 	/**
 	 * Draw Tarzan.
-	 * 
 	 * @param g
 	 */
 	private void drawTarzan(Graphics g) {
@@ -191,7 +190,6 @@ public class Map {
 
 	/**
 	 * Check if position is free: not a water Tile and not an other NotMoving on it.
-	 * 
 	 * @param pos
 	 * @return Position2D
 	 */
@@ -270,7 +268,6 @@ public class Map {
 
 	/**
 	 * Draw the world (thus also NotMovings) and Tarzan.
-	 * 
 	 * @param g
 	 */
 	public void render(Graphics g) {

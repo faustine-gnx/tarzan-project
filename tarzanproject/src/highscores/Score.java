@@ -9,17 +9,22 @@ package highscores;
  */
 import java.io.Serializable;
 
-public class Score implements Serializable {
-	/**
-	 * make object of the type Score [name + score of player]
-	 */
+	public class Score implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int score; // variable integers of the score
-	private String naam; // variable string of the name
+	private String name; // variable string of the name
+	
+	/**
+	 * Constructor.
+	 * @param name, score
+	 */
+	public Score(String name, int score) {
+		this.score = score;
+		this.name = name;
+	}
 
 	/**
 	 * Getter.
-	 * 
 	 * @return score
 	 */
 	public int getScore() {
@@ -28,18 +33,17 @@ public class Score implements Serializable {
 
 	/**
 	 * Getter.
-	 * 
-	 * @return naam
+	 * @return name
 	 */
-	public String getNaam() {
-		return naam;
+	public String getName() {
+		return name;
 	}
-
+	
 	/**
-	 * define the score with string name and int score
+	 * Setter.
+	 * @param score
 	 */
-	public Score(String naam, int score) {
+	public void setScore(int score) {
 		this.score = score;
-		this.naam = naam;
 	}
 }
