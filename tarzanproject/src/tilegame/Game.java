@@ -84,18 +84,22 @@ public class Game implements Runnable {
 
 	/**
 	 * Initialize: new game application and initialization of assets.
+	 * @throws IOException 
 	 */
-	public void init() {
-		try {
-			gameApp = new GameApplication(this);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void init() throws IOException {
+		gameApp = new GameApplication(this);
 		gameHandler = new Handler(this);
 		Assets.init();
 	}
-
+	
+	/**
+	 * Initialize: new game application and initialization of assets.
+	 * @throws IOException 
+	 */
+	public void initNewGame() throws IOException {
+		gameApp.initUI();
+	}
+	
 	/**
 	 * Getter.
 	 * @return gameMap
@@ -176,7 +180,12 @@ public class Game implements Runnable {
 	 */
 	@Override
 	public void run() {
-		init();
+		try {
+			init();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// Get the system time
 		lastTime = System.nanoTime();
 		fps = 60; // tick method called 60 times per second

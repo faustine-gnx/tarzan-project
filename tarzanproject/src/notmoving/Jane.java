@@ -27,6 +27,11 @@ public class Jane extends NotMovings {
 	 */
 	@Override
 	public void interact(Tarzan t) {
-		t.janeFound();
+		try {
+			t.janeFound();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

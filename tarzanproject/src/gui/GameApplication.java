@@ -77,7 +77,8 @@ public class GameApplication extends JFrame implements ActionListener {
 	 * Initialize the frame of the game.
 	 * @throws IOException 
 	 */
-	private void initUI() throws IOException {
+	public void initUI() throws IOException {
+		gamePlaying = false;
 		setTitle("Tarzan - The Lost Adventure");
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

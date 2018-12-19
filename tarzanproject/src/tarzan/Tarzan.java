@@ -1,9 +1,12 @@
 package tarzan;
 
+import java.awt.CardLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
+import gui.GameApplication;
 import tilegame.*;
 
 import map.Map;
@@ -157,8 +160,9 @@ public class Tarzan implements KeyListener {
 
 	/**
 	 * Interaction with Jane: if goals are met, game won.
+	 * @throws IOException 
 	 */
-	public void janeFound() {
+	public void janeFound() throws IOException {
 		if (areGoalsMet()) {
 			handler.getHandlerGame().addGameScore(energy*handler.getHandlerMap().getMapLevel().getLevelNumber());
 			endOfGameWin();{
@@ -231,21 +235,25 @@ public class Tarzan implements KeyListener {
 
 	/**
 	 * End of game - player lost. New game application.
+	 * @throws IOException 
 	 */
-	private void endOfGameLost() {
+	private void endOfGameLost() throws IOException {
 		handler.getHandlerGame().getGameApp().newJOptionPane("Sorry, you lost :( \n Score: " + String.valueOf(handler.getHandlerGame().getGameScore().getScore())); // add score
 		handler.getHandlerGame().updateHighScores(handler.getHandlerGame().getGameScore());
+		handler.getHandlerGame().getGameApp().setVisible(false);
 		handler.getHandlerGame().init(); // new Game --> back to start
 	}
 
 	/**
 	 * End of game - player won (bonus for score). New game application.
+	 * @throws IOException 
 	 */
-	private void endOfGameWin() {
+	private void endOfGameWin() throws IOException {
 		handler.getHandlerGame().addGameScore(WINNING_BONUS);
 		handler.getHandlerGame().getGameApp().newJOptionPane("Congrats, you win :D \n Score: " + String.valueOf(handler.getHandlerGame().getGameScore().getScore())); // add score
 		handler.getHandlerGame().updateHighScores(handler.getHandlerGame().getGameScore());
-		handler.getHandlerGame().init(); // new Game --> back to start
+		handler.getHandlerGame().getGameApp().setVisible(false);
+		handler.getHandlerGame().init();
 	}
 
 	/**
@@ -286,7 +294,12 @@ public class Tarzan implements KeyListener {
 		}
 
 		if (energy <= 0) {
-			endOfGameLost();
+			try {
+				endOfGameLost();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 
 		if (handler.getHandlerWorld().getWorldNotMovings(tarzanPosition) != null) {

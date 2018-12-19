@@ -170,9 +170,8 @@ public class HighScoreManager {
 			x = MAX_NUMBER_SCORES;
 		}
 		while (i < x) {
-			highScoreString += (i + 1) + ".\t" + scores.get(i).getName() + "\t\t" + scores.get(i).getScore() + "\n";
+			highScoreString += (i + 1) + ". \t" + scores.get(i).getName() + " \t\t" + scores.get(i).getScore() + " \n";
 			i++;
-			System.out.println("get");
 		}
 		return highScoreString;
 	}

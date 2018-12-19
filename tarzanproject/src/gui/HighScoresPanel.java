@@ -1,9 +1,14 @@
 package gui;
 
+import java.awt.GridLayout;
 import java.io.IOException;
 
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.SpringLayout;
+import javax.swing.text.JTextComponent;
 
 import highscores.HighScoreManager;
 
@@ -17,7 +22,7 @@ import highscores.HighScoreManager;
 
 public class HighScoresPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private JLabel highScores;
+	private JTextComponent highScores;
 	private HighScoreManager highScoreManager;
 
 	/**
@@ -26,11 +31,10 @@ public class HighScoresPanel extends JPanel {
 	 */
 	public HighScoresPanel() throws IOException {
 		// read text from file
+		//this.setLayout(new GridLayout());
 		highScoreManager = new HighScoreManager();
-		//String text = " THE HIGH SCORES WILL COME HERE "; // get text from file
 		String text = highScoreManager.getHighScoreString();
-		highScores = new JLabel(text);
-		
+		highScores = new JTextArea(text);
 		this.add(highScores);
 	}
 }
