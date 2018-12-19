@@ -1,7 +1,16 @@
 package highscores;
 
-import java.util.*;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author Faustine & Martina
@@ -16,21 +25,34 @@ import java.io.*;
 public class HighScoreManager {
 	private final static int MAX_NUMBER_SCORES = 10; 
 	private ArrayList<Score> scores; // variable Arraylist of the type "score". We will use it to work with the
-										// scores inside the class
-	private static final String HIGHSCORE_FILE = "scores.dat";// The name of the file where the Highscores will be saved
+	// scores inside the class
+	private static final String HIGHSCORE_FILE = "high_scores.txt";// The name of the file where the Highscores will be saved
 	private ObjectOutputStream outputStream;// Initializing an outputStream for working with the file
 	private ObjectInputStream inputStream; // Initializing an inputStream for working with the file
 	private ScoreComparator comparator;
 	private String highScoreString;
+	Path path;
 
 	/**
 	 *Constructor.
 	 */
 	public HighScoreManager() {
-		//outputStream = null;
-		//inputStream  = null;
+		outputStream = null;
+		inputStream  = null;
 		comparator = new ScoreComparator();
 		scores = new ArrayList<Score>();
+		path = Paths.get("high_scores.txt");
+		if (!Files.exists(path)) {
+			System.out.println("File created");
+			try {
+				Files.createFile(path);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			System.out.println("File already exists");
+		}
 	}
 
 	/**
@@ -40,7 +62,7 @@ public class HighScoreManager {
 	public ArrayList<Score> getScores() {
 		return scores;
 	}
-	
+
 	/**
 	 * Initialize the scores: load them and sort them. 
 	 * @return scores
@@ -65,6 +87,18 @@ public class HighScoreManager {
 	public void addScore(String name, int score) {
 		loadScoreFile();
 		scores.add(new Score(name, score));
+		sort();
+		updateScoreFile();
+	}
+
+	/**
+	 * Add score to the scoreFile.
+	 * @param score
+	 */
+	public void addScore(Score score) {
+		loadScoreFile();
+		scores.add(score);
+		sort();
 		updateScoreFile();
 	}
 
@@ -72,10 +106,13 @@ public class HighScoreManager {
 	 * load arraylist of score in the high scores file and put them into the
 	 * scores-arraylist try catch necessary to avoid crashing
 	 */
+	@SuppressWarnings("unchecked")
 	public void loadScoreFile() {
 		try {
-			inputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILE));
-			scores = (ArrayList<Score>) inputStream.readObject(); // does that work??
+			//inputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILE));
+			//scores = (ArrayList<Score>) inputStream.readObject(); // does that work?? No
+			inputStream = new ObjectInputStream(new FileInputStream(path.toString()));
+			scores = (ArrayList<Score>) inputStream.readObject();
 		} catch (FileNotFoundException e) {
 			System.out.println("[Load] FNF Error: " + e.getMessage());
 		} catch (IOException e) {
@@ -100,7 +137,10 @@ public class HighScoreManager {
 	public void updateScoreFile() {
 		try {
 			outputStream = new ObjectOutputStream(new FileOutputStream(HIGHSCORE_FILE));
-			outputStream.writeObject(getHighScoreString());
+			if (scores != null) {
+				outputStream.writeObject(scores); 
+				outputStream.write('\n');
+			}
 		} catch (FileNotFoundException e) {
 			System.out.println("[Update] FNF Error: " + e.getMessage() + ", the program will try and make a new file");
 		} catch (IOException e) {
@@ -132,6 +172,7 @@ public class HighScoreManager {
 		while (i < x) {
 			highScoreString += (i + 1) + ".\t" + scores.get(i).getName() + "\t\t" + scores.get(i).getScore() + "\n";
 			i++;
+			System.out.println("get");
 		}
 		return highScoreString;
 	}

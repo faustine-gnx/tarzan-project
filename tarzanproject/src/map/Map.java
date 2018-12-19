@@ -31,7 +31,7 @@ public class Map {
 	// free position = no tarzan, no animal, no notMovings, not water
 	private boolean[][] freePositions; // set directly boolean[SIZE_MAP][SIZE_MAP]?
 	private final World mapWorld; // variable for the terrain
-	private List<NotMovings> mapNotMovings = new ArrayList<NotMovings>(); // arraylist for the notmovings as banana,
+	private ArrayList<NotMovings> mapNotMovings = new ArrayList<NotMovings>(); // arraylist for the notmovings as banana,
 																			// knife etc.
 	public Tarzan mapTarzan; // variable for Tarzan
 
@@ -39,7 +39,6 @@ public class Map {
 	 * Constructor. Initialize the Map: - Generates a random repartition for the
 	 * tiles - Sets the level and initial parameters - Creates Tarzan - Creates the
 	 * NotMovings
-	 * 
 	 * @param strength, endurance, level, handler
 	 */
 	public Map(int strength, int endurance, int level, Handler handler) { // Handler instead of Game?
@@ -60,7 +59,6 @@ public class Map {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return mapTarzan
 	 */
 	public Tarzan getMapTarzan() {
@@ -78,7 +76,6 @@ public class Map {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return mapWorld
 	 */
 	public World getMapWorld() {
@@ -87,7 +84,6 @@ public class Map {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return Color
 	 */
 	public Color getColor(int x, int y) { // maybe MapImage is not necessary
@@ -102,7 +98,6 @@ public class Map {
 
 	/**
 	 * Draw the world: tiles + not movings
-	 * 
 	 * @param g
 	 */
 	private void drawWorld(Graphics g) {
@@ -151,7 +146,6 @@ public class Map {
 
 	/**
 	 * Create the NotMovings; number depending on level.
-	 * 
 	 * @param level
 	 */
 	private void createNotMovings(Level level) {
@@ -172,7 +166,6 @@ public class Map {
 	/**
 	 * Generate random position for the creation of the NotMovings. Checks if
 	 * position is free, if not generate a new random position recursively.
-	 * 
 	 * @return Position2D
 	 */
 	private Position2D randomPosition() {

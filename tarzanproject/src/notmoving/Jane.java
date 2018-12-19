@@ -1,5 +1,7 @@
 package notmoving;
 
+import java.io.IOException;
+
 import tarzan.Tarzan;
 import tilegame.Position2D;
 
@@ -13,7 +15,6 @@ public class Jane extends NotMovings {
 
 	/**
 	 * Constructor.
-	 * 
 	 * @param position
 	 */
 	public Jane(Position2D position) {
@@ -22,7 +23,6 @@ public class Jane extends NotMovings {
 
 	/**
 	 * Interaction with Tarzan. May end the game.
-	 * 
 	 * @param t
 	 */
 	@Override

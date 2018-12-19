@@ -24,7 +24,6 @@ public class World {
 
 	/**
 	 * Constructor. Create the tiles according to the noise map landMap.
-	 * 
 	 * @param landMap
 	 */
 	public World(float[][] landMap) {
@@ -38,7 +37,6 @@ public class World {
 
 	/**
 	 * Get the tile corresponding to the map position.
-	 * 
 	 * @param x, y
 	 * @return Tile
 	 */
@@ -52,7 +50,6 @@ public class World {
 
 	/**
 	 * Get the tile corresponding to the map position.
-	 * 
 	 * @param pos
 	 * @return Tile
 	 */
@@ -66,7 +63,6 @@ public class World {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return worldTiles
 	 */
 	public int[][] getWorldTiles() {
@@ -75,7 +71,6 @@ public class World {
 
 	/**
 	 * Get the NotMoving corresponding to the map position.
-	 * 
 	 * @param pos
 	 * @return NotMovings
 	 */
@@ -85,7 +80,6 @@ public class World {
 
 	/**
 	 * Set the NotMoving in the worldNotMovings matrix..
-	 * 
 	 * @param notMovings
 	 */
 	public void setWorldNotMovings(NotMovings notMovings) {
@@ -95,7 +89,6 @@ public class World {
 
 	/**
 	 * Set the worldNotMovings matrix to null at position pos.
-	 * 
 	 * @param pos
 	 */
 	public void setWorldNotMovingsNull(Position2D pos) {
@@ -104,7 +97,6 @@ public class World {
 
 	/**
 	 * Draw all tiles.
-	 * 
 	 * @deprecated Now only visible tiles are drawn.
 	 * @param g
 	 */
@@ -119,7 +111,6 @@ public class World {
 
 	/**
 	 * Fill the world with gray tiles.
-	 * 
 	 * @param g
 	 */
 	public void renderGrayTiles(Graphics g) {
@@ -132,7 +123,6 @@ public class World {
 
 	/**
 	 * Draw the tile corresponding the the position x, y.
-	 * 
 	 * @param g, x, y
 	 */
 	public void renderOneTile(Graphics g, int x, int y) {

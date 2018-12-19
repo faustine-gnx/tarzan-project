@@ -2,6 +2,8 @@ package tilegame;
 
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
+import java.io.IOException;
+
 import gui.Assets;
 import gui.GameApplication;
 import highscores.HighScoreManager;
@@ -31,7 +33,7 @@ public class Game implements Runnable {
 	// store as a double cause 60 sec in nanosec is big and store as final so it
 	// can't be changed
 	private int fps = 60; // tick method called 60 times per second --> 5 for now: player does not press
-							// key + than 5 times/s
+	// key + than 5 times/s
 	// Set definition of how many ticks per 1000000000 ns or 1 sec
 	private double timePerTick; // because nanoseconds
 	private double delta; // variable for create delta (= change in time)
@@ -77,13 +79,19 @@ public class Game implements Runnable {
 		gameHandler.setHandlerWorld(gameMap.getMapWorld());
 		gameApp.addKeyListener(gameMap.getMapTarzan());
 		gameApp.setFocusable(true);
+		highScoreManager = new HighScoreManager();
 	}
 
 	/**
 	 * Initialize: new game application and initialization of assets.
 	 */
 	public void init() {
-		gameApp = new GameApplication(this);
+		try {
+			gameApp = new GameApplication(this);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		gameHandler = new Handler(this);
 		Assets.init();
 	}
@@ -103,7 +111,7 @@ public class Game implements Runnable {
 	public GameApplication getGameApp() {
 		return gameApp;
 	}
-	
+
 	/**
 	 * Getter.
 	 * @return gameScore
@@ -111,7 +119,7 @@ public class Game implements Runnable {
 	public Score getGameScore() {
 		return gameScore;
 	}
-	
+
 	/**
 	 * Setter.
 	 * @param score
@@ -119,7 +127,7 @@ public class Game implements Runnable {
 	public void setScoreGameScore(int score) {
 		gameScore.setScore(score);
 	}
-	
+
 	/**
 	 * Setter.
 	 * @param score
@@ -127,7 +135,15 @@ public class Game implements Runnable {
 	public void addGameScore(int score) {
 		gameScore.setScore(gameScore.getScore()+score);
 	}
-	
+
+	/**
+	 * Setter.
+	 * @param score
+	 */
+	public void updateHighScores(Score score) {
+		highScoreManager.addScore(score);
+	}
+
 	/**
 	 * Update.
 	 */

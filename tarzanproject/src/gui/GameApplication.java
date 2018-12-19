@@ -4,10 +4,14 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+
 import tilegame.Game;
 
 /**
@@ -25,7 +29,7 @@ public class GameApplication extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L; // added because class is serializable (because of button?)
 	public final static int WIDTH = 800; // variable width of game panel
-	public final static int HEIGHT = 1000; // variable height of game panel
+	public final static int HEIGHT = 950; // variable height of game panel
 	public final static String GAME_PANEL = "Game"; // variable name of game panel
 	public final static String START_PANEL = "Start"; // variable name of start panel
 	public final static String SCORES_PANEL = "Scores"; // variable name of scores panel
@@ -52,8 +56,7 @@ public class GameApplication extends JFrame implements ActionListener {
 	private String RULES = "Rules";// variable with string of characters of the rules' button
 	private String BACK = "Back";// variable with string of character of the back button
 	private boolean gamePlaying = false; // variable with game playing equal to false since in the panel the game didn't
-											// start yet
-
+	// start yet
 	private JButton startButton; // variable for the start button
 	private JButton highScoresButton; // variable for the high scores button
 	private JButton rulesButton; // variable for the rules button
@@ -63,16 +66,18 @@ public class GameApplication extends JFrame implements ActionListener {
 	/**
 	 * Constructor. Initialize the GUI.
 	 * @param game
+	 * @throws IOException 
 	 */
-	public GameApplication(Game game) {
+	public GameApplication(Game game) throws IOException {
 		initUI();
 		this.game = game;
 	}
 
 	/**
 	 * Initialize the frame of the game.
+	 * @throws IOException 
 	 */
-	private void initUI() {
+	private void initUI() throws IOException {
 		setTitle("Tarzan - The Lost Adventure");
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

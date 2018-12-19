@@ -36,7 +36,7 @@ public class Jaguar extends NotMovings {
 	public void interact(Tarzan t) {
 		t.takeDamage();
 		Random rand = new Random();
-		int winningChance = t.getStrength() * rand.nextInt(5);
+		int winningChance = t.getStrength() * rand.nextInt(2) * (5-t.getHandler().getHandlerMap().getMapLevel().getLevelNumber());
 		if (winningChance > 100) {
 			t.killsJaguar();
 			t.getHandler().getHandlerWorld().setWorldNotMovingsNull(notMovingsPosition);

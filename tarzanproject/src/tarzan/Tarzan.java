@@ -2,6 +2,8 @@ package tarzan;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+
 import tilegame.*;
 
 import map.Map;
@@ -53,7 +55,6 @@ public class Tarzan implements KeyListener {
 	private Position2D tarzanPosition; // variable Tarzan position
 	private Handler handler; // handler declared
 	private int speed; // variable speed of Tarzan
-	//private int score; // variable score of Tarzan
 	private boolean[] keys;
 
 	/**
@@ -112,7 +113,6 @@ public class Tarzan implements KeyListener {
 
 	/**
 	 * Returns true if Tarzan is on a WaterTile.
-	 * 
 	 * @return boolean
 	 */
 	private boolean inTheWater() {
@@ -161,7 +161,8 @@ public class Tarzan implements KeyListener {
 	public void janeFound() {
 		if (areGoalsMet()) {
 			handler.getHandlerGame().addGameScore(energy*handler.getHandlerMap().getMapLevel().getLevelNumber());
-			endOfGameWin();
+			endOfGameWin();{
+			}
 		} else {
 			System.out.println("Meet the goals and come find me later!");
 		}
@@ -169,7 +170,6 @@ public class Tarzan implements KeyListener {
 
 	/**
 	 * Returns true if goals are met.
-	 * 
 	 * @return boolean
 	 */
 	private boolean areGoalsMet() {
@@ -234,6 +234,7 @@ public class Tarzan implements KeyListener {
 	 */
 	private void endOfGameLost() {
 		handler.getHandlerGame().getGameApp().newJOptionPane("Sorry, you lost :( \n Score: " + String.valueOf(handler.getHandlerGame().getGameScore().getScore())); // add score
+		handler.getHandlerGame().updateHighScores(handler.getHandlerGame().getGameScore());
 		handler.getHandlerGame().init(); // new Game --> back to start
 	}
 
@@ -243,6 +244,7 @@ public class Tarzan implements KeyListener {
 	private void endOfGameWin() {
 		handler.getHandlerGame().addGameScore(WINNING_BONUS);
 		handler.getHandlerGame().getGameApp().newJOptionPane("Congrats, you win :D \n Score: " + String.valueOf(handler.getHandlerGame().getGameScore().getScore())); // add score
+		handler.getHandlerGame().updateHighScores(handler.getHandlerGame().getGameScore());
 		handler.getHandlerGame().init(); // new Game --> back to start
 	}
 
