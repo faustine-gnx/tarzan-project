@@ -1,9 +1,9 @@
 package gui;
 
 import java.io.IOException;
+
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
-import javax.swing.text.JTextComponent;
 
 import highscores.HighScoreManager;
 
@@ -16,9 +16,9 @@ import highscores.HighScoreManager;
  */
 
 public class HighScorePanel extends JPanel {
-	private static final long serialVersionUID = 1L; // added because class is serializable
-	private JTextComponent highScores; // text area with high scores (max 10)
-	private HighScoreManager highScoreManager; // to get scores from file
+	private static final long serialVersionUID = 1L; /**<  added because class is serializable */
+	private JLabel highScores; /**< text area with high scores (max 10) */
+	private HighScoreManager highScoreManager; /**< to get scores from file */
 
 	/**
 	 * Constructor.
@@ -29,8 +29,11 @@ public class HighScorePanel extends JPanel {
 		String text = highScoreManager.getHighScoreString();
 		if (text == null) {
 			text = "No high scores yet"; // if file is empty
+		} else {
+			text =  "<html> " + text + "</html> ";
 		}
-		highScores = new JTextArea(text);
+		
+		highScores = new JLabel(text);
 		this.add(highScores);
 	}
 }

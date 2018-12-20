@@ -18,25 +18,18 @@ import map.Map;
  */
 
 public class Assets {
-	// image width
-	private static final int WIDTH = GameApplication.WIDTH / Map.SIZE_MAP;
-	// image height (square = same as width)
-	private static final int HEIGHT = GameApplication.WIDTH / Map.SIZE_MAP;
+	// Constants
+	private static final int WIDTH = GameApplication.WIDTH / Map.SIZE_MAP; /**< image width */
+	private static final int HEIGHT = GameApplication.WIDTH / Map.SIZE_MAP; /**< image height (square = same as width) */
 
-	// image for start panel
-	public static BufferedImage TARZAN_JANE;
-	// image Tarzan
-	public static BufferedImage TARZAN_NORMAL;
-	// image Kavurus
-	public static BufferedImage KAVURUS;
-	// image knife
-	public static BufferedImage KNIFE;
-	// image Banana
-	public static BufferedImage BANANA;
-	// image Jaguar
-	public static BufferedImage JAGUAR;
-	// image Jane
-	public static BufferedImage JANE;
+	// Images
+	public static BufferedImage TARZAN_JANE; /**< image for start panel */
+	public static BufferedImage TARZAN_NORMAL; /**< image Tarzan */
+	public static BufferedImage KAVURUS; /**< image Kavurus */
+	public static BufferedImage KNIFE; /**< image knife */ 
+	public static BufferedImage BANANA; /**< image Banana */
+	public static BufferedImage JAGUAR; /**< image Jaguar */
+	public static BufferedImage JANE; /**< image Jane */
 
 	/**
 	 * Load images from files and resize it to tile size.

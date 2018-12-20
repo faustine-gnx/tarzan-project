@@ -14,7 +14,7 @@ import tilegame.Position2D;
  */
 
 public class Jaguar extends NonMoving {
-	public final static int JAGUAR_STRENGTH = 25; // variable to set the stregnth of the jaguar
+	public final static int JAGUAR_STRENGTH = 25; /**< variable to set the stregnth of the jaguar */
 
 	/**
 	 * Constructor.

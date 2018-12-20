@@ -14,9 +14,9 @@ import map.Map;
 
 public abstract class Tile {
 
-	public static Tile[] tiles = new Tile[5]; // create tile
-	public static Tile grassTile = new GrassTile(0); // create grass tile with index 0
-	public static Tile waterTile = new WaterTile(1); // create water tile with index 1
+	public static Tile[] tiles = new Tile[5]; /**< set of tiles */
+	public static Tile grassTile = new GrassTile(0); /**< create grass tile with index 0 */
+	public static Tile waterTile = new WaterTile(1); /**< create water tile with index 1 */
 
 	protected Color tileColor;
 	protected final int tileID;

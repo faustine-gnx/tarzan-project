@@ -10,7 +10,7 @@ import tilegame.Position2D;
  * 
  */
 public class Kavurus extends NonMoving {
-	public static final int ENERGY_GIVEN = 50; // energy given
+	public static final int ENERGY_GIVEN = 50; /**< energy given */
 
 	/**
 	 * Constructor.

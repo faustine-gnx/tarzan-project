@@ -9,8 +9,8 @@ package tilegame;
  */
 
 public class Position2D {
-	private int x; // horizontal position
-	private int y; // vertical position
+	private int x; /**< horizontal position */
+	private int y; /**< vertical position */
 
 	/**
 	 * Constructor from two int.

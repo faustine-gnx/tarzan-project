@@ -10,9 +10,9 @@ package highscores;
 import java.io.Serializable;
 
 public class Score implements Serializable {
-	private static final long serialVersionUID = 1L; // added because class is serializable
-	private int score; // score value
-	private String name; // player name
+	private static final long serialVersionUID = 1L; /**< added because class is serializable */
+	private int score; /**< score value */
+	private String name; /**< player name */
 
 	/**
 	 * Constructor.

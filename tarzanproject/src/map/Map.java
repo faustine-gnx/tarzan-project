@@ -22,13 +22,13 @@ import tilegame.*;
  */
 
 public class Map {
-	public final static int SIZE_MAP = 16; // size of the game
-	public final static int PIXEL_SCALE = GameApplication.WIDTH / SIZE_MAP; // pixel scale for drawing (same canvas size)
-	private final Level mapLevel; // level for the game: influences parameters
-	private float[][] landMap; // land height in map (used with perlin noise for smoother map)
-	private boolean[][] freePositions; // free position = no tarzan, no nonMoving, not water
-	private final World mapWorld; // terrain of the map = tile repartition, based on landMap
-	private Tarzan mapTarzan; // Tarzan = player
+	public final static int SIZE_MAP = 16; /**< size of the game */
+	public final static int PIXEL_SCALE = GameApplication.WIDTH / SIZE_MAP; /**< pixel scale for drawing (same canvas size)  */
+	private final Level mapLevel; /**< level for the game: influences parameters */
+	private float[][] landMap; /**< land height in map (used with perlin noise for smoother map) */
+	private boolean[][] freePositions; /**< free position = no tarzan, no nonMoving, not water */
+	private final World mapWorld; /**< terrain of the map = tile repartition, based on landMap */
+	private Tarzan mapTarzan; /**< Tarzan = player */
 
 	/**
 	 * Constructor. Initialize the Map: - Generates a random repartition for the

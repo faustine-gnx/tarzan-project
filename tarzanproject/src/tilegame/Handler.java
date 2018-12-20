@@ -11,9 +11,9 @@ import map.World;
  */
 
 public class Handler {
-	private Game handlerGame; // to access game
-	private Map handlerMap; // to access map
-	private World handlerWorld; // to access world
+	private Game handlerGame; /**< to access game */
+	private Map handlerMap; /**< to access map */
+	private World handlerWorld; /**< to access world */
 
 	/**
 	 * Constructor.

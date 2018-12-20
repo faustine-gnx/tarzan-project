@@ -13,9 +13,9 @@ import tilegame.Position2D;
  *         position and that don't move.
  * 
  */
-public abstract class NonMoving { // = non moving
-	protected final Position2D nonMovingPosition; // position in 2D
-	protected final String nonMovingName; // name
+public abstract class NonMoving {
+	protected final Position2D nonMovingPosition; /**< position in 2D */
+	protected final String nonMovingName; /**< name */
 
 	/**
 	 * Constructor.

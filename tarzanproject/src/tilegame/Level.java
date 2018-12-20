@@ -12,14 +12,14 @@ import map.Map;
  */
 
 public class Level {
-	public final int levelNumber; // level: 1, 2 or 3
-	public final int numberOfJaguars; // number of jaguars to create
-	public final int numberOfBananas; // number of bananas to create
-	public final int numberOfKavurus; // number of kavurus to create
-	public final int numberOfKnives; // number of knives to create
-	public final int goalStrength; // strength that must be reached to win game
-	public final int goalEndurance; // endurance that must be reached to win game
-	public final int goalJaguars; // jaguars that must be killed to win game
+	public final int levelNumber; /**< level: 1, 2 or 3 */
+	public final int numberOfJaguars; /**< number of jaguars to create */
+	public final int numberOfBananas; /**< number of bananas to create */
+	public final int numberOfKavurus; /**< number of kavurus to create */
+	public final int numberOfKnives; /**< number of knives to create */
+	public final int goalStrength; /**< strength that must be reached to win game */
+	public final int goalEndurance; /**< endurance that must be reached to win game */
+	public final int goalJaguars; /**< jaguars that must be killed to win game */
 
 	/**
 	 * Constructor.

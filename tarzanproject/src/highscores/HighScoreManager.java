@@ -23,14 +23,14 @@ import java.nio.file.Paths;
  */
 
 public class HighScoreManager {
-	private final static int MAX_NUMBER_SCORES = 10; // maximum number of scores kept in high scores
-	private ArrayList<Score> scores; // list of high scores
-	private static final String HIGHSCORE_FILE = "high_scores.txt"; // file in which scores are stored
-	private ObjectInputStream inputStream; // Initializing an inputStream for working with the file
-	private ObjectOutputStream outputStream;// Initializing an outputStream for working with the file
-	private ScoreComparator comparator; // to compare scores and keep best ones
-	private String highScoreString; // to output scores
-	private Path path; // path to the high scores file
+	private final static int MAX_NUMBER_SCORES = 10; /**< maximum number of scores kept in high scores */
+	private ArrayList<Score> scores; /**< list of high scores */
+	private static final String HIGHSCORE_FILE = "high_scores.txt"; /**< file in which scores are stored */
+	private ObjectInputStream inputStream; /**< Initializing an inputStream for working with the file */
+	private ObjectOutputStream outputStream;/**< Initializing an outputStream for working with the file */
+	private ScoreComparator comparator; /**< to compare scores and keep best ones */
+	private String highScoreString; /**< to output scores */
+	private Path path; /**< path to the high scores file */
 
 	/**
 	 *Constructor.
@@ -170,7 +170,7 @@ public class HighScoreManager {
 			x = MAX_NUMBER_SCORES;
 		}
 		while (i < x) {
-			highScoreString += (i + 1) + ". \t" + scores.get(i).getName() + " \t\t" + scores.get(i).getScore() + " \n";
+			highScoreString += (i + 1) + ". \t" + scores.get(i).getName() + " \t\t" + scores.get(i).getScore() + " <br>";
 			i++;
 		}
 		//System.out.println("High score string : "+highScoreString);

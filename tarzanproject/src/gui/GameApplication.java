@@ -26,43 +26,43 @@ import tilegame.Game;
 
 public class GameApplication extends JFrame implements ActionListener {
 
-	private static final long serialVersionUID = 1L; // added because class is serializable
-	public final static int WIDTH = 800; // width of game frame
-	public final static int HEIGHT = 950; // height of game frame
-	public final static String GAME_PANEL = "Game"; // name of game panel
-	public final static String START_PANEL = "Start"; // name of start panel
-	public final static String SCORES_PANEL = "Scores"; // name of scores panel
-	public final static String RULES_PANEL = "Rules"; // name of rules panel
-	private final static String START = "Start"; // name of start button
-	private final static String SCORES = "High Scores"; // name of high scores button
-	private final static String RULES = "Rules"; // name of rules button
-	private final static String BACK = "Back"; // name of back button
+	private static final long serialVersionUID = 1L; /**< added because class is serializable */
+	public final static int WIDTH = 800; /**< width of game frame */
+	public final static int HEIGHT = 950; /**< height of game frame */
+	public final static String GAME_PANEL = "Game"; /**< name of game panel */
+	public final static String START_PANEL = "Start"; /**< name of start panel */
+	public final static String SCORES_PANEL = "Scores"; /**< name of scores panel */
+	public final static String RULES_PANEL = "Rules"; /**< name of rules panel */
+	private final static String START = "Start"; /**< name of start button */
+	private final static String SCORES = "High Scores"; /**< name of high scores button */
+	private final static String RULES = "Rules"; /**< name of rules button */
+	private final static String BACK = "Back"; /**< name of back button */
 
-	// default values for safety
-	private final static int DEFAULT_LEVEL = 1; // default level value
-	private final static int DEFAULT_INITIAL_STRENGTH = 50; // default initial strength value
-	private final static int DEFAULT_INITIAL_ENDURANCE = 50; //  default initial endurance value
-	private final static String DEFAULT_NAME = "Anonymous"; // default player's name string
+	// Default values for safety
+	private final static int DEFAULT_LEVEL = 1; /**< default level value */
+	private final static int DEFAULT_INITIAL_STRENGTH = 50; /**< default initial strength value */
+	private final static int DEFAULT_INITIAL_ENDURANCE = 50; /**<  default initial endurance value */
+	private final static String DEFAULT_NAME = "Anonymous"; /**< default player's name string */
 
 	// Attributes
-	private String playerName = DEFAULT_NAME; // player's name attribute
-	private int initialStrength = DEFAULT_INITIAL_STRENGTH; // initial strength attribute
-	private int initialEndurance = DEFAULT_INITIAL_ENDURANCE; // initial endurance attribute
-	private int level = DEFAULT_LEVEL; // level attribute
+	private String playerName = DEFAULT_NAME; /**< player's name attribute */
+	private int initialStrength = DEFAULT_INITIAL_STRENGTH; /**< initial strength attribute */
+	private int initialEndurance = DEFAULT_INITIAL_ENDURANCE; /**< initial endurance attribute */
+	private int level = DEFAULT_LEVEL; /**< level attribute */
 
-	private Game game;// game attribute
-	private JPanel allPanels; // allPanels: group the 3 panels
-	private StartPanel startPanel; // start panel = menu + settings choice
-	private GamePanel gamePanel; // game panel = canvas showing game + current game parameters/objectives
-	private HighScorePanel scoresPanel; // high scores panel = max. 10 best scores with player name
-	private RulesPanel rulesPanel; // rules panel = explain game
+	private Game game; /**< game attribute */
+	private JPanel allPanels; /**< allPanels: group the 3 panels */
+	private StartPanel startPanel; /**< start panel = menu + settings choice */
+	private GamePanel gamePanel; /**< game panel = canvas showing game + current game parameters/objectives */
+	private HighScorePanel scoresPanel; /**< high scores panel = max. 10 best scores with player name */
+	private RulesPanel rulesPanel; /**< rules panel = explain game */
 
-	private boolean gamePlaying = false; // boolean if game is currently being played
-	private JButton startButton; // start button
-	private JButton highScoresButton; // high score button
-	private JButton rulesButton; // rules button
-	private JButton backButton1; // back button (of high scores panel)
-	private JButton backButton2; // back button (of rules panel)
+	private boolean gamePlaying = false; /**< boolean if game is currently being played */
+	private JButton startButton; /**< start button */
+	private JButton highScoresButton; /**< high score button */
+	private JButton rulesButton; /**< rules button */
+	private JButton backButton1; /**< back button (of high scores panel) */
+	private JButton backButton2; /**< back button (of rules panel)
 
 	/**
 	 * Constructor. Initialize the GUI.

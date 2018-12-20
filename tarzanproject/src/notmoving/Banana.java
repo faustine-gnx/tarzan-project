@@ -12,7 +12,7 @@ import tilegame.Position2D;
 
 public class Banana extends NonMoving {
 
-	public static final int ENDURANCE_GIVEN = 25; // endurance given
+	public static final int ENDURANCE_GIVEN = 25; /**< endurance given */
 
 	/**
 	 * Constructor.

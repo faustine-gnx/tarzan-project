@@ -30,16 +30,16 @@ import javax.swing.SwingConstants;
 
 public class StartPanel extends JPanel implements ItemListener, ChangeListener {
 
-	private static final long serialVersionUID = 1L; // added because class is serializable
-	private JLabel welcomeMessage; // for welcome level
-	private JLabel imageLabel; // for Tarzan and Jane picture
-	private JLabel chooseSkills; // label before skills slider
-	private JSlider skillsSlider; // skills slider to choose strength-endurance repartition
-	private JLabel chooseLevel; // label before combobox
-	private JComboBox<Integer> levelComboBox; // combo box of the levels: 1, 2 or 3
-	private JLabel enterName; // label before textField
-	private JTextField nameField; // text field where players can enter their names
-	private int levelNumber = 1; // default level = 1
+	private static final long serialVersionUID = 1L; /**<  added because class is serializable */
+	private JLabel welcomeMessage; /**<  for welcome level */
+	private JLabel imageLabel; /**<  for Tarzan and Jane picture */
+	private JLabel chooseSkills; /**<  label before skills slider */
+	private JSlider skillsSlider; /**<  skills slider to choose strength-endurance repartition */
+	private JLabel chooseLevel; /**<  label before combobox */
+	private JComboBox<Integer> levelComboBox; /**<  combo box of the levels: 1, 2 or 3 */
+	private JLabel enterName; /**<  label before textField */
+	private JTextField nameField; /**<  text field where players can enter their names */
+	private int levelNumber = 1; /**<  default level = 1 */
 
 	/**
 	 * Constructor. Create the labels, text field, slider, combo box of the start menu.

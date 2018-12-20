@@ -17,8 +17,8 @@ import tilegame.Tile;
 
 public class World {
 
-	private int[][] worldTiles; // tiles of the terrain; int = type
-	private NonMoving[][] worldNonMovings = new NonMoving[Map.SIZE_MAP][Map.SIZE_MAP]; //nonMovings of the terrain
+	private int[][] worldTiles; /**< tiles of the terrain; int = type */
+	private NonMoving[][] worldNonMovings = new NonMoving[Map.SIZE_MAP][Map.SIZE_MAP]; /**<nonMovings of the terrain */
 
 	/**
 	 * Constructor. Create the tiles according to the noise map landMap.
@@ -100,7 +100,6 @@ public class World {
 	public void render(Graphics g) {
 		for (int x = 0; x < Map.SIZE_MAP; x++) {
 			for (int y = 0; y < Map.SIZE_MAP; y++) {
-				// System.out.println(x + ", " + y);
 				getTile(x, y).render(g, x, y);
 			}
 		}

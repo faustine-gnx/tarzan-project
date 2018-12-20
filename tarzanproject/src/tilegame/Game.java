@@ -21,22 +21,21 @@ import map.Map;
 
 public class Game implements Runnable {
 
-	private GameApplication gameApp; // game application to handle GUI
-	private Thread gameThread; // to execute program
-	private boolean gameRunning = false; // !! different than playing !!
-	private BufferStrategy gameBuffer; // to draw
-	private Graphics g; // graphics for render
-	private Map gameMap;// map = the game
-	private Handler gameHandler; // to access game, map and world more easily
-	private long lastTime;
-	private final static int FPS = 60; // tick method called 60 times per second
-	// Set definition of how many ticks per 1000000000 ns or 1 sec
-	private final static double TIME_PER_TICK = 1000000000 / FPS; // 1000000000 because nanoseconds
-	private double delta; // variable for create delta (= change in time)
-	private long now; // variable for the time of the system
-	private long timer; // variable to set the timer
-	private HighScoreManager highScoreManager; // to manage high score
-	private Score gameScore; // score of the player in this game
+	private GameApplication gameApp; /**< game application to handle GUI */
+	private Thread gameThread; /**< to execute program */
+	private boolean gameRunning = false; /**< !! different than playing !! */
+	private BufferStrategy gameBuffer; /**< to draw */
+	private Graphics g; /**< graphics for render */
+	private Map gameMap; /**< map = the game */
+	private Handler gameHandler; /**< to access game, map and world more easily */
+	private long lastTime; /**< previous system time */
+	private final static int FPS = 60; /**< tick method called FPS times per second */
+	private final static double TIME_PER_TICK = 1000000000 / FPS; /**< 1000000000 because nanoseconds */
+	private double delta; /**< change in time */
+	private long now; /**< current system time */
+	private long timer; /**< timer of the system */
+	private HighScoreManager highScoreManager; /**< to manage high score */
+	private Score gameScore; /**< score of the player in this game */
 
 	/**
 	 * Start new game (new thread).

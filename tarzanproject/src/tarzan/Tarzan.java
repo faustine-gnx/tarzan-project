@@ -39,22 +39,22 @@ import notmoving.*;
 
 public class Tarzan implements KeyListener {
 	// Constants
-	private final static int SPEED = 1; // moves 1 tile at a time
-	private final static int ENERGY_LOSS = 1; // One move = decrease of factor 1 in energy (actual number depends on endurance)
-	private final static int WATER_ENERGY_LOSS = 5; // Extra decrease of factor 5 when moving in water
-	public final static int FIELD_OF_VIEW_RADIUS = 2; // the player sees all tiles accessible in 2 moves
-	public final static int INITIAL_ENERGY = 500; // initial energy
-	public final static int WINNING_BONUS = 500; // extra points when winning the game
+	private final static int SPEED = 1; /**< moves 1 tile at a time */
+	private final static int ENERGY_LOSS = 1; /**< One move = decrease of factor 1 in energy (actual number depends on endurance) */
+	private final static int WATER_ENERGY_LOSS = 5; /**< Extra decrease of factor 5 when moving in water */
+	public final static int FIELD_OF_VIEW_RADIUS = 2; /**< the player sees all tiles accessible in 2 moves */
+	public final static int INITIAL_ENERGY = 500; /**< initial energy */
+	public final static int WINNING_BONUS = 500; /**< extra points when winning the game */
 
-	//Attributes
-	private int energy; // current energy
-	private int endurance; // current endurance
-	private int strength; // current strength 
-	private int jaguarsKilled; // current number of killed jaguars
-	private Position2D tarzanPosition; // current position
-	private Handler handler; // handler for game / map / world
-	private int speed; // speed of Tarzan
-	private boolean[] keys; // for the key listener
+	// Attributes
+	private int energy; /**< current energy */
+	private int endurance; /**< current endurance */
+	private int strength; /**< current strength */
+	private int jaguarsKilled; /**< current number of killed jaguars */
+	private Position2D tarzanPosition; /**< current position */
+	private Handler handler; /**< handler for game / map / world */
+	private int speed; /**< speed of Tarzan */
+	private boolean[] keys; /**< for the key listener */
 
 	/**
 	 * Constructor.
@@ -121,7 +121,6 @@ public class Tarzan implements KeyListener {
 	 * Interaction with Jaguar: loss of energy. Tarzan might die.
 	 */
 	public void fightJaguar() {
-		// manipulate the amount of damage taken
 		System.out.println("Fighting a jaguar!");
 		if (Jaguar.JAGUAR_STRENGTH >= energy) {
 			energy = 0;
@@ -154,7 +153,7 @@ public class Tarzan implements KeyListener {
 	 */
 	public void takePill() {
 		System.out.println("Taking a magic pill...");
-		handler.getHandlerGame().addGameScore(Kavurus.ENERGY_GIVEN*handler.getHandlerMap().getMapLevel().getLevelNumber()); // no idea how much
+		handler.getHandlerGame().addGameScore(Kavurus.ENERGY_GIVEN*handler.getHandlerMap().getMapLevel().getLevelNumber());
 	}
 
 	/**
@@ -228,7 +227,7 @@ public class Tarzan implements KeyListener {
 	}
 
 	private int energyLoss() {
-		return Math.abs(15 - endurance / 10);
+		return Math.abs((150 - endurance) / 10);
 	}
 
 	/**
@@ -245,72 +244,72 @@ public class Tarzan implements KeyListener {
 	 * @throws IOException 
 	 */
 	private void endOfGameLost() throws IOException {
-		handler.getHandlerGame().getGameApp().newJOptionPane("Sorry, you lost :( \n Score: " + String.valueOf(handler.getHandlerGame().getGameScore().getScore())); // add score
+		handler.getHandlerGame().getGameApp().newJOptionPane("Sorry, you lost :( \n Score: " + String.valueOf(handler.getHandlerGame().getGameScore().getScore())); 
 		handler.getHandlerGame().updateHighScores(handler.getHandlerGame().getGameScore());
 		handler.getHandlerGame().getGameApp().setVisible(false);
-		handler.getHandlerGame().initNew(); // new Game --> back to start
+		handler.getHandlerGame().initNew(); // new Game --> back to start (keeps player name)
 	}
 
 	/**
-	 * End of game - player won (bonus for score). New game application.
-	 * @throws IOException 
-	 */
-	private void endOfGameWin() throws IOException {
-		handler.getHandlerGame().addGameScore(WINNING_BONUS);
-		handler.getHandlerGame().getGameApp().newJOptionPane("Congrats, you win :D \n Score: " + String.valueOf(handler.getHandlerGame().getGameScore().getScore())); // add score
-		handler.getHandlerGame().updateHighScores(handler.getHandlerGame().getGameScore());
-		handler.getHandlerGame().getGameApp().setVisible(false);
-		handler.getHandlerGame().initNew();
-	}
-
-	/**
-	 * Update.
-	 */
-	public void tick() {
-		handler.getHandlerGame().getGameApp().getGamePanel().updateGameSettings(strength, endurance, energy,
-				jaguarsKilled, handler.getHandlerMap().getMapLevel().getGoalStrength(),
-				handler.getHandlerMap().getMapLevel().getGoalEndurance(),
-				handler.getHandlerMap().getMapLevel().getGoalJaguars(), handler.getHandlerGame().getGameScore().getScore());
-	}
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		if (e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
-			return;
-		keys[e.getKeyCode()] = true;
-
-		if (keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]) {
-			tarzanPosition.setY(Math.max(0, tarzanPosition.getY() - speed));
-			energy -= ENERGY_LOSS * energyLoss();
-		}
-		if (keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]) {
-			tarzanPosition.setY(Math.min(Map.SIZE_MAP - 1, tarzanPosition.getY() + speed));
-			energy -= ENERGY_LOSS * energyLoss();
-		}
-		if (keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT]) {
-			tarzanPosition.setX(Math.max(0, tarzanPosition.getX() - speed));
-			energy -= ENERGY_LOSS * energyLoss();
-		}
-		if (keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]) {
-			tarzanPosition.setX(Math.min(Map.SIZE_MAP - 1, tarzanPosition.getX() + speed));
-			energy -= ENERGY_LOSS * energyLoss();
+		 * End of game - player won (bonus for score). New game application.
+		 * @throws IOException 
+		 */
+		private void endOfGameWin() throws IOException {
+			handler.getHandlerGame().addGameScore(WINNING_BONUS);
+			handler.getHandlerGame().getGameApp().newJOptionPane("Congrats, you win :D \n Score: " + String.valueOf(handler.getHandlerGame().getGameScore().getScore())); 
+			handler.getHandlerGame().updateHighScores(handler.getHandlerGame().getGameScore());
+			handler.getHandlerGame().getGameApp().setVisible(false);
+			handler.getHandlerGame().initNew();
 		}
 
-		if (inTheWater()) {
-			System.out.println("In the water... Energy decreased!");
-			energy -= WATER_ENERGY_LOSS;
+		/**
+		 * Update.
+		 */
+		public void tick() {
+			handler.getHandlerGame().getGameApp().getGamePanel().updateGameSettings(strength, endurance, energy,
+					jaguarsKilled, handler.getHandlerMap().getMapLevel().getGoalStrength(),
+					handler.getHandlerMap().getMapLevel().getGoalEndurance(),
+					handler.getHandlerMap().getMapLevel().getGoalJaguars(), handler.getHandlerGame().getGameScore().getScore());
 		}
 
-		if (energy <= 0) {
-			try {
-				endOfGameLost();
-			} catch (IOException e1) {
-				e1.printStackTrace();
+		@Override
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode() < 0 || e.getKeyCode() >= keys.length)
+				return;
+			keys[e.getKeyCode()] = true;
+
+			if (keys[KeyEvent.VK_W] || keys[KeyEvent.VK_UP]) {
+				tarzanPosition.setY(Math.max(0, tarzanPosition.getY() - speed));
+				energy -= ENERGY_LOSS * energyLoss();
 			}
-		}
+			if (keys[KeyEvent.VK_S] || keys[KeyEvent.VK_DOWN]) {
+				tarzanPosition.setY(Math.min(Map.SIZE_MAP - 1, tarzanPosition.getY() + speed));
+				energy -= ENERGY_LOSS * energyLoss();
+			}
+			if (keys[KeyEvent.VK_A] || keys[KeyEvent.VK_LEFT]) {
+				tarzanPosition.setX(Math.max(0, tarzanPosition.getX() - speed));
+				energy -= ENERGY_LOSS * energyLoss();
+			}
+			if (keys[KeyEvent.VK_D] || keys[KeyEvent.VK_RIGHT]) {
+				tarzanPosition.setX(Math.min(Map.SIZE_MAP - 1, tarzanPosition.getX() + speed));
+				energy -= ENERGY_LOSS * energyLoss();
+			}
 
-		if (handler.getHandlerWorld().getWorldNonMovings(tarzanPosition) != null) {
-			//System.out.println("Non moving encountered");
+			if (inTheWater()) {
+				System.out.println("In the water... Energy decreased!");
+				energy -= WATER_ENERGY_LOSS;
+			}
+
+			if (energy <= 0) {
+				try {
+					endOfGameLost();
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+
+			if (handler.getHandlerWorld().getWorldNonMovings(tarzanPosition) != null) {
+				//System.out.println("Non moving encountered");
 			handler.getHandlerWorld().getWorldNonMovings(tarzanPosition).interact(this);
 		}
 	}

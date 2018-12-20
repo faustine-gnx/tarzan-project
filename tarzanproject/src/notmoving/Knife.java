@@ -10,7 +10,7 @@ import tilegame.Position2D;
  * 
  */
 public class Knife extends NonMoving {
-	public static final int STRENGTH_GIVEN = 25; // strength given
+	public static final int STRENGTH_GIVEN = 25; /**< strength given */
 	
 	/**
 	 * Constructor.

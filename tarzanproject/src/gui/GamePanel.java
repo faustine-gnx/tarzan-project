@@ -17,16 +17,16 @@ import tarzan.Tarzan;
  */
 
 public class GamePanel extends JPanel {
-	private static final long serialVersionUID = 1L; // added because class is serializable
+	private static final long serialVersionUID = 1L; /**< added because class is serializable  */
 	// Components of the game panel
-	private Canvas gameCanvas; // canvas for the display of game
-	private JLabel levelLabel; // to show current level
-	private JLabel strengthLabel; // to show current strength
-	private JLabel enduranceLabel; // to show current endurance
-	private JLabel playerLabel; // to show player name
-	private JLabel energyLabel; // to show current energy
-	private JLabel jaguarLabel; // to show current jaguars killed
-	private JLabel scoreLabel; // to show current score
+	private Canvas gameCanvas; /**< canvas for the display of game */
+	private JLabel levelLabel; /**< to show current level */
+	private JLabel strengthLabel; /**< to show current strength */
+	private JLabel enduranceLabel; /**< to show current endurance */
+	private JLabel playerLabel; /**< to show player name */
+	private JLabel energyLabel; /**< to show current energy */
+	private JLabel jaguarLabel; /**< to show current jaguars killed */
+	private JLabel scoreLabel; /**< to show current score */
 
 	/**
 	 * Constructor. Add a canvas to the GamePanel.
