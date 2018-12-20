@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import tilegame.Game;
 
@@ -49,7 +48,7 @@ public class GameApplication extends JFrame implements ActionListener {
 	private JPanel allPanels;// variable allPanels
 	private StartPanel startPanel; // variable start panel
 	private GamePanel gamePanel;// variable panel of the game
-	private HighScoresPanel scoresPanel;// variable panel of the high scores
+	private HighScorePanel scoresPanel;// variable panel of the high scores
 	private RulesPanel rulesPanel; // variable panel of the rules
 	private String START = "Start"; // variable with string of characters of the start button
 	private String SCORES = "High Scores"; // variable with string of characters of the HighScores button
@@ -69,7 +68,17 @@ public class GameApplication extends JFrame implements ActionListener {
 	 * @throws IOException 
 	 */
 	public GameApplication(Game game) throws IOException {
-		initUI();
+		initUI(playerName);
+		this.game = game;
+	}
+	
+	/**
+	 * Constructor. Initialize the GUI.
+	 * @param game, player
+	 * @throws IOException 
+	 */
+	public GameApplication(Game game, String player) throws IOException {
+		initUI(player);
 		this.game = game;
 	}
 
@@ -77,16 +86,16 @@ public class GameApplication extends JFrame implements ActionListener {
 	 * Initialize the frame of the game.
 	 * @throws IOException 
 	 */
-	public void initUI() throws IOException {
+	public void initUI(String player) throws IOException {
 		gamePlaying = false;
 		setTitle("Tarzan - The Lost Adventure");
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// this.setLocationRelativeTo(null);
 		setResizable(false);
-		startPanel = new StartPanel();
+		startPanel = new StartPanel(player);
 		rulesPanel = new RulesPanel();
-		scoresPanel = new HighScoresPanel();
+		scoresPanel = new HighScorePanel();
 		gamePanel = new GamePanel();
 
 		highScoresButton = new JButton("High Scores");

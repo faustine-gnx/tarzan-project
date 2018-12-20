@@ -46,4 +46,12 @@ import java.io.Serializable;
 	public void setScore(int score) {
 		this.score = score;
 	}
+	
+	/**
+	 * Setter.
+	 * @param name
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 }

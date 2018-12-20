@@ -77,7 +77,6 @@ public class Tarzan implements KeyListener {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return tarzanPosition
 	 */
 	public Position2D getTarzanPosition() {
@@ -86,7 +85,6 @@ public class Tarzan implements KeyListener {
 
 	/**
 	 * Setter.
-	 * 
 	 * @param tarzanPosition
 	 */
 	public void setTarzanPosition(Position2D tarzanPosition) {
@@ -95,7 +93,6 @@ public class Tarzan implements KeyListener {
 
 	/**
 	 * Setter.
-	 * 
 	 * @param x, y
 	 */
 	public void setTarzanPosition(int x, int y) {
@@ -241,7 +238,7 @@ public class Tarzan implements KeyListener {
 		handler.getHandlerGame().getGameApp().newJOptionPane("Sorry, you lost :( \n Score: " + String.valueOf(handler.getHandlerGame().getGameScore().getScore())); // add score
 		handler.getHandlerGame().updateHighScores(handler.getHandlerGame().getGameScore());
 		handler.getHandlerGame().getGameApp().setVisible(false);
-		handler.getHandlerGame().init(); // new Game --> back to start
+		handler.getHandlerGame().initNew(); // new Game --> back to start
 	}
 
 	/**
@@ -253,7 +250,7 @@ public class Tarzan implements KeyListener {
 		handler.getHandlerGame().getGameApp().newJOptionPane("Congrats, you win :D \n Score: " + String.valueOf(handler.getHandlerGame().getGameScore().getScore())); // add score
 		handler.getHandlerGame().updateHighScores(handler.getHandlerGame().getGameScore());
 		handler.getHandlerGame().getGameApp().setVisible(false);
-		handler.getHandlerGame().init();
+		handler.getHandlerGame().initNew();
 	}
 
 	/**

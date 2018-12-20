@@ -1,13 +1,8 @@
 package gui;
 
-import java.awt.GridLayout;
 import java.io.IOException;
-
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.SpringLayout;
 import javax.swing.text.JTextComponent;
 
 import highscores.HighScoreManager;
@@ -20,21 +15,30 @@ import highscores.HighScoreManager;
  * 
  */
 
-public class HighScoresPanel extends JPanel {
+public class HighScorePanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextComponent highScores;
 	private HighScoreManager highScoreManager;
 
 	/**
-	 * Constructor. TODO: read text from file.
+	 * Constructor.
 	 * @throws IOException 
 	 */
-	public HighScoresPanel() throws IOException {
-		// read text from file
-		//this.setLayout(new GridLayout());
+	public HighScorePanel() throws IOException {
+		System.out.println("HS Panel constructor");
+		
 		highScoreManager = new HighScoreManager();
 		String text = highScoreManager.getHighScoreString();
+		System.out.println("High score string : "+text);
+		if (text == null) {
+			text = "No high scores yet";
+		}/* else {
+			text = highScoreManager.getHighScoreString();
+		}*/
+
+		System.out.println("High score string2 : "+text);
 		highScores = new JTextArea(text);
 		this.add(highScores);
+		System.out.println("end HS Panel constructor");
 	}
 }

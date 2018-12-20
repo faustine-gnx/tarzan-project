@@ -35,6 +35,7 @@ public class HighScoreManager {
 
 	/**
 	 *Constructor.
+	 *@exception IOException
 	 */
 	public HighScoreManager() {
 		outputStream = null;
@@ -47,7 +48,6 @@ public class HighScoreManager {
 			try {
 				Files.createFile(path);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
@@ -103,16 +103,15 @@ public class HighScoreManager {
 	}
 
 	/**
-	 * load arraylist of score in the high scores file and put them into the
-	 * scores-arraylist try catch necessary to avoid crashing
+	 * Load arraylist of score from file.
+	 * @exception FileNotFoundException, IOException
 	 */
 	@SuppressWarnings("unchecked")
 	public void loadScoreFile() {
 		try {
-			//inputStream = new ObjectInputStream(new FileInputStream(HIGHSCORE_FILE));
-			//scores = (ArrayList<Score>) inputStream.readObject(); // does that work?? No
 			inputStream = new ObjectInputStream(new FileInputStream(path.toString()));
 			scores = (ArrayList<Score>) inputStream.readObject();
+			//scores.removeAll(Collections.singleton(null));
 		} catch (FileNotFoundException e) {
 			System.out.println("[Load] FNF Error: " + e.getMessage());
 		} catch (IOException e) {
@@ -132,9 +131,11 @@ public class HighScoreManager {
 	}
 
 	/**
-	 * writing on the score arraylist to the file
+	 * Write the updated score arraylist into the file.
+	 * @exception FileNotFoundException, IOException
 	 */
 	public void updateScoreFile() {
+		scores.removeAll(Collections.singleton(null));
 		try {
 			outputStream = new ObjectOutputStream(new FileOutputStream(HIGHSCORE_FILE));
 			if (scores != null) {
@@ -158,7 +159,8 @@ public class HighScoreManager {
 	}
 
 	/**
-	 * Getter. Max MAX_NUMBER_SCORES top players. // put the high scores into the label of the GUI // Not true!
+	 * Getter. Max MAX_NUMBER_SCORES top players. 
+	 * Called in HighScoresPanel to set the text.
 	 * @return highScoreString
 	 */
 	public String getHighScoreString() {
@@ -173,6 +175,11 @@ public class HighScoreManager {
 			highScoreString += (i + 1) + ". \t" + scores.get(i).getName() + " \t\t" + scores.get(i).getScore() + " \n";
 			i++;
 		}
-		return highScoreString;
+		//System.out.println("High score string : "+highScoreString);
+		if (highScoreString == null) {
+			return "No high scores yet";
+		} else {
+			return highScoreString.substring(4);
+		}
 	}
 }

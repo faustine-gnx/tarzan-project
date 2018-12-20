@@ -9,15 +9,12 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import imageloader.ImageLoader;
 import javax.swing.BoxLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Group;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
-import javax.swing.SpringLayout;
 import javax.swing.SwingConstants;
 
 /**
@@ -58,6 +55,49 @@ public class StartPanel extends JPanel implements ItemListener, ChangeListener {
 		chooseLevel = new JLabel("Choose a level:");
 		chooseSkills = new JLabel("Choose the strength-endurance distribution:");
 		nameField = new JTextField("Anonymous");
+		skillsSlider = new JSlider(0, 100, 50);
+		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+		labelTable.put(new Integer(0), new JLabel("Strength"));
+		labelTable.put(new Integer(100), new JLabel("Endurance"));
+		skillsSlider.setLabelTable(labelTable);
+		skillsSlider.setPaintLabels(true);
+		levelComboBox = new JComboBox<Integer>(new Integer[] { 1, 2, 3 });
+
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		    
+		skillsSlider.addChangeListener(this);
+		levelComboBox.addItemListener(this);
+
+		this.add(welcomeMessage);
+		this.add(imageLabel);
+		this.add(enterName);
+	    enterName.setLabelFor(nameField);
+	    this.add(nameField);
+		this.add(chooseSkills);
+		chooseSkills.setLabelFor(skillsSlider);
+		this.add(skillsSlider);
+		this.add(chooseLevel);
+		chooseLevel.setLabelFor(levelComboBox);
+		this.add(levelComboBox);
+
+		setVisible(true);
+	}
+	
+	/**
+	 * Constructor. Create the labels, text field, slider, combo box of the start
+	 * menu.
+	 * @param player
+	 */
+	public StartPanel(String player) {
+		welcomeMessage = new JLabel("Welcome to our game: Tarzan - The Lost Adventure!");
+		welcomeMessage.setFont(new Font("TimesRoman", Font.BOLD, 32));
+		BufferedImage image = ImageLoader.loadImage("/textures/tarzan_jane.jpg");
+	    imageLabel = new JLabel(new ImageIcon(image), SwingConstants.CENTER);
+	    
+		enterName = new JLabel("Enter your name:");
+		chooseLevel = new JLabel("Choose a level:");
+		chooseSkills = new JLabel("Choose the strength-endurance distribution:");
+		nameField = new JTextField(player);
 		skillsSlider = new JSlider(0, 100, 50);
 		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
 		labelTable.put(new Integer(0), new JLabel("Strength"));

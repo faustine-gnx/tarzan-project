@@ -56,6 +56,7 @@ public class Game implements Runnable {
 
 	/**
 	 * Stops the game.
+	 * @exception InterruptedException
 	 */
 	public synchronized void stop() {
 		if (!gameRunning) {
@@ -74,13 +75,14 @@ public class Game implements Runnable {
 	 */
 	public void initGame() {
 		gameMap = new Map(gameApp.getInitialStrength(), gameApp.getInitialEndurance(), gameApp.getLevel(), gameHandler);
-		gameScore = new Score(gameApp.getPlayerName(), 0);
+		gameScore.setName(gameApp.getPlayerName());
 		gameHandler.setHandlerMap(gameMap);
 		gameHandler.setHandlerWorld(gameMap.getMapWorld());
 		gameApp.addKeyListener(gameMap.getMapTarzan());
 		gameApp.setFocusable(true);
 		highScoreManager = new HighScoreManager();
 	}
+	
 
 	/**
 	 * Initialize: new game application and initialization of assets.
@@ -89,15 +91,19 @@ public class Game implements Runnable {
 	public void init() throws IOException {
 		gameApp = new GameApplication(this);
 		gameHandler = new Handler(this);
+		gameScore = new Score("Anonymous", 0);
 		Assets.init();
 	}
 	
 	/**
 	 * Initialize: new game application and initialization of assets.
+	 * Called at the end of a game. Remember the name of the previous players.
 	 * @throws IOException 
 	 */
-	public void initNewGame() throws IOException {
-		gameApp.initUI();
+	public void initNew() throws IOException {
+		gameApp = new GameApplication(this, getGameApp().getPlayerName());
+		gameHandler = new Handler(this);
+		Assets.init();
 	}
 	
 	/**
