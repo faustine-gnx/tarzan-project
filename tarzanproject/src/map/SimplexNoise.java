@@ -8,11 +8,11 @@ import java.util.Random;
  * This code was placed in the public domain by its original author, Stefan
  * Gustavson and adapted by Peter Eastman.
  * 
- * Simpified by Faustine & Martina.
+ * Further simpified by Faustine & Martina.
  *
  */
 
-public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
+public class SimplexNoise { 
 	private static Grad grad3[] = { new Grad(1, 1, 0), new Grad(-1, 1, 0), new Grad(1, -1, 0), new Grad(-1, -1, 0),
 			new Grad(1, 0, 1), new Grad(-1, 0, 1), new Grad(1, 0, -1), new Grad(-1, 0, -1), new Grad(0, 1, 1),
 			new Grad(0, -1, 1), new Grad(0, 1, -1), new Grad(0, -1, -1) };
@@ -144,6 +144,5 @@ public class SimplexNoise { // Simplex noise in 2D, 3D and 4D
 			this.x = x;
 			this.y = y;
 		}
-
 	}
 }

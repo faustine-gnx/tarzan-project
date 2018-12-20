@@ -12,7 +12,6 @@ import java.awt.Color;
 public class WaterTile extends Tile {
 	/**
 	 * Constructor. Create the tiles with blue color and a unique ID.
-	 * 
 	 * @param id
 	 */
 	public WaterTile(int id) {

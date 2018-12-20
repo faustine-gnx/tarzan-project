@@ -4,17 +4,16 @@ package tilegame;
  * @author Faustine & Martina
  * 
  *         The Position2D class is created to handle positions more easily: one
- *         attribute position instead of two x and y.
+ *         attribute position instead of two int x and y.
  * 
  */
 
 public class Position2D {
-	private int x; // variable for ax x
-	private int y; // variable for ax y
+	private int x; // horizontal position
+	private int y; // vertical position
 
 	/**
 	 * Constructor from two int.
-	 * 
 	 * @param x, y
 	 */
 	public Position2D(int x, int y) {
@@ -24,7 +23,6 @@ public class Position2D {
 
 	/**
 	 * Constructor from another Position2D.
-	 * 
 	 * @param pos
 	 */
 	public Position2D(Position2D pos) {
@@ -34,7 +32,6 @@ public class Position2D {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return x
 	 */
 	public int getX() {
@@ -43,7 +40,6 @@ public class Position2D {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return y
 	 */
 	public int getY() {
@@ -52,7 +48,6 @@ public class Position2D {
 
 	/**
 	 * Setter.
-	 * 
 	 * @param x
 	 */
 	public Position2D setX(int x) {
@@ -62,7 +57,6 @@ public class Position2D {
 
 	/**
 	 * Setter.
-	 * 
 	 * @param y
 	 */
 	public Position2D setY(int y) {
@@ -72,7 +66,6 @@ public class Position2D {
 
 	/**
 	 * Setter.
-	 * 
 	 * @param x, y
 	 */
 	public Position2D set(int x, int y) {
@@ -83,7 +76,6 @@ public class Position2D {
 
 	/**
 	 * Check if two Position2D are equal.
-	 * 
 	 * @param pos
 	 * @return boolean
 	 */

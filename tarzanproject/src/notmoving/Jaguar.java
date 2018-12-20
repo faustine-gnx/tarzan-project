@@ -13,12 +13,11 @@ import tilegame.Position2D;
  * 
  */
 
-public class Jaguar extends NotMovings {
+public class Jaguar extends NonMoving {
 	public final static int JAGUAR_STRENGTH = 25; // variable to set the stregnth of the jaguar
 
 	/**
 	 * Constructor.
-	 * 
 	 * @param position
 	 */
 	public Jaguar(Position2D position) {
@@ -29,17 +28,16 @@ public class Jaguar extends NotMovings {
 	 * Interaction with Tarzan. Tarzan's energy decreases. If fight is won by
 	 * Tarzan, Tarzan's method killsJaguar is called (increments number of jaguars
 	 * killed by 1) and Jaguar disappears from the world.
-	 * 
 	 * @param t
 	 */
 	@Override
 	public void interact(Tarzan t) {
-		t.takeDamage();
+		t.fightJaguar();
 		Random rand = new Random();
 		int winningChance = t.getStrength() * rand.nextInt(2) * (5-t.getHandler().getHandlerMap().getMapLevel().getLevelNumber());
 		if (winningChance > 100) {
 			t.killsJaguar();
-			t.getHandler().getHandlerWorld().setWorldNotMovingsNull(notMovingsPosition);
+			t.getHandler().getHandlerWorld().setWorldNonMovingNull(nonMovingPosition);
 		} else {
 			System.out.println("Jaguar beat you, keep on moving, you might be luckier next time!");
 		}

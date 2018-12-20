@@ -26,41 +26,43 @@ import tilegame.Game;
 
 public class GameApplication extends JFrame implements ActionListener {
 
-	private static final long serialVersionUID = 1L; // added because class is serializable (because of button?)
-	public final static int WIDTH = 800; // variable width of game panel
-	public final static int HEIGHT = 950; // variable height of game panel
-	public final static String GAME_PANEL = "Game"; // variable name of game panel
-	public final static String START_PANEL = "Start"; // variable name of start panel
-	public final static String SCORES_PANEL = "Scores"; // variable name of scores panel
-	public final static String RULES_PANEL = "Rules"; // variable name of rules panel
+	private static final long serialVersionUID = 1L; // added because class is serializable
+	public final static int WIDTH = 800; // width of game frame
+	public final static int HEIGHT = 950; // height of game frame
+	public final static String GAME_PANEL = "Game"; // name of game panel
+	public final static String START_PANEL = "Start"; // name of start panel
+	public final static String SCORES_PANEL = "Scores"; // name of scores panel
+	public final static String RULES_PANEL = "Rules"; // name of rules panel
+	private final static String START = "Start"; // name of start button
+	private final static String SCORES = "High Scores"; // name of high scores button
+	private final static String RULES = "Rules"; // name of rules button
+	private final static String BACK = "Back"; // name of back button
 
 	// default values for safety
-	private final static int DEFAULT_LEVEL = 1; // variable default level with value
-	private final static int DEFAULT_INITIAL_STRENGTH = 50; // variable default initial strength with value
-	private final static int DEFAULT_INITIAL_ENDURANCE = 50; // variable default initial endurance with value
-	private final static String DEFAULT_NAME = "Anonymous"; // variable default player's name with value
-	private String playerName = DEFAULT_NAME; // variable default player's name
-	private int initialStrength = DEFAULT_INITIAL_STRENGTH; // declare variable default initial strength
-	private int initialEndurance = DEFAULT_INITIAL_ENDURANCE;// declare variable default initial endurance
-	private int level = DEFAULT_LEVEL;// declare variable default initial level
+	private final static int DEFAULT_LEVEL = 1; // default level value
+	private final static int DEFAULT_INITIAL_STRENGTH = 50; // default initial strength value
+	private final static int DEFAULT_INITIAL_ENDURANCE = 50; //  default initial endurance value
+	private final static String DEFAULT_NAME = "Anonymous"; // default player's name string
 
-	private Game game;// variable game
-	private JPanel allPanels;// variable allPanels
-	private StartPanel startPanel; // variable start panel
-	private GamePanel gamePanel;// variable panel of the game
-	private HighScorePanel scoresPanel;// variable panel of the high scores
-	private RulesPanel rulesPanel; // variable panel of the rules
-	private String START = "Start"; // variable with string of characters of the start button
-	private String SCORES = "High Scores"; // variable with string of characters of the HighScores button
-	private String RULES = "Rules";// variable with string of characters of the rules' button
-	private String BACK = "Back";// variable with string of character of the back button
-	private boolean gamePlaying = false; // variable with game playing equal to false since in the panel the game didn't
-	// start yet
-	private JButton startButton; // variable for the start button
-	private JButton highScoresButton; // variable for the high scores button
-	private JButton rulesButton; // variable for the rules button
-	private JButton backButton1; // variable for the first back button (back from the panel of high scores)
-	private JButton backButton2; // variable for the second back button (back from the panel of rules)
+	// Attributes
+	private String playerName = DEFAULT_NAME; // player's name attribute
+	private int initialStrength = DEFAULT_INITIAL_STRENGTH; // initial strength attribute
+	private int initialEndurance = DEFAULT_INITIAL_ENDURANCE; // initial endurance attribute
+	private int level = DEFAULT_LEVEL; // level attribute
+
+	private Game game;// game attribute
+	private JPanel allPanels; // allPanels: group the 3 panels
+	private StartPanel startPanel; // start panel = menu + settings choice
+	private GamePanel gamePanel; // game panel = canvas showing game + current game parameters/objectives
+	private HighScorePanel scoresPanel; // high scores panel = max. 10 best scores with player name
+	private RulesPanel rulesPanel; // rules panel = explain game
+
+	private boolean gamePlaying = false; // boolean if game is currently being played
+	private JButton startButton; // start button
+	private JButton highScoresButton; // high score button
+	private JButton rulesButton; // rules button
+	private JButton backButton1; // back button (of high scores panel)
+	private JButton backButton2; // back button (of rules panel)
 
 	/**
 	 * Constructor. Initialize the GUI.
@@ -71,7 +73,7 @@ public class GameApplication extends JFrame implements ActionListener {
 		initUI(playerName);
 		this.game = game;
 	}
-	
+
 	/**
 	 * Constructor. Initialize the GUI.
 	 * @param game, player
@@ -87,11 +89,11 @@ public class GameApplication extends JFrame implements ActionListener {
 	 * @throws IOException 
 	 */
 	public void initUI(String player) throws IOException {
+		System.out.println("Initializing the GUI...");
 		gamePlaying = false;
 		setTitle("Tarzan - The Lost Adventure");
 		setPreferredSize(new Dimension(WIDTH, HEIGHT));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// this.setLocationRelativeTo(null);
 		setResizable(false);
 		startPanel = new StartPanel(player);
 		rulesPanel = new RulesPanel();
@@ -196,6 +198,7 @@ public class GameApplication extends JFrame implements ActionListener {
 	 */
 	public void newJOptionPane(String text) {
 		JOptionPane.showMessageDialog(this, text, "Game over", JOptionPane.INFORMATION_MESSAGE);
+		System.out.println("Game over");
 	}
 
 	/**
@@ -205,30 +208,33 @@ public class GameApplication extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
-		if (action.equals(START)) {
+		if (action.equals(START)) { // start game with settings chosen in start panel
 			playerName = startPanel.getNameField().getText();
-			initialStrength = startPanel.getSkillsSlider().getValue();
-			initialEndurance = 100 - initialStrength;
+			initialEndurance = startPanel.getSkillsSlider().getValue();
+			initialStrength = 100 - initialEndurance;
 			level = startPanel.getLevelNumber();
 			gamePanel.initGameSettings(playerName, initialStrength, initialEndurance, level);
 			gamePlaying = true;
 			game.initGame();
-			// --> new GamePanel
+			// --> GamePanel
 			CardLayout cl = (CardLayout) (allPanels.getLayout());
 			cl.show(allPanels, GAME_PANEL);
-			// cl.next(this.allPanels);
+			System.out.println("Start playing " + playerName + "!");
 		} else if (action.equals(SCORES)) {
-			// --> new HighScoresPanel
+			// --> HighScoresPanel
 			CardLayout cl = (CardLayout) (allPanels.getLayout());
 			cl.show(allPanels, SCORES_PANEL);
+			System.out.println("Showing high scores");
 		} else if (action.equals(RULES)) {
-			// --> new RulesPanel
+			// --> RulesPanel
 			CardLayout cl = (CardLayout) (allPanels.getLayout());
 			cl.show(allPanels, RULES_PANEL);
+			System.out.println("Showing rules");
 		} else if (action.equals(BACK)) {
 			// --> back to startPanel
 			CardLayout cl = (CardLayout) (allPanels.getLayout());
 			cl.show(allPanels, START_PANEL);
+			System.out.println("Back to start panel");
 		}
 	}
 }

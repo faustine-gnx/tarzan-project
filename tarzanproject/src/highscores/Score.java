@@ -9,11 +9,11 @@ package highscores;
  */
 import java.io.Serializable;
 
-	public class Score implements Serializable {
-	private static final long serialVersionUID = 1L;
-	private int score; // variable integers of the score
-	private String name; // variable string of the name
-	
+public class Score implements Serializable {
+	private static final long serialVersionUID = 1L; // added because class is serializable
+	private int score; // score value
+	private String name; // player name
+
 	/**
 	 * Constructor.
 	 * @param name, score
@@ -38,7 +38,7 @@ import java.io.Serializable;
 	public String getName() {
 		return name;
 	}
-	
+
 	/**
 	 * Setter.
 	 * @param score
@@ -46,7 +46,7 @@ import java.io.Serializable;
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
+
 	/**
 	 * Setter.
 	 * @param name

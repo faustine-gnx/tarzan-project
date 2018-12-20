@@ -8,7 +8,7 @@ import java.util.Random;
  * This code was placed in the public domain by its original author, Stefan
  * Gustavson and adapted by Peter Eastman.
  * 
- * Simpified by Faustine & Martina. Called in Map.
+ * Further simpified by Faustine & Martina. Called in Map.
  *
  */
 

@@ -11,13 +11,12 @@ import map.World;
  */
 
 public class Handler {
-	private Game handlerGame;
-	private Map handlerMap;
-	private World handlerWorld;
+	private Game handlerGame; // to access game
+	private Map handlerMap; // to access map
+	private World handlerWorld; // to access world
 
 	/**
 	 * Constructor.
-	 * 
 	 * @param game
 	 */
 	public Handler(Game game) {
@@ -26,7 +25,6 @@ public class Handler {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return handlerGame
 	 */
 	public Game getHandlerGame() {
@@ -35,7 +33,6 @@ public class Handler {
 
 	/**
 	 * Setter.
-	 * 
 	 * @param handlergame
 	 */
 	public void setHandlerGame(Game handlerGame) {
@@ -44,7 +41,6 @@ public class Handler {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return handlerMap
 	 */
 	public Map getHandlerMap() {
@@ -53,7 +49,6 @@ public class Handler {
 
 	/**
 	 * Setter.
-	 * 
 	 * @param handlerMap
 	 */
 	public void setHandlerMap(Map handlerMap) {
@@ -62,7 +57,6 @@ public class Handler {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return handlerWorld
 	 */
 	public World getHandlerWorld() {
@@ -71,7 +65,6 @@ public class Handler {
 
 	/**
 	 * Setter.
-	 * 
 	 * @param handlerWorld
 	 */
 	public void setHandlerWorld(World handlerWorld) {

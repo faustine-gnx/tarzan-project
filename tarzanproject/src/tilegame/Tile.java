@@ -15,10 +15,8 @@ import map.Map;
 public abstract class Tile {
 
 	public static Tile[] tiles = new Tile[5]; // create tile
-	public static Tile grassTile = new GrassTile(0); // create grass tile
-	public static Tile waterTile = new WaterTile(1); // create water tile
-	// public static Tile secretTile = new SecretTile(2); for invisible tiles but
-	// actually not the best way imo
+	public static Tile grassTile = new GrassTile(0); // create grass tile with index 0
+	public static Tile waterTile = new WaterTile(1); // create water tile with index 1
 
 	protected Color tileColor;
 	protected final int tileID;
@@ -26,7 +24,6 @@ public abstract class Tile {
 	/**
 	 * Constructor. Create the tiles with a color (depending on the type, grass or
 	 * water) and a unique ID.
-	 * 
 	 * @param color, id
 	 */
 	public Tile(Color color, int id) {
@@ -37,7 +34,6 @@ public abstract class Tile {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return tileID
 	 */
 	public int getId() {
@@ -46,7 +42,6 @@ public abstract class Tile {
 
 	/**
 	 * Draw the tile according to its color.
-	 * 
 	 * @param g, x, y
 	 */
 	public void render(Graphics g, int x, int y) {
@@ -56,7 +51,6 @@ public abstract class Tile {
 
 	/**
 	 * Draw a grey tile (when not in Tarzan's field of view).
-	 * 
 	 * @param g, x, y
 	 */
 	public void renderGrayTile(Graphics g, int x, int y) {

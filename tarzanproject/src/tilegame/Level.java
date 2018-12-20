@@ -12,18 +12,17 @@ import map.Map;
  */
 
 public class Level {
-	public final int levelNumber; // variable number of the level
-	public final int numberOfJaguars; // variable number of jaguars in that level
-	public final int goalStrength; // variable goal strength in order to find Jane
-	public final int goalEndurance; // variable goal endurance in order to find Jane
-	public final int goalJaguars; // variable goal number's animals killed in order to find Jane in that level
-	public final int numberOfBananas; // variable number's of bananas in that level
-	public final int numberOfKavurus; // variable number of Kavurus in that level
-	public final int numberOfKnives; // variable number of Knife in that level
+	public final int levelNumber; // level: 1, 2 or 3
+	public final int numberOfJaguars; // number of jaguars to create
+	public final int numberOfBananas; // number of bananas to create
+	public final int numberOfKavurus; // number of kavurus to create
+	public final int numberOfKnives; // number of knives to create
+	public final int goalStrength; // strength that must be reached to win game
+	public final int goalEndurance; // endurance that must be reached to win game
+	public final int goalJaguars; // jaguars that must be killed to win game
 
 	/**
 	 * Constructor.
-	 * 
 	 * @param level
 	 */
 	public Level(int level) {
@@ -64,7 +63,6 @@ public class Level {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return goalStrength
 	 */
 	public int getGoalStrength() {
@@ -73,7 +71,6 @@ public class Level {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return goalEndurance
 	 */
 	public int getGoalEndurance() {
@@ -82,7 +79,6 @@ public class Level {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return goalJaguars
 	 */
 	public int getGoalJaguars() {
@@ -91,7 +87,6 @@ public class Level {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return levelNumber
 	 */
 	public int getLevelNumber() {
@@ -100,7 +95,6 @@ public class Level {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return numberOfJaguars
 	 */
 	public int getNumberOfJaguars() {
@@ -109,7 +103,6 @@ public class Level {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return numberOfBananas
 	 */
 	public int getNumberOfBananas() {
@@ -118,7 +111,6 @@ public class Level {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return numberOfKavurus
 	 */
 	public int getNumberOfKavurus() {
@@ -127,7 +119,6 @@ public class Level {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return numberOfKnives
 	 */
 	public int getNumberOfKnives() {

@@ -16,7 +16,6 @@ public class ImageLoader {
 
 	/**
 	 * Loads an image from a given path.
-	 * 
 	 * @param path
 	 * @return BufferedImage
 	 */

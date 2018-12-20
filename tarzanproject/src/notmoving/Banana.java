@@ -10,14 +10,12 @@ import tilegame.Position2D;
  * 
  */
 
-public class Banana extends NotMovings {
+public class Banana extends NonMoving {
 
-	public static final int ENDURANCE_GIVEN = 25; // variable to set the endurance given to Tarzan by eating the banana
-	public Object getBananaPosition; // object to get banana position
+	public static final int ENDURANCE_GIVEN = 25; // endurance given
 
 	/**
 	 * Constructor.
-	 * 
 	 * @param position
 	 */
 	public Banana(Position2D position) {
@@ -27,13 +25,12 @@ public class Banana extends NotMovings {
 	/**
 	 * Interaction with Tarzan. Tarzan's endurance is increased. Banana disappears
 	 * from the world.
-	 * 
 	 * @param t
 	 */
 	@Override
 	public void interact(Tarzan t) {
 		t.eatBanana();
-		t.getHandler().getHandlerWorld().setWorldNotMovingsNull(notMovingsPosition);
+		t.getHandler().getHandlerWorld().setWorldNonMovingNull(nonMovingPosition);
 		System.out.println("Yummy yummy, banana eaten! Endurance increased");
 	}
 }

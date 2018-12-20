@@ -16,29 +16,21 @@ import highscores.HighScoreManager;
  */
 
 public class HighScorePanel extends JPanel {
-	private static final long serialVersionUID = 1L;
-	private JTextComponent highScores;
-	private HighScoreManager highScoreManager;
+	private static final long serialVersionUID = 1L; // added because class is serializable
+	private JTextComponent highScores; // text area with high scores (max 10)
+	private HighScoreManager highScoreManager; // to get scores from file
 
 	/**
 	 * Constructor.
 	 * @throws IOException 
 	 */
 	public HighScorePanel() throws IOException {
-		System.out.println("HS Panel constructor");
-		
 		highScoreManager = new HighScoreManager();
 		String text = highScoreManager.getHighScoreString();
-		System.out.println("High score string : "+text);
 		if (text == null) {
-			text = "No high scores yet";
-		}/* else {
-			text = highScoreManager.getHighScoreString();
-		}*/
-
-		System.out.println("High score string2 : "+text);
+			text = "No high scores yet"; // if file is empty
+		}
 		highScores = new JTextArea(text);
 		this.add(highScores);
-		System.out.println("end HS Panel constructor");
 	}
 }

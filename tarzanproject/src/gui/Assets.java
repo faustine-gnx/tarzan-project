@@ -17,20 +17,16 @@ import map.Map;
  * 
  */
 
-public class Assets { // to load img / sounds ...
+public class Assets {
+	// image width
 	private static final int WIDTH = GameApplication.WIDTH / Map.SIZE_MAP;
+	// image height (square = same as width)
 	private static final int HEIGHT = GameApplication.WIDTH / Map.SIZE_MAP;
 
-	// image Tarzan when fight
-	public static BufferedImage TARZAN_FIGHT;
-	// image Tarzan in the forest
-	public static BufferedImage TARZAN_FOREST;
-	// image Tarzan and Jane
+	// image for start panel
 	public static BufferedImage TARZAN_JANE;
-	// image Normal Tarzan
+	// image Tarzan
 	public static BufferedImage TARZAN_NORMAL;
-	// image Tarzan in the water
-	public static BufferedImage TARZAN_WATER;
 	// image Kavurus
 	public static BufferedImage KAVURUS;
 	// image knife
@@ -43,14 +39,11 @@ public class Assets { // to load img / sounds ...
 	public static BufferedImage JANE;
 
 	/**
-	 * Load images from files.
+	 * Load images from files and resize it to tile size.
 	 */
 	public static void init() {
 		BufferedImage TARZAN_NORMAL0 = ImageLoader.loadImage("/textures/tarzan_normal.gif");
 		TARZAN_NORMAL = resize(TARZAN_NORMAL0);
-
-		BufferedImage TARZAN_FOREST0 = ImageLoader.loadImage("/textures/tarzan_forest.gif");
-		TARZAN_FOREST = resize(TARZAN_FOREST0);
 
 		BufferedImage JAGUAR0 = ImageLoader.loadImage("/textures/jaguar.gif");
 		JAGUAR = resize(JAGUAR0);
@@ -70,7 +63,6 @@ public class Assets { // to load img / sounds ...
 
 	/**
 	 * Resize images to the size of a tile.
-	 * 
 	 * @return BufferedImage
 	 */
 	private static BufferedImage resize(BufferedImage img) {
@@ -83,9 +75,7 @@ public class Assets { // to load img / sounds ...
 	}
 
 	/**
-	 * Called in render in World to get the image corresponding to the desired
-	 * NotMovings.
-	 * 
+	 * Called in render in World to get the image corresponding to the desired NonMoving.
 	 * @return BufferedImage
 	 */
 	public static BufferedImage getImageFromString(String s) {

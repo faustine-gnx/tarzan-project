@@ -8,7 +8,6 @@ package map;
 public interface MapGenerator {
 	/**
 	 * To create a map.
-	 * 
 	 * @param size
 	 * @return float[][]
 	 */

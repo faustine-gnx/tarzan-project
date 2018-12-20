@@ -15,13 +15,13 @@ public class Launcher {
 
 	/**
 	 * Main. Launches the game.
-	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				Game newGame = new Game();
+				System.out.println("New game launched");
 				newGame.start();
 			}
 		});

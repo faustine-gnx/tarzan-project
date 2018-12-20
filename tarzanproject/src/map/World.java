@@ -1,9 +1,8 @@
 package map;
 
 import java.awt.Graphics;
-
 import gui.Assets;
-import notmoving.NotMovings;
+import notmoving.NonMoving;
 import tilegame.Position2D;
 import tilegame.Tile;
 
@@ -11,16 +10,15 @@ import tilegame.Tile;
  * @author Faustine & Martina
  * 
  *         The World class is the terrain of the world. It is composed of Tiles
- *         (grass or water) which might have NotMovings on it. The render
- *         methods draw the tiles and their NotLivings if any.
+ *         (grass or water) which might have NonMovings on it. The render
+ *         methods draw the tiles and their NonMoving if any.
  * 
  */
 
 public class World {
 
-	private int[][] worldTiles; // variable integers for the tiles of the terrain
-	private NotMovings[][] worldNotMovings = new NotMovings[Map.SIZE_MAP][Map.SIZE_MAP];// variable to create an array
-																						// of notmovings in the map
+	private int[][] worldTiles; // tiles of the terrain; int = type
+	private NonMoving[][] worldNonMovings = new NonMoving[Map.SIZE_MAP][Map.SIZE_MAP]; //nonMovings of the terrain
 
 	/**
 	 * Constructor. Create the tiles according to the noise map landMap.
@@ -30,7 +28,7 @@ public class World {
 		worldTiles = new int[Map.SIZE_MAP][Map.SIZE_MAP];
 		for (int x = 0; x < Map.SIZE_MAP; x++) {
 			for (int y = 0; y < Map.SIZE_MAP; y++) {
-				worldTiles[x][y] = Math.abs(Math.round(landMap[x][y]));
+				worldTiles[y][x] = Math.abs(Math.round(landMap[x][y]));
 			}
 		}
 	}
@@ -70,29 +68,28 @@ public class World {
 	}
 
 	/**
-	 * Get the NotMoving corresponding to the map position.
+	 * Get the NonMoving corresponding to the map position.
 	 * @param pos
-	 * @return NotMovings
+	 * @return NonMovings
 	 */
-	public NotMovings getWorldNotMovings(Position2D pos) {
-		return worldNotMovings[pos.getX()][pos.getY()];
+	public NonMoving getWorldNonMovings(Position2D pos) {
+		return worldNonMovings[pos.getX()][pos.getY()];
 	}
 
 	/**
-	 * Set the NotMoving in the worldNotMovings matrix..
-	 * @param notMovings
+	 * Set the NonMoving in the worldNonMovings matrix.
+	 * @param nonMovings
 	 */
-	public void setWorldNotMovings(NotMovings notMovings) {
-		worldNotMovings[notMovings.getNotMovingsPosition().getX()][notMovings.getNotMovingsPosition()
-				.getY()] = notMovings;
+	public void setWorldNonMovings(NonMoving nonMoving) {
+		worldNonMovings[nonMoving.getNonMovingPosition().getX()][nonMoving.getNonMovingPosition().getY()] = nonMoving;
 	}
 
 	/**
-	 * Set the worldNotMovings matrix to null at position pos.
+	 * Set the worldNonMovings matrix to null at position pos.
 	 * @param pos
 	 */
-	public void setWorldNotMovingsNull(Position2D pos) {
-		worldNotMovings[pos.getX()][pos.getY()] = null;
+	public void setWorldNonMovingNull(Position2D pos) {
+		worldNonMovings[pos.getX()][pos.getY()] = null;
 	}
 
 	/**
@@ -128,8 +125,8 @@ public class World {
 	public void renderOneTile(Graphics g, int x, int y) {
 		if (0 <= x && x < Map.SIZE_MAP && 0 <= y && y < Map.SIZE_MAP) {
 			getTile(x, y).render(g, y, x);
-			if (worldNotMovings[x][y] != null) {
-				g.drawImage(Assets.getImageFromString(worldNotMovings[x][y].getName()), x * Map.PIXEL_SCALE,
+			if (worldNonMovings[x][y] != null) {
+				g.drawImage(Assets.getImageFromString(worldNonMovings[x][y].getName()), x * Map.PIXEL_SCALE,
 						y * Map.PIXEL_SCALE, null);
 			}
 		}

@@ -12,7 +12,6 @@ import java.awt.Color;
 public class GrassTile extends Tile {
 	/**
 	 * Constructor. Create the tiles with green color and a unique ID.
-	 * 
 	 * @param id
 	 */
 	public GrassTile(int id) {

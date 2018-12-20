@@ -4,8 +4,6 @@ import java.util.Random;
 import notmoving.*;
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
-import java.util.List;
 import gui.Assets;
 import gui.GameApplication;
 import tarzan.Tarzan;
@@ -15,46 +13,49 @@ import tilegame.*;
  * @author Faustine & Martina
  * 
  *         The Map class is used to run the game. It has a World (the terrain),
- *         a list of "NotMovings" (all the entities of the game except Tarzan),
+ *         a list of "NonMovings" (all the entities of the game except Tarzan),
  *         and Tarzan. The Map depends on the level chosen. The Map is used to
- *         generate the random attribution of tiles and create NotMovings and
+ *         generate the random attribution of tiles and create NonMovings and
  *         Tarzan. It is used to update the graphics of the game (render
  *         method), calling the render methods from World and Tarzan.
  * 
  */
 
 public class Map {
-	public final static int SIZE_MAP = 16; // variable to set the size map
-	public final static int PIXEL_SCALE = GameApplication.WIDTH / SIZE_MAP;
-	private final Level mapLevel; // variable to create the map specific for that level
-	private float[][] landMap; // variable to create the land of the map
-	// free position = no tarzan, no animal, no notMovings, not water
-	private boolean[][] freePositions; // set directly boolean[SIZE_MAP][SIZE_MAP]?
-	private final World mapWorld; // variable for the terrain
-	private ArrayList<NotMovings> mapNotMovings = new ArrayList<NotMovings>(); // arraylist for the notmovings as banana,
-																			// knife etc.
-	public Tarzan mapTarzan; // variable for Tarzan
+	public final static int SIZE_MAP = 16; // size of the game
+	public final static int PIXEL_SCALE = GameApplication.WIDTH / SIZE_MAP; // pixel scale for drawing (same canvas size)
+	private final Level mapLevel; // level for the game: influences parameters
+	private float[][] landMap; // land height in map (used with perlin noise for smoother map)
+	private boolean[][] freePositions; // free position = no tarzan, no nonMoving, not water
+	private final World mapWorld; // terrain of the map = tile repartition, based on landMap
+	private Tarzan mapTarzan; // Tarzan = player
 
 	/**
 	 * Constructor. Initialize the Map: - Generates a random repartition for the
 	 * tiles - Sets the level and initial parameters - Creates Tarzan - Creates the
-	 * NotMovings
+	 * NonMovings
 	 * @param strength, endurance, level, handler
 	 */
-	public Map(int strength, int endurance, int level, Handler handler) { // Handler instead of Game?
-		SimplexNoiseGenerator mapGen = new SimplexNoiseGenerator(level, 1, 1); // lvl: increase number of water tiles
-																				// with level
-		landMap = mapGen.createMap(SIZE_MAP);
+	public Map(int strength, int endurance, int level, Handler handler) {
+		System.out.println("Initializing the parameters of a new game: ");
+		// Simplex noise (not that useful now that we just have 2 sorts of tiles)
+		// More difficult terrain with higher level
+		SimplexNoiseGenerator mapGen = new SimplexNoiseGenerator(level, 1, 1); // increase number of water tiles with level
+		System.out.println("Generating a map");								
+		landMap = mapGen.createMap(SIZE_MAP); 
 		mapLevel = new Level(level);
 		mapWorld = new World(landMap);
 		freePositions = new boolean[SIZE_MAP][SIZE_MAP];
 		for (int i = 0; i < SIZE_MAP; i++) {
-			java.util.Arrays.fill(freePositions[i], true); // or when rock put false
+			java.util.Arrays.fill(freePositions[i], true); // 1) set all positions free = true
 		}
-		setWaterNotPositionFree();
+		setWaterNotPositionFree(); // 2) set positions with water to false
 		mapTarzan = new Tarzan(new Position2D(0, 0), handler, mapLevel, strength, endurance);
-		freePositions[mapTarzan.getTarzanPosition().getY()][mapTarzan.getTarzanPosition().getX()] = false;
-		createNotMovings(mapLevel);
+		// 3) set Tarzan position to false
+		freePositions[mapTarzan.getTarzanPosition().getY()][mapTarzan.getTarzanPosition().getX()] = false; 
+		System.out.println("NonMovings creation");
+		// 4) create nonMovings in free positions (and set positions to false)
+		createNonMovings(mapLevel);
 	}
 
 	/**
@@ -67,7 +68,6 @@ public class Map {
 
 	/**
 	 * Getter.
-	 * 
 	 * @return mapLevel
 	 */
 	public Level getMapLevel() {
@@ -86,24 +86,25 @@ public class Map {
 	 * Getter.
 	 * @return Color
 	 */
-	public Color getColor(int x, int y) { // maybe MapImage is not necessary
-		if (landMap[x][y] <= 0.5) { // if value equals 0, fill with water
+	public Color getColor(int x, int y) { 
+		if (landMap[x][y] <= 0.5) { // if value equals 0, fill with grass
 			return Color.GREEN;
-		} else if (landMap[x][y] > 0.5) { // if value equals 1, fill with forest
-			return Color.BLUE; // put grass green and delete forest?
+		} else if (landMap[x][y] > 0.5) { // if value equals 1, fill with water
+			return Color.BLUE;
 		} else {
 			return Color.DARK_GRAY;
 		}
 	}
 
 	/**
-	 * Draw the world: tiles + not movings
+	 * Draw the world: tiles + non movings
 	 * @param g
 	 */
 	private void drawWorld(Graphics g) {
-		mapWorld.renderGrayTiles(g);
-		mapWorld.renderOneTile(g, mapTarzan.getTarzanPosition().getX(), mapTarzan.getTarzanPosition().getY());
-		for (int x = 1; x <= Tarzan.FIELD_OF_VIEW_RADIUS; x++) {
+		//System.out.println("Drawing the world...");
+		mapWorld.renderGrayTiles(g); // 1) all grey tiles
+		mapWorld.renderOneTile(g, mapTarzan.getTarzanPosition().getX(), mapTarzan.getTarzanPosition().getY()); // tarzan tile
+		for (int x = 1; x <= Tarzan.FIELD_OF_VIEW_RADIUS; x++) { // show tiles in field of view
 			for (int y = 1; y <= Tarzan.FIELD_OF_VIEW_RADIUS; y++) {
 				mapWorld.renderOneTile(g, mapTarzan.getTarzanPosition().getX() + x,
 						mapTarzan.getTarzanPosition().getY());
@@ -135,28 +136,27 @@ public class Map {
 	}
 
 	/*
-	 * private void drawNotMovings(Graphics g) { for (int x=0; x<SIZE_MAP; x++) {
-	 * for (int y=0; y<SIZE_MAP; y++) { if(mapWorld.getWorldNotMovings(new
+	 * private void drawNonMovings(Graphics g) { for (int x=0; x<SIZE_MAP; x++) {
+	 * for (int y=0; y<SIZE_MAP; y++) { if(mapWorld.getWorldNonMovings(new
 	 * Position2D(x,y)) != null) {
-	 * g.drawImage(Assets.getImageFromString(mapWorld.getWorldNotMovings(new
+	 * g.drawImage(Assets.getImageFromString(mapWorld.getWorldNonMovings(new
 	 * Position2D(x,y)).getName()), x*PIXEL_SCALE, y*PIXEL_SCALE, null);
 	 * 
 	 * } } } }
 	 */ // Now done in draw world
 
 	/**
-	 * Create the NotMovings; number depending on level.
+	 * Create the NonMovings; number depending on level.
 	 * @param level
 	 */
-	private void createNotMovings(Level level) {
+	private void createNonMovings(Level level) {
 		for (int i = 0; i < level.getNumberOfJaguars(); i++) {
 			createOneJaguar();
 		}
 
-		// create NotMovings
 		createJane();
 
-		for (int i = 0; i < level.getNumberOfBananas(); i++) { // all the same for now
+		for (int i = 0; i < level.getNumberOfBananas(); i++) { // all 3 same number
 			createOneBanana();
 			createOneKavurus();
 			createOneKnife();
@@ -164,25 +164,25 @@ public class Map {
 	}
 
 	/**
-	 * Generate random position for the creation of the NotMovings. Checks if
+	 * Generate random position for the creation of the NonMovings. Checks if
 	 * position is free, if not generate a new random position recursively.
 	 * @return Position2D
 	 */
 	private Position2D randomPosition() {
 		Random rand = new Random();
-		int x = rand.nextInt(SIZE_MAP);
+		int x = rand.nextInt(SIZE_MAP); // new random position
 		int y = rand.nextInt(SIZE_MAP);
 		Position2D pos = new Position2D(x, y);
-		if (isPositionFree(pos)) {
-			freePositions[pos.getY()][pos.getX()] = false;
-			return pos;
-		} else {
+		if (isPositionFree(pos)) { // check if position is free
+			freePositions[pos.getY()][pos.getX()] = false; // set it to false
+			return pos; // return it
+		} else { // if not free
 			return randomPosition(); // Recursive way to find other position if previous position is not free
 		}
 	}
 
 	/**
-	 * Check if position is free: not a water Tile and not an other NotMoving on it.
+	 * Check if position is free: not a water Tile and not an other NonMoving on it.
 	 * @param pos
 	 * @return Position2D
 	 */
@@ -208,11 +208,10 @@ public class Map {
 	 * in the freePosition matrix.
 	 */
 	private void createOneJaguar() {
-		// create Jaguar
 		Jaguar j = new Jaguar(randomPosition());
-		mapNotMovings.add(j);
-		freePositions[j.getNotMovingsPosition().getY()][j.getNotMovingsPosition().getX()] = false;
-		mapWorld.setWorldNotMovings(j);
+		freePositions[j.getNonMovingPosition().getY()][j.getNonMovingPosition().getX()] = false;
+		mapWorld.setWorldNonMovings(j);
+		System.out.println("Jaguar created");
 	}
 
 	/**
@@ -221,9 +220,9 @@ public class Map {
 	 */
 	private void createOneBanana() {
 		Banana b = new Banana(randomPosition());
-		mapNotMovings.add(b);
-		freePositions[b.getNotMovingsPosition().getY()][b.getNotMovingsPosition().getX()] = false;
-		mapWorld.setWorldNotMovings(b);
+		freePositions[b.getNonMovingPosition().getY()][b.getNonMovingPosition().getX()] = false;
+		mapWorld.setWorldNonMovings(b);
+		System.out.println("Banana created");
 	}
 
 	/**
@@ -232,9 +231,9 @@ public class Map {
 	 */
 	private void createJane() {
 		Jane j = new Jane(randomPosition());
-		mapNotMovings.add(j);
-		freePositions[j.getNotMovingsPosition().getY()][j.getNotMovingsPosition().getX()] = false;
-		mapWorld.setWorldNotMovings(j);
+		freePositions[j.getNonMovingPosition().getY()][j.getNonMovingPosition().getX()] = false;
+		mapWorld.setWorldNonMovings(j);
+		System.out.println("Jane created!");
 	}
 
 	/**
@@ -243,9 +242,9 @@ public class Map {
 	 */
 	private void createOneKavurus() {
 		Kavurus k = new Kavurus(randomPosition());
-		mapNotMovings.add(k);
-		freePositions[k.getNotMovingsPosition().getY()][k.getNotMovingsPosition().getX()] = false;
-		mapWorld.setWorldNotMovings(k);
+		freePositions[k.getNonMovingPosition().getY()][k.getNonMovingPosition().getX()] = false;
+		mapWorld.setWorldNonMovings(k);
+		System.out.println("Kavuru's pill created");
 	}
 
 	/**
@@ -254,13 +253,13 @@ public class Map {
 	 */
 	private void createOneKnife() {
 		Knife k = new Knife(randomPosition());
-		mapNotMovings.add(k);
-		freePositions[k.getNotMovingsPosition().getY()][k.getNotMovingsPosition().getX()] = false;
-		mapWorld.setWorldNotMovings(k);
+		freePositions[k.getNonMovingPosition().getY()][k.getNonMovingPosition().getX()] = false;
+		mapWorld.setWorldNonMovings(k);
+		System.out.println("Knife created");
 	}
 
 	/**
-	 * Draw the world (thus also NotMovings) and Tarzan.
+	 * Draw the world (thus also NonMovings) and Tarzan.
 	 * @param g
 	 */
 	public void render(Graphics g) {

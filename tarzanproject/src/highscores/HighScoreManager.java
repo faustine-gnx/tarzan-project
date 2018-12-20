@@ -23,15 +23,14 @@ import java.nio.file.Paths;
  */
 
 public class HighScoreManager {
-	private final static int MAX_NUMBER_SCORES = 10; 
-	private ArrayList<Score> scores; // variable Arraylist of the type "score". We will use it to work with the
-	// scores inside the class
-	private static final String HIGHSCORE_FILE = "high_scores.txt";// The name of the file where the Highscores will be saved
-	private ObjectOutputStream outputStream;// Initializing an outputStream for working with the file
+	private final static int MAX_NUMBER_SCORES = 10; // maximum number of scores kept in high scores
+	private ArrayList<Score> scores; // list of high scores
+	private static final String HIGHSCORE_FILE = "high_scores.txt"; // file in which scores are stored
 	private ObjectInputStream inputStream; // Initializing an inputStream for working with the file
-	private ScoreComparator comparator;
-	private String highScoreString;
-	Path path;
+	private ObjectOutputStream outputStream;// Initializing an outputStream for working with the file
+	private ScoreComparator comparator; // to compare scores and keep best ones
+	private String highScoreString; // to output scores
+	private Path path; // path to the high scores file
 
 	/**
 	 *Constructor.
@@ -44,14 +43,14 @@ public class HighScoreManager {
 		scores = new ArrayList<Score>();
 		path = Paths.get("high_scores.txt");
 		if (!Files.exists(path)) {
-			System.out.println("File created");
+			System.out.println("High score file created");
 			try {
 				Files.createFile(path);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else {
-			System.out.println("File already exists");
+			System.out.println("High score file already exists");
 		}
 	}
 
@@ -69,7 +68,7 @@ public class HighScoreManager {
 	 */
 	public void initScores() {
 		loadScoreFile();
-		sort();
+		sort(); // should already be sorted
 	}
 
 	/**
@@ -103,7 +102,7 @@ public class HighScoreManager {
 	}
 
 	/**
-	 * Load arraylist of score from file.
+	 * Load arraylist of scores from file.
 	 * @exception FileNotFoundException, IOException
 	 */
 	@SuppressWarnings("unchecked")
@@ -111,11 +110,10 @@ public class HighScoreManager {
 		try {
 			inputStream = new ObjectInputStream(new FileInputStream(path.toString()));
 			scores = (ArrayList<Score>) inputStream.readObject();
-			//scores.removeAll(Collections.singleton(null));
 		} catch (FileNotFoundException e) {
-			System.out.println("[Load] FNF Error: " + e.getMessage());
+			System.out.println("[Load] FNF Error: " + e.getMessage() + " --> No high score file");
 		} catch (IOException e) {
-			System.out.println("[Load] IO Error: " + e.getMessage());
+			System.out.println("[Load] IO Error: " + e.getMessage() + " --> Empty high score file");
 		} catch (ClassNotFoundException e) {
 			System.out.println("[Load] CNF Error: " + e.getMessage());
 		} finally {

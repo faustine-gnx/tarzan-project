@@ -11,7 +11,7 @@ import tilegame.Position2D;
  *         Jane must be found by Tarzan to win the game.
  * 
  */
-public class Jane extends NotMovings {
+public class Jane extends NonMoving {
 
 	/**
 	 * Constructor.

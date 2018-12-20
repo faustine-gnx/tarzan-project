@@ -13,34 +13,30 @@ import map.Map;
 /**
  * @author Faustine & Martina
  * 
- *         The Game class is where the game and the gui are centralized. It is
- *         the Runnable of our project. It contains a GameApplication for the
- *         gui and a map to play the game.
+ *         The Game class is where the game and the GUI are centralized. It is
+ *         the executable (Runnable) of our project. It contains a GameApplication 
+ *         for the GUI and a map to play the game.
  * 
  */
 
 public class Game implements Runnable {
 
-	private GameApplication gameApp; // variable game application
-	private Thread gameThread; // variable thread of the game
-	private boolean gameRunning = false; // variable game running set to false
-	private BufferStrategy gameBuffer; // variable buffer
-	private Graphics g;// variable graphics
-	private Map gameMap;// variable map
-	private Handler gameHandler; // variable handler
+	private GameApplication gameApp; // game application to handle GUI
+	private Thread gameThread; // to execute program
+	private boolean gameRunning = false; // !! different than playing !!
+	private BufferStrategy gameBuffer; // to draw
+	private Graphics g; // graphics for render
+	private Map gameMap;// map = the game
+	private Handler gameHandler; // to access game, map and world more easily
 	private long lastTime;
-	// Specify how many seconds there are in a minute as a double
-	// store as a double cause 60 sec in nanosec is big and store as final so it
-	// can't be changed
-	private int fps = 60; // tick method called 60 times per second --> 5 for now: player does not press
-	// key + than 5 times/s
+	private final static int FPS = 60; // tick method called 60 times per second
 	// Set definition of how many ticks per 1000000000 ns or 1 sec
-	private double timePerTick; // because nanoseconds
+	private final static double TIME_PER_TICK = 1000000000 / FPS; // 1000000000 because nanoseconds
 	private double delta; // variable for create delta (= change in time)
 	private long now; // variable for the time of the system
 	private long timer; // variable to set the timer
-	private HighScoreManager highScoreManager;
-	private Score gameScore;
+	private HighScoreManager highScoreManager; // to manage high score
+	private Score gameScore; // score of the player in this game
 
 	/**
 	 * Start new game (new thread).
@@ -49,6 +45,7 @@ public class Game implements Runnable {
 		if (gameRunning) {
 			return;
 		}
+		System.out.println("Starting game");
 		gameRunning = true;
 		gameThread = new Thread(this);
 		gameThread.start();
@@ -62,6 +59,7 @@ public class Game implements Runnable {
 		if (!gameRunning) {
 			return;
 		}
+		System.out.println("Stopping game");
 		gameRunning = false;
 		try {
 			gameThread.join();
@@ -81,31 +79,36 @@ public class Game implements Runnable {
 		gameApp.addKeyListener(gameMap.getMapTarzan());
 		gameApp.setFocusable(true);
 		highScoreManager = new HighScoreManager();
+		System.out.println("Game initialized");
 	}
-	
 
 	/**
 	 * Initialize: new game application and initialization of assets.
 	 * @throws IOException 
 	 */
 	public void init() throws IOException {
+		System.out.println("Initialization...");
 		gameApp = new GameApplication(this);
 		gameHandler = new Handler(this);
 		gameScore = new Score("Anonymous", 0);
 		Assets.init();
+		System.out.println("Initialized!");
 	}
-	
+
 	/**
 	 * Initialize: new game application and initialization of assets.
 	 * Called at the end of a game. Remember the name of the previous players.
 	 * @throws IOException 
 	 */
 	public void initNew() throws IOException {
+		System.out.println("New initialization...");
 		gameApp = new GameApplication(this, getGameApp().getPlayerName());
+		gameScore = new Score(getGameApp().getPlayerName(), 0);
 		gameHandler = new Handler(this);
 		Assets.init();
+		System.out.println("Initialized!");
 	}
-	
+
 	/**
 	 * Getter.
 	 * @return gameMap
@@ -159,7 +162,7 @@ public class Game implements Runnable {
 	 */
 	private void tick() {
 		if (gameApp.isGamePlaying() && gameMap != null) {
-			gameMap.mapTarzan.tick();
+			gameMap.getMapTarzan().tick();
 		}
 	}
 
@@ -189,14 +192,11 @@ public class Game implements Runnable {
 		try {
 			init();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		// Get the system time
 		lastTime = System.nanoTime();
-		fps = 60; // tick method called 60 times per second
 		// Set definition of how many ticks per 1000000000 ns or 1 sec
-		timePerTick = 1000000000 / fps; // because nanoseconds
 		delta = 0;
 		timer = 0;
 
@@ -204,7 +204,7 @@ public class Game implements Runnable {
 			// Update the time
 			now = System.nanoTime();
 			// calculate change in time since last known time
-			delta += (now - lastTime) / timePerTick;
+			delta += (now - lastTime) / TIME_PER_TICK;
 			timer += now - lastTime;
 			// update last known time
 			lastTime = now;

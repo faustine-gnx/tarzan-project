@@ -30,70 +30,28 @@ import javax.swing.SwingConstants;
 
 public class StartPanel extends JPanel implements ItemListener, ChangeListener {
 
-	private static final long serialVersionUID = 1L;
-	private JLabel welcomeMessage; // variable for welcome level
-	private JLabel imageLabel;
-	private JTextField nameField; // variable for the text field where player need to enter their names
-	private JSlider skillsSlider; // variable for the skills slider
-	private JComboBox<Integer> levelComboBox; // variable for the combo box of the levels
-	private JLabel enterName; // variable for the label which permits to enter the name
-	private JLabel chooseLevel; // variable for the label which permits to choose level
-	private JLabel chooseSkills; // variable of the label which choose the endurance
+	private static final long serialVersionUID = 1L; // added because class is serializable
+	private JLabel welcomeMessage; // for welcome level
+	private JLabel imageLabel; // for Tarzan and Jane picture
+	private JLabel chooseSkills; // label before skills slider
+	private JSlider skillsSlider; // skills slider to choose strength-endurance repartition
+	private JLabel chooseLevel; // label before combobox
+	private JComboBox<Integer> levelComboBox; // combo box of the levels: 1, 2 or 3
+	private JLabel enterName; // label before textField
+	private JTextField nameField; // text field where players can enter their names
 	private int levelNumber = 1; // default level = 1
-	
+
 	/**
-	 * Constructor. Create the labels, text field, slider, combo box of the start
-	 * menu.
-	 */
-	public StartPanel() {
-		welcomeMessage = new JLabel("Welcome to our game: Tarzan - The Lost Adventure!");
-		welcomeMessage.setFont(new Font("TimesRoman", Font.BOLD, 32));
-		BufferedImage image = ImageLoader.loadImage("/textures/tarzan_jane.jpg");
-	    imageLabel = new JLabel(new ImageIcon(image), SwingConstants.CENTER);
-	    
-		enterName = new JLabel("Enter your name:");
-		chooseLevel = new JLabel("Choose a level:");
-		chooseSkills = new JLabel("Choose the strength-endurance distribution:");
-		nameField = new JTextField("Anonymous");
-		skillsSlider = new JSlider(0, 100, 50);
-		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
-		labelTable.put(new Integer(0), new JLabel("Strength"));
-		labelTable.put(new Integer(100), new JLabel("Endurance"));
-		skillsSlider.setLabelTable(labelTable);
-		skillsSlider.setPaintLabels(true);
-		levelComboBox = new JComboBox<Integer>(new Integer[] { 1, 2, 3 });
-
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		    
-		skillsSlider.addChangeListener(this);
-		levelComboBox.addItemListener(this);
-
-		this.add(welcomeMessage);
-		this.add(imageLabel);
-		this.add(enterName);
-	    enterName.setLabelFor(nameField);
-	    this.add(nameField);
-		this.add(chooseSkills);
-		chooseSkills.setLabelFor(skillsSlider);
-		this.add(skillsSlider);
-		this.add(chooseLevel);
-		chooseLevel.setLabelFor(levelComboBox);
-		this.add(levelComboBox);
-
-		setVisible(true);
-	}
-	
-	/**
-	 * Constructor. Create the labels, text field, slider, combo box of the start
-	 * menu.
+	 * Constructor. Create the labels, text field, slider, combo box of the start menu.
+	 * Used with the name of the previous player or "Anonymous" if first game.
 	 * @param player
 	 */
 	public StartPanel(String player) {
 		welcomeMessage = new JLabel("Welcome to our game: Tarzan - The Lost Adventure!");
 		welcomeMessage.setFont(new Font("TimesRoman", Font.BOLD, 32));
 		BufferedImage image = ImageLoader.loadImage("/textures/tarzan_jane.jpg");
-	    imageLabel = new JLabel(new ImageIcon(image), SwingConstants.CENTER);
-	    
+		imageLabel = new JLabel(new ImageIcon(image), SwingConstants.CENTER);
+
 		enterName = new JLabel("Enter your name:");
 		chooseLevel = new JLabel("Choose a level:");
 		chooseSkills = new JLabel("Choose the strength-endurance distribution:");
@@ -107,15 +65,15 @@ public class StartPanel extends JPanel implements ItemListener, ChangeListener {
 		levelComboBox = new JComboBox<Integer>(new Integer[] { 1, 2, 3 });
 
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		    
+
 		skillsSlider.addChangeListener(this);
 		levelComboBox.addItemListener(this);
 
 		this.add(welcomeMessage);
 		this.add(imageLabel);
 		this.add(enterName);
-	    enterName.setLabelFor(nameField);
-	    this.add(nameField);
+		enterName.setLabelFor(nameField);
+		this.add(nameField);
 		this.add(chooseSkills);
 		chooseSkills.setLabelFor(skillsSlider);
 		this.add(skillsSlider);
@@ -152,17 +110,18 @@ public class StartPanel extends JPanel implements ItemListener, ChangeListener {
 
 	/**
 	 * Called when a state is changed (slider).
-	 * @param arg0
+	 * @param e
 	 */
 	@Override
-	public void stateChanged(ChangeEvent arg0) {
+	public void stateChanged(ChangeEvent e) {
 	}
 
 	/**
 	 * Called when an item state is changed (level).
+	 * @param e
 	 */
 	@Override
-	public void itemStateChanged(ItemEvent arg0) {
+	public void itemStateChanged(ItemEvent e) {
 		levelNumber = (Integer) levelComboBox.getSelectedItem();
 	}
 
